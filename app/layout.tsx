@@ -26,6 +26,8 @@ export default function RootLayout({
       appearance={{
         variables: { colorPrimary: '#116b29' },
       }}
+      signInUrl='/sign-in'
+      signUpUrl='/sign-up'
     >
       <html lang="en" suppressHydrationWarning>
         <body className={cn('font-IBMPlex antialiased', IBMPlex.variable)}>
