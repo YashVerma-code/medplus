@@ -1,6 +1,6 @@
 'use client'
 
-import { IoSunny,IoMoon} from "react-icons/io5";
+import { SunMedium,Moon} from "lucide-react";
 import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Image from "next/image"
@@ -28,7 +28,7 @@ export default function ThemeSwitch() {
   if (resolvedTheme === 'dark') {
     return (
         <div className="rounded-lg flex gap-3 items-center pl-1 pb-1 lg:pr-32 md:pr-10 whitespace-nowrap hover:cursor-pointer hover:bg-gray-200" onClick={() => setTheme('light')} >
-            <IoSunny color="#384262" style={{width:'1.5em',height:'1.5em'}} cursor='pointer'/>
+            <SunMedium color="#384262" style={{width:'1.5em',height:'1.5em'}} cursor='pointer'/>
             {!isMobile && (<p style={{color:'#384262'}} className="text-base font-semibold ">Light Mode</p>)}
         </div>
     )
@@ -37,7 +37,7 @@ export default function ThemeSwitch() {
   if (resolvedTheme === 'light') {
     return (
     <div className="rounded-lg flex gap-2.5 items-center pl-2 pb-1 lg:pr-32 md:pr-10 whitespace-nowrap hover:cursor-pointer hover:bg-gray-200" onClick={() => setTheme('dark')}>
-        <IoMoon color="#384262" style={{width:'1.4em',height:'1.4em',}}  cursor='pointer'/>
+        <Moon color="#384262" style={{width:'1.4em',height:'1.4em',}}  cursor='pointer'/>
         {!isMobile && (<p style={{color:'#384262'}} className="text-base font-semibold ">Dark Mode</p>)}
     </div>
     )

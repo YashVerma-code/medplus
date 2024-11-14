@@ -8,8 +8,18 @@ import React from "react";
 import { Button } from "../ui/button";
 import ThemeSwitch from "./ThemeSwitch";
 
+import { BriefcaseMedical,House, Star, UserRound,Stethoscope } from "lucide-react";
+const iconMap = {
+  "/FaHome": <House />,
+  "/FaStar": <Star />,
+  "/FaBriefcaseMedical": <BriefcaseMedical />,
+  "/FaUser": <UserRound />,
+  "/FaStethoscope": <Stethoscope />,
+};
+
 const Sidebar = () => {
   const pathname = usePathname();
+  const baseRoute = "/" + pathname.split("/").slice(1, 3).join("/");
   return (
     <aside>
       <div className="sidebar">
@@ -26,7 +36,7 @@ const Sidebar = () => {
             <SignedIn>
               <ul className="sidebar-nav_elements">
                 {navLinks.slice(0, 6).map((link) => {
-                  const isActive = link.route == pathname;
+                  const isActive = link.route == baseRoute
                   return (
                     <li
                       key={link.route}
@@ -37,16 +47,10 @@ const Sidebar = () => {
                       }`}
                     >
                       <Link className="sidebar-link" href={link.route}>
-                        <Image
-                          src={link.icon}
-                          alt="link logo"
-                          width={24}
-                          height={24}
-                          className={`sidebar-icon ${
-                            isActive && "brightness-200"
-                          }`}
-                        />
-                        {link.label}
+                        <span className={`sidebar-icon ${isActive && "brightness-200"}`}>
+                          {iconMap[link.icon]}
+                        </span>
+                        <span>{link.label}</span>
                       </Link>
                     </li>
                   );
@@ -54,7 +58,7 @@ const Sidebar = () => {
               </ul>
               <ul className="sidebar-nav_elements">
                 {navLinks.slice(6).map((link) => {
-                  const isActive = link.route == pathname;
+                  const isActive = link.route == pathname
                   return (
                     <li
                       key={link.route}
@@ -65,16 +69,10 @@ const Sidebar = () => {
                       }`}
                     >
                       <Link className="sidebar-link" href={link.route}>
-                        <Image
-                          src={link.icon}
-                          alt="link logo"
-                          width={24}
-                          height={24}
-                          className={`sidebar-icon ${
-                            isActive && "brightness-200"
-                          }`}
-                        />
-                        {link.label}
+                        <span className={`sidebar-icon ${isActive && "brightness-200"}`}>
+                          {iconMap[link.icon]}
+                        </span>
+                        <span>{link.label}</span>
                       </Link>
                     </li>
                   );

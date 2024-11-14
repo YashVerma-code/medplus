@@ -16,3 +16,32 @@ declare type CreateUserParams = {
     username: string
     photo: string
   }
+
+// ====== DOCTOR PARAMS
+declare type CreateDoctorParams = {
+  name: string;
+  specialty: string;
+  experience: string;
+  location: string;
+  rating: number;
+  availability: string;
+  imageUrl?: string; // Optional
+  phone: string;
+  about: string;
+  education: string[]; 
+  specializations: string[]; 
+};
+
+declare type UpdateDoctorParams = {
+  name?: string;
+  specialty?: string;
+  experience?: string;
+  location?: string;
+  rating?: number;
+  availability?: string;
+  imageUrl?: string;
+  phone?: string;
+  about?: string;
+  education?: string[];
+  specializations?: string[];
+};
