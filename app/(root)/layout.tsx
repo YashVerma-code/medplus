@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="root">
+    <main className="root bg-gradient-to-r from-gray-100 to-teal-200">
         <Sidebar/>
         <MobileNav/>
       <div className="root-container">

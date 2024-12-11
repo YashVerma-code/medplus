@@ -5,25 +5,13 @@ import Link from "next/link"
 const Home = async () => {
   return (
     <>
-      <section className="home">
-        <h1 className="home-heading">
-          HealthCare Management System
-        </h1>
-        <ul className="flex-center w-full gap-20">
-          {navLinks.slice(1, 5).map((link) => (
-            <Link
-              key={link.route}
-              href={link.route}
-              className="flex-center flex-col gap-2"
-            >
-              <li className="flex-center w-fit rounded-full bg-white p-4">
-                <Image src={link.icon} alt="image" width={24} height={24} />
-              </li>
-              <p className="p-14-medium text-center text-white">{link.label}</p>
-            </Link>
-          ))}
-        </ul>
-      </section>
+      <div className="grid grid-cols-12 grid-rows-12 gap-5 p-4 box-border min-h-screen rounded-lg">
+        <div className="col-span-8 row-span-6 rounded-lg rounded-tl-[18px] p-4 bggrad">Box 1</div>
+        <div className=" col-span-4 row-span-4 rounded-lg  rounded-tr-[18px] p-4 bggrad ">Box 2</div>
+        <div className=" col-span-4 row-span-2 rounded-lg p-4 bggrad ">Box 3</div>
+        <div className=" col-span-5 row-span-6 rounded-lg rounded-bl-[18px] p-4 bggrad ">Box 4</div>
+        <div className=" col-span-7 row-span-6 rounded-lg rounded-br-[18px] p-4 bggrad ">Box 5</div>
+    </div>
     </>
   )
 }
