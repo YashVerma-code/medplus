@@ -37,7 +37,7 @@ const MobileNav = () => {
           <ThemeSwitch />
           <Sheet>
             <SheetTrigger asChild>
-              <button>
+              <button title="Menu">
               <Menu />
               </button>
             </SheetTrigger>

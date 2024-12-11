@@ -7,6 +7,24 @@
   }
 }
 
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.fon{
+  font-family: 'Poppins', sans-serif;
+}
+
+
+.bggrad{
+  background-color: rgba(255, 255, 255, 0.30);
+  font-family: 'Poppins', sans-serif;
+}
+.bggrad:hover{
+  background-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.03);
+  transition: 0.5s ease;
+}
+
 .tooltip-custom {
   display: inline-block;
   padding: 5px 10px;
@@ -287,12 +305,10 @@
 
   /* Home Page */
   .home {
-    @apply sm:flex-center hidden h-72 flex-col gap-4 rounded-[20px] border bg-banner bg-cover bg-no-repeat p-10 shadow-inner;
+    @apply flex-auto justify-center content-center flex-wrap flex-row gap-4 bg-lblue shadow-inner h-full w-full;
   }
 
-  .home-heading {
-    @apply h1-semibold max-w-[500px] flex-wrap text-center text-white shadow-sm;
-  }
+  
 
   /* Credits Page */
   .credits-list {
@@ -361,7 +377,7 @@
   }
 
   .sidebar-nav_element {
-    @apply flex-center p-0.5 p-16-semibold w-full whitespace-nowrap rounded-md bg-cover hover:bg-green-gradient hover:shadow-inner hover:text-white;
+    @apply flex-center p-0.5 p-16-semibold w-full whitespace-nowrap rounded-md bg-cover hover:bg-blue hover:shadow-inner hover:text-white;
   }
 
   .sidebar-link {

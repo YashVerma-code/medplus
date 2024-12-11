@@ -7,8 +7,10 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "../ui/button";
 import ThemeSwitch from "./ThemeSwitch";
+import { Poppins } from "next/font/google";
 
 import { BriefcaseMedical,House, Star, UserRound,Stethoscope } from "lucide-react";
+
 const iconMap = {
   "/FaHome": <House />,
   "/FaStar": <Star />,
@@ -24,7 +26,7 @@ const Sidebar = () => {
     <aside>
       <div className="sidebar">
         <div className="flex size-full flex-col gap-4">
-          <Link href="/" className="sidebar-logo">
+          <Link href="/" className="sidebar-logo pl-5">
             <Image
               src="/assets/images/logo.png"
               alt="logo"
@@ -42,7 +44,7 @@ const Sidebar = () => {
                       key={link.route}
                       className={`sidebar-nav_element group ${
                         isActive
-                          ? "bg-green-gradient text-white"
+                          ? "bg-blue text-white"
                           : "text-gray-700"
                       }`}
                     >
@@ -64,7 +66,7 @@ const Sidebar = () => {
                       key={link.route}
                       className={`sidebar-nav_element group ${
                         isActive
-                          ? "bg-green-gradient text-white"
+                          ? "bg-blue text-white"
                           : "text-gray-700"
                       }`}
                     >

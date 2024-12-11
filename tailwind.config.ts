@@ -66,13 +66,16 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        pink:'#F56477',
+        blue:'#2A90B8',
+        lblue:'#BADEED',
       },
       fontFamily: {
         IBMPlex: ["var(--font-ibm-plex)"],
+        Poppins: ["var(--font-poppins)"],
       },
       backgroundImage: {
         "green-gradient": "url('/assets/images/gradient-bg.svg')",
-        banner: "url('/assets/images/banner-bg.png')",
       },
       borderRadius: {
         lg: "var(--radius)",
