@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
-import { navLinks } from "@/constants";
+import { patientNavLinks } from "@/constants";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import ThemeSwitch from "./ThemeSwitch";
 import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope } from "lucide-react";
@@ -17,12 +17,25 @@ const iconMap = {
   "/FaUser": <UserRound />,
   "/FaStethoscope": <Stethoscope />,
 };
+const extractFeatureFromPath = (path: string): string =>{
+  let pageName = '';
+  const segments = path.replace(/^\//, '').split('/');
+  if(segments.length>1) pageName = segments[2].replace(/-/g, ' ');
+  else if(path==='/profile') pageName = "My Profile";
+  else pageName = "Home";
+  return pageName
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 const MobileNav = () => {
   const pathname = usePathname();
+  const pageTitle = extractFeatureFromPath(pathname);
   const baseRoute = "/" + pathname.split("/").slice(1, 3).join("/");
   
   return (
-    <header className="header flex items-center justify-between p-4 z-10">
+    <header className="header flex items-center z-10">
       <Link href="/" className="flex items-center gap-2">
         <Image
           src="/assets/images/logo-small.png"
@@ -31,15 +44,18 @@ const MobileNav = () => {
           height={51}
         />
       </Link>
-      <nav className="flex items-center gap-4">
+      <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue ml-0 sm:ml-2 leading-5 sm:leading-6">
+        {pageTitle}
+      </div>
+      <nav className="flex items-center gap-2">
         <SignedIn>
           <UserButton />
           <ThemeSwitch />
           <Sheet>
             <SheetTrigger asChild>
-              <button title="Menu">
+              <Button title="Menu" className="p-0">
               <Menu />
-              </button>
+              </Button>
             </SheetTrigger>
             <SheetContent side="right" className="sheet-content sm:w-64 p-4 flex flex-col justify-between">
               <div>
@@ -52,7 +68,7 @@ const MobileNav = () => {
                     height={23}
                   />
                   <ul className="flex flex-col gap-2">
-                    {navLinks
+                    {patientNavLinks
                       .filter(link => link.label !== "Profile")
                       .map((link) => {
                         const isActive = link.route === baseRoute;

@@ -67,7 +67,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
           </div>
         </CardContent>
         <CardFooter className="p-4 pt-0">
-          <Link href={`/features/connect-with-doctor/doctor/${doctor._id}`} className="w-full">
+          <Link href={`/patient/features/health-connect/doctor/${doctor._id}`} className="w-full">
             <Button className="w-full">View Profile</Button>
           </Link>
         </CardFooter>

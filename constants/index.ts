@@ -1,13 +1,14 @@
 export type IconName = "/FaHome" | "/FaStar" | "/FaBriefcaseMedical" | "/FaUser" |"/FaStethoscope";
-export const navLinks :{label: string; route: string; icon: IconName }[] = [
+// patient
+export const patientNavLinks :{label: string; route: string; icon: IconName }[] = [
   {
     label: 'Home',
-    route: '/',
+    route: '/patient',
     icon: '/FaHome',
   },
   {
     label: 'Feature 1',
-    route: '/features/feature1',
+    route: '/patient/features/feature1',
     icon: '/FaStar',
   },  
   {
@@ -17,12 +18,12 @@ export const navLinks :{label: string; route: string; icon: IconName }[] = [
   },
   {
     label: 'My Health Vault',
-    route: '/features/my-health-vault',
+    route: '/patient/features/my-health-vault',
     icon: '/FaBriefcaseMedical',
   },
   {
-    label: 'Connect with Doctor',
-    route: '/features/connect-with-doctor',
+    label: 'Health Connect',
+    route: '/patient/features/health-connect',
     icon: '/FaStethoscope',
   },
   {
@@ -32,7 +33,7 @@ export const navLinks :{label: string; route: string; icon: IconName }[] = [
   },
   {
     label: 'Profile',
-    route: '/',
+    route: '/profile',
     icon: '/FaUser',
   },
 ];

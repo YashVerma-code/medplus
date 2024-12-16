@@ -1,11 +1,18 @@
-'use client'
-import { useEffect,useState } from "react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Calendar, Clock, MapPin, Phone, Star } from 'lucide-react'
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+"use client";
+import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Calendar, Clock, MapPin, Phone, Star } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { DNA } from "react-loader-spinner";
 
 interface Doctor {
   _id: string;
@@ -30,14 +37,13 @@ interface DoctorDetailProps {
 
 const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
         const response = await fetch(`/api/doctors/search?id=${_id}`);
         const data = await response.json();
-        console.log("Hellleoleol data",data);
         setDoctor(data);
       } catch (error) {
         console.error("Failed to fetch doctor data:", error);
@@ -50,16 +56,26 @@ const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
   }, [_id]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div className="mx-auto flex-center">
+        <DNA
+          visible={true}
+          height="80"
+          width="80"
+          ariaLabel="dna-loading"
+          wrapperStyle={{ filter: "hue-rotate(180deg)" }}
+          wrapperClass="dna-wrapper"
+        />
+      </div>
+    );
   }
 
   if (!doctor) {
-    return <p>Doctor not found</p>;
+    return <p className="mx-auto flex-center">Doctor not found</p>;
   }
 
-
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-20 lg:py-8">
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader className="flex flex-col sm:flex-row gap-4">
@@ -78,7 +94,9 @@ const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
               </CardDescription>
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary">{doctor.specialty}</Badge>
-                <span className="text-sm text-muted-foreground">{doctor.experience}</span>
+                <span className="text-sm text-muted-foreground">
+                  {doctor.experience}
+                </span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4" />
@@ -143,11 +161,11 @@ const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
         </Card>
       </div>
       <div className="mt-6">
-        <Link href="/features/connect-with-doctor">
+        <Link href="/patient/features/health-connect">
           <Button variant="outline">Back to Doctors List</Button>
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 export default DoctorInfo;
