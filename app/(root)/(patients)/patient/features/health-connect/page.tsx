@@ -81,7 +81,7 @@ const HealthConnect: React.FC = () => {
             <Alert className="fixed w-1/2 bg-teal-200 bg-opacity-20 border-none">
             <AlertTitle className="text-center text-green-500">No Doctors Matching Your Search</AlertTitle>
             <AlertDescription className="text-center text-green-500">
-              We couldn't find any doctors that match your search criteria. Please try a different search term.
+              We couldn&apos;t find any doctors that match your search criteria. Please try a different search term.
             </AlertDescription>
           </Alert>
           </div>
