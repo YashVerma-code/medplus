@@ -6,16 +6,50 @@ import { DNA } from "react-loader-spinner";
 import useGlobalStore from "@/zustand/useProps";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
+
+interface Slot {
+  start: string;
+  end: string;
+  status: 'available' | 'booked' | 'unavailable';
+}
+
+interface Availability {
+  day: string;
+  slots: Slot[];
+}
+
+interface ProfessionalDetails {
+  licenseNumber: string;
+  professionalOrganizations: string[];
+  publications: string[];
+  awards: string[];
+}
+
+interface User {
+  _id: string;
+  clerkId: string;
+  email: string;
+  username: string;
+  photo: string;
+  firstName?: string;
+  lastName?: string;
+  role: 'admin' | 'doctor' | 'patient';
+}
+
 interface Doctor {
   _id: string;
-  name: string;
-  specialty: string;
-  experience: string;
-  location: string;
+  user: User;
+  specializations: string[];
+  experience: number;
+  education: string[];
+  languages: string[];
+  qualifications: string[];
   rating: number;
-  availability: string;
-  imageUrl: string;
+  availability: Availability[];
+  phone: string;
+  professionalDetails: ProfessionalDetails;
 }
+
 
 async function searchDoctors(query: string): Promise<Doctor[]> {
   const response = await fetch(
@@ -73,7 +107,7 @@ const HealthConnect: React.FC = () => {
         ) : doctors.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {doctors.map((doctor) => (
-              <DoctorCard key={doctor._id} doctor={doctor} />
+              <DoctorCard key={doctor._id} doctor={doctor} handleDelete={()=>{console.log("health connect prop passed")}} />
             ))}
           </div>
         ) : (
