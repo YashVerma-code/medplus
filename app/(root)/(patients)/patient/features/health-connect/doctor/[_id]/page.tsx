@@ -15,21 +15,49 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DNA } from "react-loader-spinner";
 
+interface Slot {
+  start: string;
+  end: string;
+  status: 'available' | 'booked' | 'unavailable';
+}
+
+interface Availability {
+  day: string;
+  slots: Slot[];
+}
+
+interface ProfessionalDetails {
+  licenseNumber: string;
+  professionalOrganizations: string[];
+  publications: string[];
+  awards: string[];
+}
+
+interface User {
+  _id: string;
+  clerkId: string;
+  email: string;
+  username: string;
+  photo: string;
+  firstName?: string;
+  lastName?: string;
+  role: 'admin' | 'doctor' | 'patient';
+}
+
 interface Doctor {
   _id: string;
-  name: string;
-  specialty: string;
-  experience: string;
-  location: string;
-  rating: number;
-  availability: string;
-  imageUrl: string;
-  phone: string;
-  about: string;
-  education: string[];
+  user: User;
   specializations: string[];
-  streamChatId: string;
+  experience: number;
+  education: string[];
+  languages: string[];
+  qualifications: string[];
+  rating: number;
+  availability: Availability[];
+  phone: string;
+  professionalDetails: ProfessionalDetails;
 }
+
 
 interface DoctorDetailProps {
   params: {
@@ -88,34 +116,30 @@ const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
         <Card className="lg:col-span-2">
           <CardHeader className="flex flex-col sm:flex-row gap-4">
             <Avatar className="h-24 w-24">
-              <AvatarImage src={doctor.imageUrl} alt={doctor.name} />
-              <AvatarFallback>{doctor.name[0]}</AvatarFallback>
+              <AvatarImage src={doctor.user.photo} alt={doctor.user.username} />
+              <AvatarFallback>{doctor.user.firstName + " " + doctor.user.lastName}</AvatarFallback>
             </Avatar>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <CardTitle>{doctor.name}</CardTitle>
-                <Badge>{doctor.availability}</Badge>
+                <CardTitle>{doctor.user.firstName + " " + doctor.user.lastName}</CardTitle>
+                <Badge>{doctor.availability[0]?.day}</Badge>
               </div>
               <CardDescription className="flex items-center gap-1">
                 <Star className="h-4 w-4 fill-primary text-primary" />
                 {doctor.rating} Rating
               </CardDescription>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="secondary">{doctor.specialty}</Badge>
+                <Badge variant="secondary">{doctor.specializations.join(', ')}</Badge>
                 <span className="text-sm text-muted-foreground">
                   {doctor.experience}
                 </span>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                {doctor.location}
               </div>
             </div>
           </CardHeader>
           <CardContent className="grid gap-6">
             <div>
               <h3 className="font-semibold mb-2">About</h3>
-              <p className="text-sm text-muted-foreground">{doctor.about}</p>
+              {/* <p className="text-sm text-muted-foreground">{doctor.about}</p> */}
             </div>
             <div>
               <h3 className="font-semibold mb-2">Education</h3>

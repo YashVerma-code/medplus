@@ -53,14 +53,7 @@ interface Doctor {
   phone: string;
   professionalDetails: ProfessionalDetails;
   consultationModes: string[];
-  location: string;
   timeZone: string;
-  fees: {
-    inPerson: number;
-    telehealth: number;
-    chat: number;
-  };
-  paymentMethods: string[];
   ratings: number;
   totalReviews: number;
   schedule: {
@@ -185,10 +178,6 @@ export default function DoctorProfilePage({ params: { _id } }: DoctorProfilePage
                       <div>
                         <dt className="font-semibold">Languages:</dt>
                         <dd>{doctor.languages.join(", ")}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-semibold">Location:</dt>
-                        <dd>{doctor.location}</dd>
                       </div>
                       <div>
                         <dt className="font-semibold">Time Zone:</dt>
