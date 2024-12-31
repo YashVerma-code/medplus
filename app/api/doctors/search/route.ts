@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/database/mongoose';
-import { createDoctor, getDoctorById, updateDoctor, deleteDoctor, searchDoctors } from '@/lib/actions/doctor.actions';
+import { getDoctorById, updateDoctor, deleteDoctor, searchDoctors } from '@/lib/actions/doctor.actions';
 import Doctor from "../../../../lib/database/models/doctor.model";
 
 // GET: Search single doctor
@@ -23,6 +23,7 @@ export async function GET(req: Request) {
 
     // Search doctors by query(if given)
     const doctors = await searchDoctors(query);
+    console.log('doctors',doctors);
     return NextResponse.json(doctors);
   } catch (error) {
     console.error('Error fetching doctor(s):', error);
@@ -48,7 +49,7 @@ export async function POST(req: Request) {
     try {
       await connectToDatabase();
   
-      const doctors = await req.json(); // Expecting an array of doctor objects
+      const doctors = await req.json();
       if (!Array.isArray(doctors)) {
         return NextResponse.json({ error: 'Expected an array of doctor objects' }, { status: 400 });
       }
@@ -86,7 +87,6 @@ export async function PUT(req: Request) {
 // DELETE: Remove doctor by ID
 export async function DELETE(req: Request) {
   await connectToDatabase();
-
   try {
     const { searchParams } = new URL(req.url);
     const doctorId = searchParams.get('id');
@@ -94,7 +94,7 @@ export async function DELETE(req: Request) {
     if (!doctorId) {
       return NextResponse.json({ error: 'Doctor ID is required' }, { status: 400 });
     }
-
+    
     const deletedDoctor = await deleteDoctor(doctorId);
     if (!deletedDoctor) {
       return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });

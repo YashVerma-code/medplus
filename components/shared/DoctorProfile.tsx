@@ -10,9 +10,52 @@ import { Calendar } from "@/components/ui/calendar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
+interface Slot {
+  start: string;
+  end: string;
+  status: 'available' | 'booked' | 'unavailable';
+}
+
+interface Availability {
+  day: string;
+  slots: Slot[];
+}
+
+interface ProfessionalDetails {
+  licenseNumber: string;
+  professionalOrganizations: string[];
+  publications: string[];
+  awards: string[];
+}
+
+interface User {
+  _id: string;
+  clerkId: string;
+  email: string;
+  username: string;
+  photo: string;
+  firstName?: string;
+  lastName?: string;
+  role: 'admin' | 'doctor' | 'patient';
+}
+
+interface Doctor {
+  _id: string;
+  user: User;
+  specializations: string[];
+  experience: number;
+  education: string[];
+  languages: string[];
+  qualifications: string[];
+  rating: number;
+  availability: Availability[];
+  phone: string;
+  professionalDetails: ProfessionalDetails;
+}
+
 export default function DoctorProfilePage() {
   const [date, setDate] = useState<Date | undefined>(new Date())
-
+  
   const doctor = {
     name: "Dr. Jane Smith",
     image: "/placeholder.svg",
@@ -40,13 +83,13 @@ export default function DoctorProfilePage() {
       telehealth: 150,
       chat: 100,
     },
-    paymentMethods: ["Credit Card", "Insurance"],
+    paymentMethods: ["Credit Card"],
     ratings: 4.8,
     totalReviews: 256,
   }
 
   return (
-    <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div className="container py-6">
       <Card className="w-full">
         <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <Avatar className="w-24 h-24">
@@ -66,7 +109,7 @@ export default function DoctorProfilePage() {
           </div>
           <Button className="mt-4 sm:mt-0">Edit Profile</Button>
         </CardHeader>
-        <CardContent>
+        <CardContent >
           <Tabs defaultValue="info" className="w-full">
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 mb-4">
               <TabsTrigger value="info">Info</TabsTrigger>

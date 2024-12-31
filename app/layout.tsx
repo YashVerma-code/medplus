@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils'
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { Providers } from '@/providers'
+import { Toaster } from 'react-hot-toast';
 
 const MyPoppins = Poppins({
   subsets: ['latin'],
@@ -31,6 +32,7 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body className={cn('font-mypoppins antialiased', MyPoppins.variable)}>
+        <Toaster position="top-center" />
         <Providers>
           {children}
         </Providers>

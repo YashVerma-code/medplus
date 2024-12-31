@@ -5,6 +5,7 @@ import Doctor from '../database/models/doctor.model';
 import { connectToDatabase } from '../database/mongoose';
 import { handleError } from '../utils';
 import { NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 
 // CREATE
 export async function createDoctor(doctor: CreateDoctorParams) {
@@ -23,8 +24,8 @@ export async function createDoctor(doctor: CreateDoctorParams) {
 export async function getDoctorById(doctorId: string) {
   try {
     await connectToDatabase();
-    const doctor = await Doctor.findById(doctorId);
-    console.log('get doctor by id');
+    const doctor = await Doctor.findById(doctorId).populate('user');
+    console.log('get doctor by id',doctor);
     if (!doctor) throw new Error('Doctor not found');
 
     return JSON.parse(JSON.stringify(doctor));
@@ -67,21 +68,39 @@ export async function deleteDoctor(doctorId: string) {
 
 // SEARCH
 export async function searchDoctors(query: string) {
-    try {
-      await connectToDatabase();
-      const filter = query
-        ? {
-            $or: [
-              { name: { $regex: query, $options: 'i' } },
-              { specialty: { $regex: query, $options: 'i' } },
-            ],
-          }
-        : {};
-  
-      const results = await Doctor.find(filter).limit(20).exec();
-      return results;
-    } catch (error) {
-      console.error('Database Error:', error);
-      throw new Error('Internal Server Error');
-    }
+  try {
+    await connectToDatabase();
+    console.log(query);
+
+    const filter = query
+      ? {
+          $or: [
+            { 'user.firstName': { $regex: query, $options: 'i' } },
+            { 'user.lastName': { $regex: query, $options: 'i' } },
+            { 'user.username': { $regex: query, $options: 'i' } },
+            { specializations: { $regex: query, $options: 'i' } },
+            ...(mongoose.Types.ObjectId.isValid(query) ? [{ _id: query }] : []),
+          ].filter(Boolean),
+        }
+      : {};
+
+    const results = await Doctor.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      { $match: filter },
+      { $limit: 20 },
+    ]);
+
+    return results;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Internal Server Error');
+  }
   }

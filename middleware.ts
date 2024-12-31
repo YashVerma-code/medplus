@@ -2,7 +2,7 @@ import { authMiddleware, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 // Define public routes (accessible without authentication)
-const publicRoutes = ["/","/api/webhooks/(.*)", "/sign-in", "/sign-up"];
+const publicRoutes = ["/", "/sign-in", "/sign-up","/api/(.*)"];
 
 export default authMiddleware({
   publicRoutes,

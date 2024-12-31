@@ -1,52 +1,78 @@
 import { Schema, model, models } from 'mongoose'
+import User from './user.model'
 
 const doctorSchema = new Schema({
-  name: {
-    type: String,
+  user:{
+    type: Schema.Types.ObjectId,
+    ref: User,
     required: true,
   },
-  specialty: {
-    type: String,
-    required: true,
+  specializations: {
+    type: [String],
   },
   experience: {
-    type: String,
+    type: Number,
     required: true,
   },
-  location: {
-    type: String,
+  education: {
+    type: [String],
+  },
+  languages:{
+    type:[String],
     required: true,
+  },
+  qualifications:{
+    type:[String],
   },
   rating: {
     type: Number,
     min: 0,
     max: 5,
   },
-  availability: {
-    type: String,
-    required: true,
-  },
-  imageUrl: {
-    type: String,
-    default: '/placeholder.svg?height=400&width=400',
-  },
+  availability: [
+    {
+      day: {
+        type: String,
+        required: true,
+      },
+      slots: [
+        {
+          start: {
+            type: String,
+            required: true,
+          },
+          end: {
+            type: String,
+            required: true,
+          },
+          status: {
+            type: String,
+            enum: ["available", "booked", "unavailable"],
+            required: true,
+          }
+        },
+      ]
+    }
+  ],
   phone: {
     type: String,
     required: true,
   },
-  about: {
-    type: String,
-  },
-  education: [
-    {
+  professionalDetails:{
+    licenseNumber: {
       type: String,
+      required: true,
     },
-  ],
-  specializations: [
-    {
-      type: String,
+    professionalOrganizations: {
+      type: [String],
     },
-  ],
+    publications:{
+      type: [String],
+    },
+    awards: {
+      type: [String],
+    },
+  } 
 });
 
 export default models?.Doctor || model('Doctor', doctorSchema);

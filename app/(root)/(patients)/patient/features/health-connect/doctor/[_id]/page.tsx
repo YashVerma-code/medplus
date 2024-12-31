@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,9 +9,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Calendar, Clock, MapPin, Phone, Star } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import useGlobalStore from "@/zustand/useProps";
+import { Calendar, Clock, MapPin, MessageSquareMore, Phone, Star } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { DNA } from "react-loader-spinner";
 
 interface Doctor {
@@ -27,6 +28,7 @@ interface Doctor {
   about: string;
   education: string[];
   specializations: string[];
+  streamChatId: string;
 }
 
 interface DoctorDetailProps {
@@ -38,12 +40,14 @@ interface DoctorDetailProps {
 const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const { patientDetails } = useGlobalStore();
+  
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
         const response = await fetch(`/api/doctors/search?id=${_id}`);
         const data = await response.json();
+        console.log("Doctor Data:", data);
         setDoctor(data);
       } catch (error) {
         console.error("Failed to fetch doctor data:", error);
@@ -54,6 +58,10 @@ const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
 
     fetchDoctor();
   }, [_id]);
+
+  const handleChatNow = () => {
+    window.location.href = '/chat';
+  };
 
   if (isLoading) {
     return (
@@ -149,9 +157,9 @@ const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
               </div>
             </div>
             <div className="grid gap-2">
-              <Button size="lg">
-                <Phone className="mr-2 h-4 w-4" />
-                Call Now
+              <Button size="lg" onClick={handleChatNow}>
+              <MessageSquareMore className="mr-2 h-4 w-4" />
+                Chat Now
               </Button>
               <Button size="lg" variant="outline">
                 Schedule for Later

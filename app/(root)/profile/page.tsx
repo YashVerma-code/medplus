@@ -1,46 +1,78 @@
 "use client";
+
 import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 import DoctorProfilePage from "@/components/shared/DoctorProfile";
 import PatientProfilePage from "@/components/shared/PatientProfile";
-import { DNA } from "react-loader-spinner";
+import useGlobalStore from "@/zustand/useProps";
+import { PatientProfileSkeleton } from "@/components/shared/PatientProfileSkeleton";
 
 export default function ProfilePage() {
-  const [role, setRole] = useState("");
-  useEffect(() => {
-    //     // Simulate fetching role data from an API or session
-    //     const fetchUserRole = async () => {
-    //       // Example: Replace with your actual auth or session logic
-    //       const userRole = await getRoleFromSession();
-    //     //   setRole(userRole);
-    //     };
-    setRole("patient");
-    //     fetchUserRole();
-  }, [setRole]);
+  const { user, isLoaded, isSignedIn } = useUser();
+  const { role, setRole } = useGlobalStore();
+  const { patientId, setPatientDetails } = useGlobalStore();
 
-  if (!role) {
-    return (
-      <div className="mx-auto flex-center">
-        <DNA
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="dna-loading"
-          wrapperStyle={{ filter: "hue-rotate(180deg)" }}
-          wrapperClass="dna-wrapper"
-        />
-      </div>
-    );
+  const [patient, setPatient] = useState<PatientDetails | null>(null);
+
+  useEffect(() => {
+    const getPatientDetails = async () => {
+      try {
+        const storedDetails = localStorage.getItem("patientDetails");
+        if (storedDetails) {
+          const parsedDetails = JSON.parse(storedDetails);
+
+          if (user?.imageUrl && parsedDetails.user.photo !== user.imageUrl) {
+            parsedDetails.user.photo = user.imageUrl;
+            localStorage.setItem("patientDetails", JSON.stringify(parsedDetails));
+          }
+  
+          setPatient({ ...parsedDetails });
+          setPatientDetails(parsedDetails);
+          return;
+        }
+  
+        const response = await fetch(`/api/patients/${patientId}`);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+  
+        setPatient({ ...data });
+        setPatientDetails(data);
+  
+        console.log("Fetched patient details from API:", data);
+      } catch (error) {
+        console.error("Error fetching patient details", error);
+      }
+    };
+  
+    if (patientId) {
+      getPatientDetails();
+    }
+  }, [patientId, setPatientDetails, user?.imageUrl]);
+  
+  useEffect(() => {
+    if (isLoaded && isSignedIn && user) {
+      const userRole = user.publicMetadata.role as string | undefined;
+      if (userRole) {
+        setRole(userRole);
+      } else {
+        setRole("patient");
+      }
+    }
+  }, [isLoaded, isSignedIn, user, setRole]);
+
+  if (!isLoaded && !patient) {
+    return <PatientProfileSkeleton />;
+  }
+
+  if (!isSignedIn) {
+    return <PatientProfileSkeleton />;
   }
 
   return (
-    <div>
+    <>
+      {/* dont do this way, it will take time to shift */}
       {role === "doctor" && <DoctorProfilePage />}
-      {role === "patient" && <PatientProfilePage />}
-      {role !== "doctor" && role !== "patient" && (
-        <div className="text-center text-red-500">
-          Unauthorized Access - Please check your role.
-        </div>
-      )}
-    </div>
-  );
+      {role === "patient" && patient && <PatientProfilePage key={patient.user + patient.user.photo} patientss={patient} />}
+    </>
+  );  
 }

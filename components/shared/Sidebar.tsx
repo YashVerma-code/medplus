@@ -1,10 +1,10 @@
 "use client";
-import { patientNavLinks } from "@/constants";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { doctorNavLinks, nullNavLinks, patientNavLinks } from "@/constants";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ThemeSwitch from "./ThemeSwitch";
 
 import {
@@ -14,7 +14,9 @@ import {
   UserRound,
   Stethoscope,
   LogIn,
+  MessageSquareMore,
 } from "lucide-react";
+import useGlobalStore from "@/zustand/useProps";
 
 const iconMap = {
   "/FaHome": <House />,
@@ -22,11 +24,32 @@ const iconMap = {
   "/FaBriefcaseMedical": <BriefcaseMedical />,
   "/FaUser": <UserRound />,
   "/FaStethoscope": <Stethoscope />,
+  "/FaChat": <MessageSquareMore />,
 };
 
 const Sidebar = () => {
   const pathname = usePathname();
   const baseRoute = "/" + pathname.split("/").slice(1, 4).join("/");
+  const { role } = useGlobalStore();
+  const [isRoleLoaded, setIsRoleLoaded] = useState(false);
+  const {isSignedIn} = useUser();
+  useEffect(() => {
+    if (role) {
+      setIsRoleLoaded(true);
+    }
+  }, [role]);
+
+  const reloadPage = (route: string) => {
+    if (route === "/chat") {
+      window.location.href = route;
+    }
+  };
+
+  if (!isRoleLoaded && isSignedIn) {
+    return null; 
+  }
+  const navLinks =role === "patient"? patientNavLinks : doctorNavLinks;
+ 
   return (
     <aside>
       <div className="sidebar">
@@ -42,8 +65,8 @@ const Sidebar = () => {
 
           <nav className="sidebar-nav">
             <SignedIn>
-              <ul className="sidebar-nav_elements">
-                {patientNavLinks.slice(0, 6).map((link) => {
+              <ul className="sidebar-nav_elements h-[300px] overflow-auto">
+                {navLinks.slice(0, navLinks.length-1).map((link) => {
                   const isActive = link.route == baseRoute;
                   return (
                     <li
@@ -52,7 +75,7 @@ const Sidebar = () => {
                         isActive ? "bg-blue text-white" : "text-gray-700"
                       }`}
                     >
-                      <Link className="sidebar-link" href={link.route}>
+                      <Link className="sidebar-link" href={link.route} onClick={() => reloadPage(link.route)}>
                         <span
                           className={`sidebar-icon ${
                             isActive && "brightness-200"
@@ -67,7 +90,7 @@ const Sidebar = () => {
                 })}
               </ul>
               <ul className="sidebar-nav_elements">
-                {patientNavLinks.slice(6).map((link) => {
+                {navLinks.slice(navLinks.length-1).map((link) => {
                   const isActive = link.route == pathname;
                   return (
                     <li
@@ -76,7 +99,7 @@ const Sidebar = () => {
                         isActive ? "bg-blue text-white" : "text-gray-700"
                       }`}
                     >
-                      <Link className="sidebar-link" href={link.route}>
+                      <Link className="sidebar-link" href={link.route} onClick={() => reloadPage(link.route)}>
                         <span
                           className={`sidebar-icon ${
                             isActive && "brightness-200"
@@ -89,14 +112,18 @@ const Sidebar = () => {
                     </li>
                   );
                 })}
-                <li className="flex-center hover:bg-gray-200 rounded-lg cursor-pointer pr-15 pt-1.5 pb-1.5 pl-2 mt-1 mb-1">
+                <li className="flex hover:bg-gray-200 rounded-lg cursor-pointer w-full p-2 mt-1 mb-1">
                   <UserButton
+                   afterSignOutUrl="/"  
                     showName
                     appearance={{
                       elements: {
                         userButtonBox: {
-                          paddingRight: "125px",
                           whiteSpace: "nowrap",
+                          width: "18em",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "start",
                         },
                         userButtonAvatarBox: {
                           width: "1.4rem",
@@ -109,12 +136,12 @@ const Sidebar = () => {
                     }}
                   />
                 </li>
-                <li className="pl-1.5 w-full">
+                <li className="pl-1 p-1.5 mt-1 mb-1 w-full hover:bg-gray-200 rounded-lg cursor-pointer">
                   <ThemeSwitch />
                 </li>
               </ul>
             </SignedIn>
-            <SignedOut>
+            <SignedOut >
               <li className={`sidebar-nav_element group bg-gray-300 hover:bg-blue hover:bg-opacity-90 hover:text-white text-gray-600`}>
                 <Link className="sidebar-link" href={'/sign-in'}>
                   <span className={`sidebar-icon`}><LogIn /></span>

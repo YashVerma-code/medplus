@@ -1,4 +1,4 @@
-export type IconName = "/FaHome" | "/FaStar" | "/FaBriefcaseMedical" | "/FaUser" |"/FaStethoscope";
+export type IconName = "/FaHome" | "/FaStar" | "/FaBriefcaseMedical" | "/FaUser" |"/FaStethoscope" | "/FaChat";
 // patient
 export const patientNavLinks :{label: string; route: string; icon: IconName }[] = [
   {
@@ -7,19 +7,14 @@ export const patientNavLinks :{label: string; route: string; icon: IconName }[] 
     icon: '/FaHome',
   },
   {
-    label: 'Feature 1',
+    label: 'Patient Feature 1',
     route: '/patient/features/feature1',
     icon: '/FaStar',
   },  
   {
-    label: 'Feature 2',
-    route: '/',
+    label: 'Patient Feature 2',
+    route: '/patient/features/feature2',
     icon: '/FaStar',
-  },
-  {
-    label: 'My Health Vault',
-    route: '/patient/features/my-health-vault',
-    icon: '/FaBriefcaseMedical',
   },
   {
     label: 'Health Connect',
@@ -27,9 +22,65 @@ export const patientNavLinks :{label: string; route: string; icon: IconName }[] 
     icon: '/FaStethoscope',
   },
   {
-    label: 'Feature 5',
-    route: '/',
+    label: 'Chat',
+    route: '/chat',
+    icon: '/FaChat',
+  },
+  {
+    label: 'Profile',
+    route: '/profile',
+    icon: '/FaUser',
+  },
+];
+//null
+export const nullNavLinks :{label: string; route: string; icon: IconName }[] = [
+  {
+    label: 'Home',
+    route: '/doctor',
+    icon: '/FaHome',
+  },
+  {
+    label: 'Feature 1',
+    route: '/features/feature1',
     icon: '/FaStar',
+  },  
+  {
+    label: 'Feature 2',
+    route: '/features/feature2',
+    icon: '/FaStar',
+  },
+  {
+    label: 'Chat',
+    route: '/chat',
+    icon: '/FaChat',
+  },
+  {
+    label: 'Profile',
+    route: '/profile',
+    icon: '/FaUser',
+  },
+];
+// doctor
+export const doctorNavLinks :{label: string; route: string; icon: IconName }[] = [
+  {
+    label: 'Home',
+    route: '/doctor',
+    icon: '/FaHome',
+  },
+  {
+    label: 'Feature 1',
+    route: '/doctor/features/feature1',
+    icon: '/FaStar',
+  },  
+  {
+    label: 'Feature 2',
+    route: '/doctor/features/feature2',
+    icon: '/FaStar',
+  },
+  {
+    label: 'Chat',
+    route: '/chat',
+    icon: '/FaChat',
   },
   {
     label: 'Profile',

@@ -17,7 +17,7 @@ export default function ThemeSwitch() {
 
   return (
     <div
-      className={`flex hover:cursor-pointer items-center justify-start hover:bg-gray-200 rounded-md cursor-pointer lg:-translate-x-1.5 lg:pl-1.5 lg:pr-20 lg:pt-1 lg:pb-1 p-1 mt-1 mb-1 w-full transition-colors duration-200 ease-in-out ${
+      className={`clerk-userButtonBox ${
         resolvedTheme === "dark" ? "text-gray-800" : "text-gray-700"
       }`}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}

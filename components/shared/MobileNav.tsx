@@ -6,22 +6,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
-import { patientNavLinks } from "@/constants";
+import { doctorNavLinks, patientNavLinks } from "@/constants";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import ThemeSwitch from "./ThemeSwitch";
-import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope } from "lucide-react";
+import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope, MessageSquareMore } from "lucide-react";
+import useGlobalStore from "@/zustand/useProps";
 const iconMap = {
   "/FaHome": <House />,
   "/FaStar": <Star />,
   "/FaBriefcaseMedical": <BriefcaseMedical />,
   "/FaUser": <UserRound />,
   "/FaStethoscope": <Stethoscope />,
+  "/FaChat": <MessageSquareMore />,
 };
 const extractFeatureFromPath = (path: string): string =>{
   let pageName = '';
   const segments = path.replace(/^\//, '').split('/');
   if(segments.length>1) pageName = segments[2].replace(/-/g, ' ');
   else if(path==='/profile') pageName = "My Profile";
+  else if(path==='/chat') pageName = "Chat";
   else pageName = "Home";
   return pageName
     .split(' ')
@@ -32,8 +35,9 @@ const extractFeatureFromPath = (path: string): string =>{
 const MobileNav = () => {
   const pathname = usePathname();
   const pageTitle = extractFeatureFromPath(pathname);
-  const baseRoute = "/" + pathname.split("/").slice(1, 3).join("/");
-  
+  const baseRoute = "/" + pathname.split("/").slice(1, 4).join("/");
+  const { role } = useGlobalStore();
+  const navLinks = role === "patient" ? patientNavLinks : doctorNavLinks;
   return (
     <header className="header flex items-center z-10">
       <Link href="/" className="flex items-center gap-2">
@@ -49,7 +53,7 @@ const MobileNav = () => {
       </div>
       <nav className="flex items-center gap-2">
         <SignedIn>
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
           <ThemeSwitch />
           <Sheet>
             <SheetTrigger asChild>
@@ -62,13 +66,13 @@ const MobileNav = () => {
                 <DialogTitle></DialogTitle>
                 <div className="flex flex-col gap-4">
                   <Image
-                    src="/assets/images/logo.png"
+                    src="/assets/images/logo-large.png"
                     alt="logo"
                     width={152}
                     height={23}
                   />
                   <ul className="flex flex-col gap-2">
-                    {patientNavLinks
+                    {navLinks
                       .filter(link => link.label !== "Profile")
                       .map((link) => {
                         const isActive = link.route === baseRoute;
@@ -105,7 +109,7 @@ const MobileNav = () => {
         </SignedIn>
 
         <SignedOut>
-          <Button asChild className="bg-green-gradient">
+          <Button asChild className="bg-blue">
             <Link href="/sign-in">Login</Link>
           </Button>
         </SignedOut>
