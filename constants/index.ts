@@ -7,13 +7,13 @@ export const patientNavLinks :{label: string; route: string; icon: IconName }[] 
     icon: '/FaHome',
   },
   {
-    label: 'Medical Info',
-    route: '/patient/features/medinfo',
+    label: 'Patient Feature 1',
+    route: '/patient/features/feature1',
     icon: '/FaStar',
   },  
   {
-    label: 'Resources',
-    route: '/patient/features/resources',
+    label: 'Patient Feature 2',
+    route: '/patient/features/feature2',
     icon: '/FaStar',
   },
   {
