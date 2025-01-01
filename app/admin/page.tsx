@@ -22,7 +22,7 @@ export default function AdminDashboard() {
     {
       title: "Manage Resources",
       icon:<Syringe />,
-      href: "/admin/features/resources",
+      href: "/admin/features/manage-resources",
     },
     {
       title: "Manage Beds",

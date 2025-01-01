@@ -33,30 +33,6 @@ const config: Config = {
           500: "#044014",
           600: "#02330f",
         },
-        lightblue: {
-          50: "#EBF5FF",
-          100: "#E1EFFE",
-          200: "#C3DDFD",
-          300: "#A4CAFE",
-          400: "#76A9FA",
-          500: "#3F83F8",
-          600: "#1C64F2",
-          700: "#1A56DB",
-          800: "#1E429F",
-          900: "#233876",
-        },
-        lightPink: {
-          50: '#fdf2f8',
-          100: '#fce7f3',
-          200: '#fbcfe8',
-          300: '#f9a8d4',
-          400: '#f472b6', // Bright pink
-          500: '#ec4899', // Moderate pink
-          600: '#db2777', // Strong pink
-          700: '#be185d', // Dark pink
-          800: '#9d174d', // Deep pink
-          900: '#831843', // Darkest pink     
-  },
         dark: {
           400: "#02330f",
           500: "#02330f",
