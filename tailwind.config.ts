@@ -70,6 +70,7 @@ const config: Config = {
         pink:'#F56477',
         blue:'#2A90B8',
         lblue:'#BADEED',
+        mintGreen:'#A1E9C5',
       },
       fontFamily: {
         IBMPlex: ["var(--font-ibm-plex)"],
