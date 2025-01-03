@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 import { doctorNavLinks, patientNavLinks } from "@/constants";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import ThemeSwitch from "./ThemeSwitch";
-import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope, MessageSquareMore } from "lucide-react";
+import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope, MessageSquareMore, CalendarPlus2, HousePlus } from "lucide-react";
 import useGlobalStore from "@/zustand/useProps";
 const iconMap = {
   "/FaHome": <House />,
@@ -18,6 +18,8 @@ const iconMap = {
   "/FaUser": <UserRound />,
   "/FaStethoscope": <Stethoscope />,
   "/FaChat": <MessageSquareMore />,
+  "/FaCalendarPlus2": <CalendarPlus2/>,
+  "/FaHousePlus": <HousePlus/>
 };
 const extractFeatureFromPath = (path: string): string =>{
   let pageName = '';

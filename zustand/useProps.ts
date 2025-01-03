@@ -42,6 +42,20 @@ interface GlobalState {
   setUserId: (userId: string) => void;
   patientDetails:PatientDetails;
   setPatientDetails: (patientDetails: PatientDetails) => void;
+  searchCity:string;
+  setSearchCity:(term:string)=>void;
+  bookingStatus: boolean;
+  setBookingStatus: (status: boolean) => void;
+  refereshStatus: boolean;
+  setRefereshStatus: (status: boolean) => void;
+  longitude:number | null;
+  latitude:number | null;
+  setLongitude:(longitude:number | null)=>void;
+  setLatitude:(latitude:number | null)=>void;
+  checkedIndex: number | null;
+  setCheckedIndex: (index: number | null) => void;
+  reschedulingStatus:boolean;
+  setReschedulingStatus:(status:boolean)=>void;
 }
 
 const getInitialValue = <T>(key: string, defaultValue: T): T  => {
@@ -86,6 +100,20 @@ const useGlobalStore = create<GlobalState>((set) => ({
     set({ patientDetails: details });
     localStorage.setItem('patientDetails', JSON.stringify(details));
   },
+  searchCity:'',
+  setSearchCity:(term:string)=>set({searchCity:term}),
+  bookingStatus: false,
+  setBookingStatus: (status) => set({ bookingStatus: status }),
+  refereshStatus: false,
+  setRefereshStatus: (status) => set({refereshStatus:status}),
+  latitude:null,
+  setLatitude:(latitude)=>set({latitude:latitude}),
+  longitude:null,
+  setLongitude:(longitude)=>set({longitude:longitude}),
+  checkedIndex: null,
+  setCheckedIndex: (index) => set({ checkedIndex: index }),
+  reschedulingStatus:false,
+  setReschedulingStatus:(status)=>set({reschedulingStatus:status}),
 
 }));
 
