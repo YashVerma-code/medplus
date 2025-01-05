@@ -22,15 +22,27 @@ export const patientNavLinks :{label: string; route: string; icon: IconName }[] 
     icon: '/FaStethoscope',
   },
   {
+    label: 'Med-info',
+    route: '/patient/features/medinfo',
+    icon: '/FaHome',
+  },
+  {
     label: 'Chat',
     route: '/chat',
     icon: '/FaChat',
   },
   {
+    label: 'resources',
+    route: '/patient/features/resources',
+    icon: '/FaHome',
+  },
+  {
     label: 'Profile',
     route: '/profile',
     icon: '/FaUser',
-  },
+  }
+  
+ 
 ];
 //null
 export const nullNavLinks :{label: string; route: string; icon: IconName }[] = [
@@ -73,8 +85,13 @@ export const doctorNavLinks :{label: string; route: string; icon: IconName }[] =
     icon: '/FaStar',
   },  
   {
-    label: 'Feature 2',
-    route: '/doctor/features/feature2',
+    label: 'EHR',
+    route: '/doctor/features/healthRecord',
+    icon: '/FaStar',
+  },
+  {
+    label: 'Resources',
+    route: '/doctor/features/resources',
     icon: '/FaStar',
   },
   {

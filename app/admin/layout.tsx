@@ -20,7 +20,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     {
       title: "Manage Resources",
       icon:<Syringe />,
-      href: "/admin/features/manage-resources",
+      href: "/admin/features/resources",
     },
     {
       title: "Manage Beds",
