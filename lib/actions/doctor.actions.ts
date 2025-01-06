@@ -6,6 +6,7 @@ import { connectToDatabase } from '../database/mongoose';
 import { handleError } from '../utils';
 import { NextResponse } from 'next/server';
 import mongoose from 'mongoose';
+import { error } from 'console';
 
 // CREATE
 export async function createDoctor(doctor: CreateDoctorParams) {
@@ -31,6 +32,19 @@ export async function getDoctorById(doctorId: string) {
     return JSON.parse(JSON.stringify(doctor));
   } catch (error) {
     handleError(error);
+  }
+}
+
+export async function getDoctorByUserId(userId: string){
+  try{
+    await connectToDatabase();
+    const doctor = await Doctor.findOne({ user : userId });
+    console.log("get doctor by user id");
+    if(!doctor) throw new Error('Doctor Not Found');
+      
+    return JSON.parse(JSON.stringify(doctor));
+  }catch(error) {
+    handleError(error)
   }
 }
 

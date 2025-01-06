@@ -1,27 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   createPatient,
-  getAllPatients,
   updatePatient,
   deletePatient,
+  getPatientById,
+  getPatientByUserId,
+  searchPatients,
 } from "@/lib/actions/patient.actions";
 import { connectToDatabase } from "@/lib/database/mongoose";
-
-async function ensureDBConnection() {
-  try {
-    await connectToDatabase();
-  } catch (error) {
-    console.error("Database connection failed", error);
-    return NextResponse.json(
-      { error: "Database connection failed" },
-      { status: 500 }
-    );
-  }
-}
+import { updateUser } from "@/lib/actions/user.actions";
 
 // CREATE 
 export async function POST(req: NextRequest) {
-  await ensureDBConnection();
+  await connectToDatabase();
 
   try {
     const patientData = await req.json();
@@ -35,25 +26,62 @@ export async function POST(req: NextRequest) {
 }
 
 // READ 
+// export async function GET(req: NextRequest) {
+//   await connectToDatabase();
+
+//   try {
+//     const patients = await getAllPatients();
+//     return NextResponse.json(patients, { status: 200 });
+//   } catch (error) {
+//     console.error("Error fetching patients:", error);
+//     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+//   }
+// }
+
 export async function GET(req: NextRequest) {
-  await ensureDBConnection();
+  await connectToDatabase();
+
+  const { searchParams } = new URL(req.url);
+  const patientId = searchParams.get('id');
+  const userId = searchParams.get('userId');
+  const query = searchParams.get('q') || '';
 
   try {
-    const patients = await getAllPatients();
-    return NextResponse.json(patients, { status: 200 });
+    if(userId){
+      // Get patient by user ID
+      const patient = await getPatientByUserId(userId);
+      if(!patient){
+        return NextResponse.json({ error: 'patient not found' }, { status: 404 });
+      }
+      return NextResponse.json(patient);
+    }
+
+    if (patientId) {
+      // Get patient by ID
+      const patient = await getPatientById(patientId);
+      if (!patient) {
+        return NextResponse.json({ error: 'patient not found' }, { status: 404 });
+      }
+      return NextResponse.json(patient);
+    }
+
+    // Search patient by query(if given)
+    const patients = await searchPatients(query);
+    console.log('patients',patients);
+    return NextResponse.json(patients);
   } catch (error) {
-    console.error("Error fetching patients:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error('Error fetching patients(s):', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
 
 // UPDATE
 export async function PUT(req: NextRequest) {
-  await ensureDBConnection();
+  await connectToDatabase();
 
   try {
-    const { id, ...updateData } = await req.json();
-
+    const { id, user: userData, ...patientData } = await req.json();
+    console.log('userData:',userData);
     if (!id) {
       return NextResponse.json(
         { error: "Patient ID is required" },
@@ -61,7 +89,8 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const updatedPatient = await updatePatient(id, updateData);
+    const updatedPatient = await updatePatient(id, patientData);
+
     if (!updatedPatient) {
       return NextResponse.json(
         { error: "Patient not found" },
@@ -69,20 +98,47 @@ export async function PUT(req: NextRequest) {
       );
     }
 
+    if (userData) {
+      const { _id: userId, username, firstName, lastName } = userData;
+
+      if (!userId) {
+        return NextResponse.json(
+          { error: "User ID is required for updating user details" },
+          { status: 400 }
+        );
+      }
+
+      const userUpdateData: UpdateUserParams = {
+        username,
+        firstName,
+        lastName
+      };
+
+      const updatedUser = await updateUser(userData.clerkId, userUpdateData);
+      if (!updatedUser) {
+        return NextResponse.json(
+          { error: "User not found" },
+          { status: 404 }
+        );
+      }
+
+      updatedPatient.user = updatedUser;
+    }
+
     return NextResponse.json(updatedPatient, { status: 200 });
   } catch (error) {
-    console.error("Error updating patient:", error);
+    console.error("Error updating patient or user:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
 
 // DELETE 
 export async function DELETE(req: NextRequest) {
-  await ensureDBConnection();
+  await connectToDatabase();
 
   try {
     const { id } = await req.json();
-
+    console.log(id);
     if (!id) {
       return NextResponse.json(
         { error: "Patient ID is required" },

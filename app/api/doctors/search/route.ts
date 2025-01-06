@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/database/mongoose';
-import { getDoctorById, updateDoctor, deleteDoctor, searchDoctors } from '@/lib/actions/doctor.actions';
+import { getDoctorById, updateDoctor, deleteDoctor, searchDoctors, getDoctorByUserId } from '@/lib/actions/doctor.actions';
 import Doctor from "../../../../lib/database/models/doctor.model";
 
 // GET: Search single doctor
@@ -9,9 +9,19 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const doctorId = searchParams.get('id');
+  const userId = searchParams.get('userId');
   const query = searchParams.get('q') || '';
 
   try {
+    if(userId){
+      // Get doctor by user ID
+      const doctor = await getDoctorByUserId(userId);
+      if(!doctor){
+        return NextResponse.json({ error: 'Doctor not found' }, { status: 404 });
+      }
+      return NextResponse.json(doctor);
+    }
+
     if (doctorId) {
       // Get doctor by ID
       const doctor = await getDoctorById(doctorId);

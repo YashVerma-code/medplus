@@ -2,8 +2,23 @@
     
 import { SignUp } from '@clerk/nextjs'
 import Image from "next/image";
+import { useEffect } from 'react';
 
 const SignUpPage = () => {
+  useEffect(() => {
+    const patientDetails = localStorage.getItem('patientDetails');
+    const patientId = localStorage.getItem('patientId');
+    const doctorDetails = localStorage.getItem('doctorDetails');
+    const doctorId = localStorage.getItem('doctorId');
+    const userId = localStorage.getItem('userId');
+    const role = localStorage.getItem('role');
+    if(patientDetails) localStorage.removeItem('patientDetails');
+    if(patientId) localStorage.removeItem('patientId');
+    if(doctorDetails) localStorage.removeItem('doctorDetails');
+    if(doctorId) localStorage.removeItem('doctorId');
+    if(userId) localStorage.removeItem('userId');
+    if(role) localStorage.removeItem('role');
+  }, []);
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
       <div className="flex-1 bg-blue text-white flex flex-col justify-center px-8 lg:px-16 py-12 relative">

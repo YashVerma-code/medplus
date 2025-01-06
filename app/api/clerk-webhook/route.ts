@@ -5,8 +5,8 @@ import { Webhook } from "svix";
 export async function POST(req: Request) {
   try {
     const rawBody = await req.text();
-
-    const wh = new Webhook('whsec_BJovt12NIsydKsBdR5OzNCmg3PqaJJ05');
+    console.log(process.env.WEBHOOK_SECRET)
+    const wh = new Webhook(process.env.WEBHOOK_SECRET!);
 
     try {
       wh.verify(rawBody, {

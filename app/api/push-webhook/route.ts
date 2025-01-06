@@ -7,8 +7,8 @@ import { StreamPushEvent } from "./StreamPushEvent";
 export async function POST(req: Request) {
   try {
     const streamClient = StreamChat.getInstance(
-      'tyaxvrk499mf',
-      'wddzfefzcrds7ww35bt8u556fdkzhx682z34eevhq4v96jcd2n4z5s4jspqq6p37'
+      process.env.NEXT_PUBLIC_API_KEY!,
+      process.env.NEXT_PUBLIC_STREAM_SECRET
     );
 
     const rawBody = await req.text();
@@ -42,7 +42,6 @@ export async function POST(req: Request) {
     const recipients = recipientsResponse.data.filter(
       (user) => !user.unsafeMetadata.mutedChannels?.includes(channelId)
     );
-
     const pushPromises = recipients
       .map((recipient) => {
         const subscriptions = recipient.privateMetadata.subscriptions || [];
@@ -62,8 +61,8 @@ export async function POST(req: Request) {
               {
                 vapidDetails: {
                   subject: "mailto:varun.singh10011@gmail.com",
-                  publicKey: 'BA_0tQ-TNw4TwMJ95U68ay8TiZNo5mR5AZMbAPJWMOin_rdkvoJ4xfxiruwkDCaitetpuXnqwld-z9pD0AEL3j8',
-                  privateKey: 'weX9OcQBp59bzUcuqBxZ7qCnU3tTDRU-PS8umFQH42M',
+                  publicKey: process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY!,
+                  privateKey: process.env.NEXT_PUBLIC_WEB_PUSH_PRIVATE_KEY!,
                 },
               }
             )

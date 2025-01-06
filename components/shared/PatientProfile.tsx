@@ -33,10 +33,10 @@ export default function PatientProfilePage({
     console.log("Patient updated:", updatedPatient);
   };
   return (
-    <div className="md:container md:mx-auto md:py-6 md:px-4 lg:px-8">
+    <div className="md:container md:mx-auto md:py-6 md:px-4 lg:px-8 bg-black">
       <Card className="w-full rounded-b-none bg-transparent border-none">
-        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-          <div className="flex items-center gap-4 w-full">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-6 pb-4 pt-0 justify-between">
+          <div className="flex items-center gap-4 w-ful">
             <div className="relative">
               <Avatar className="w-24 h-24">
                 <AvatarImage
@@ -47,7 +47,7 @@ export default function PatientProfilePage({
               </Avatar>
             </div>
             <div className="flex-1">
-              <CardTitle className="text-2xl sm:text-3xl text-gray-800">
+              <CardTitle className="text-2xl sm:text-3xl dark:text-white text-gray-800">
                 {patient?.user.firstName + " " + patient?.user.lastName}
               </CardTitle>
               <CardDescription className="text-sm sm:text-base">
@@ -71,14 +71,14 @@ export default function PatientProfilePage({
         <CardContent>
           <Tabs defaultValue="health" className="w-full">
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-10 h-full p-1">
-              <TabsTrigger value="health">Health Info</TabsTrigger>
+              <TabsTrigger value="health" >Health Info</TabsTrigger>
               <TabsTrigger value="medications">Medications</TabsTrigger>
               <TabsTrigger value="records">Records</TabsTrigger>
               <TabsTrigger value="payments">Payments</TabsTrigger>
             </TabsList>
             <TabsContent value="health">
               <div className="grid gap-4 md:grid-cols-2">
-                <Card>
+                <Card className="bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">
                       Chronic Conditions
@@ -92,7 +92,7 @@ export default function PatientProfilePage({
                     </ul>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">Allergies</CardTitle>
                   </CardHeader>
@@ -104,7 +104,7 @@ export default function PatientProfilePage({
                     </ul>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">Immunizations</CardTitle>
                   </CardHeader>
@@ -116,7 +116,7 @@ export default function PatientProfilePage({
                     </ul>
                   </CardContent>
                 </Card>
-                <Card>
+                <Card className="bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">Emergency Contact</CardTitle>
                   </CardHeader>
@@ -144,7 +144,7 @@ export default function PatientProfilePage({
             </TabsContent>
             {patient.medications.length > 0 ? (
               <TabsContent value="medications">
-                <Card>
+                <Card className="bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">
                       Current Medications
@@ -169,11 +169,11 @@ export default function PatientProfilePage({
               </TabsContent>
             )}
             {patient.records?.length > 0 ? (
-              <TabsContent value="records">
-                <ScrollArea className="h-[400px]">
+              <TabsContent value="records" className="border border-l-0 border-r-0 border-gray-800 rounded-md" >
+                <ScrollArea className="h-[calc(100vh-350px)]">
                   <div className="grid gap-2">
                     {patient.records.map((record, index) => (
-                      <Card key={index}>
+                      <div key={index} className=" bg-white dark:bg-black rounded-md items-center border border-gray-800">
                         <CardHeader>
                           <CardTitle className="text-xl">
                             {record.doctorName}
@@ -201,8 +201,8 @@ export default function PatientProfilePage({
                               <dd>{record.reason}</dd>
                             </div>
                           </dl>
-                        </CardContent>
-                      </Card>
+                        </CardContent>                         
+                      </div>
                     ))}
                   </div>
                 </ScrollArea>

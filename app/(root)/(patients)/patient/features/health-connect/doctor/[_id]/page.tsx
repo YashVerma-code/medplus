@@ -10,65 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import useGlobalStore from "@/zustand/useProps";
-import { Calendar, Clock, MapPin, MessageSquareMore, Phone, Star } from "lucide-react";
+import { Calendar, Clock, MessageSquareMore, Phone, Star } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DNA } from "react-loader-spinner";
 
-interface Slot {
-  start: string;
-  end: string;
-  status: 'available' | 'booked' | 'unavailable';
-}
-
-interface Availability {
-  day: string;
-  slots: Slot[];
-}
-
-interface ProfessionalDetails {
-  licenseNumber: string;
-  professionalOrganizations: string[];
-  publications: string[];
-  awards: string[];
-}
-
-interface User {
-  _id: string;
-  clerkId: string;
-  email: string;
-  username: string;
-  photo: string;
-  firstName?: string;
-  lastName?: string;
-  role: 'admin' | 'doctor' | 'patient';
-}
-
-interface Doctor {
-  _id: string;
-  user: User;
-  specializations: string[];
-  experience: number;
-  education: string[];
-  languages: string[];
-  qualifications: string[];
-  rating: number;
-  availability: Availability[];
-  phone: string;
-  professionalDetails: ProfessionalDetails;
-}
-
-
-interface DoctorDetailProps {
-  params: {
-    _id: string;
-  };
-}
-
-const DoctorInfo = ({ params: { _id } }: DoctorDetailProps) => {
+const DoctorInfo = ({ params: { _id } }: {params: {_id:string}}) => {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { patientDetails } = useGlobalStore();
   
   useEffect(() => {
     const fetchDoctor = async () => {

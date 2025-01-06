@@ -6,10 +6,9 @@ import { StreamChat } from "stream-chat";
 export default function useInitializeChatClient() {
   const { user } = useUser();
   const [chatClient, setChatClient] = useState<StreamChat | null>(null);
-
   useEffect(() => {
     if (!user?.id) return;
-    const client = StreamChat.getInstance('tyaxvrk499mf');
+    const client = StreamChat.getInstance(process.env.NEXT_PUBLIC_API_KEY!);
 
     client
       .connectUser(

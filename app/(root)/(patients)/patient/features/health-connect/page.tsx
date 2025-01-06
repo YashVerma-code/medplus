@@ -5,51 +5,14 @@ import { debounce } from "lodash";
 import { DNA } from "react-loader-spinner";
 import useGlobalStore from "@/zustand/useProps";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
-
-interface Slot {
-  start: string;
-  end: string;
-  status: 'available' | 'booked' | 'unavailable';
-}
-
-interface Availability {
-  day: string;
-  slots: Slot[];
-}
-
-interface ProfessionalDetails {
-  licenseNumber: string;
-  professionalOrganizations: string[];
-  publications: string[];
-  awards: string[];
-}
-
-interface User {
-  _id: string;
-  clerkId: string;
-  email: string;
-  username: string;
-  photo: string;
-  firstName?: string;
-  lastName?: string;
-  role: 'admin' | 'doctor' | 'patient';
-}
-
-interface Doctor {
-  _id: string;
-  user: User;
-  specializations: string[];
-  experience: number;
-  education: string[];
-  languages: string[];
-  qualifications: string[];
-  rating: number;
-  availability: Availability[];
-  phone: string;
-  professionalDetails: ProfessionalDetails;
-}
-
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 
 async function searchDoctors(query: string): Promise<Doctor[]> {
   const response = await fetch(
@@ -65,14 +28,17 @@ const HealthConnect: React.FC = () => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { searchTerm } = useGlobalStore();
+  const [currentPage, setCurrentPage] = useState(1);
+  const doctorsPerPage = 9;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce(async (query: string) => {
       setIsLoading(true);
       try {
-        const results = await searchDoctors(query);
-        setDoctors(results);
+        let results = await searchDoctors(query);
+        setDoctors(Array.isArray(results) ? results : [results])
+        setCurrentPage(1);
       } catch (error) {
         console.error("Error searching doctors:", error);
       } finally {
@@ -89,6 +55,13 @@ const HealthConnect: React.FC = () => {
       debouncedSearch("");
     }
   }, [searchTerm, debouncedSearch]);
+  
+  const indexOfLastDoctor = currentPage * doctorsPerPage;
+  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
+  const currentDoctors = doctors.slice(indexOfFirstDoctor, indexOfLastDoctor);
+  const totalPages = Math.ceil(doctors.length / doctorsPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="container mx-auto px-4 py-24 lg:py-6">
@@ -104,13 +77,43 @@ const HealthConnect: React.FC = () => {
               wrapperClass="dna-wrapper"
             />
           </div>
-        ) : doctors.length > 0 ? (
+        ) : currentDoctors.length > 0 ? (
+          <div className="px-6 flex-col mb-4">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {doctors.map((doctor) => (
-              <DoctorCard key={doctor._id} doctor={doctor} handleDelete={()=>{console.log("health connect prop passed")}} />
+            {currentDoctors.map((doctor) => (
+              <DoctorCard key={doctor._id} doctor={doctor} handleDelete={()=>console.log("health-connect-prop")}/>
             ))}
           </div>
-        ) : (
+          <div className="mt-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => paginate(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+                {[...Array(totalPages)].map((_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink 
+                      onClick={() => paginate(index + 1)}
+                      isActive={currentPage === index + 1}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        </div>
+      ) : (
           <div className="relative w-full flex justify-center">
             <Alert className="fixed w-1/2 bg-teal-200 bg-opacity-20 border-none">
             <AlertTitle className="text-center text-green-500">No Doctors Matching Your Search</AlertTitle>

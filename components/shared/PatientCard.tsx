@@ -10,60 +10,69 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, Phone, Star } from "lucide-react";
+import { Calendar, Clock, Phone } from "lucide-react";
 import Link from "next/link";
 import useGlobalStore from "@/zustand/useProps";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
-const DoctorCard = ({ doctor,handleDelete }: { doctor: Doctor, handleDelete:(id:string)=>void }) => {
+const calculateAge= (dateOfBirth:string):number=>{
+    const birthDate = new Date(dateOfBirth);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    const dayDiff = today.getDate() - birthDate.getDate();
+
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        age--;
+    }
+    return age;
+}
+
+const PatientCard = ({ patient,handleDelete }: { patient: PatientDetails, handleDelete:(id:string)=>void }) => {
   const { role } = useGlobalStore();
+  const age = calculateAge(patient.dateOfBirth.toString());
   return (
-    <Card key={doctor._id} className={`overflow-hidden ${role === 'admin' && 'bg-black'}`}>
+    <Card key={patient._id} className={`overflow-hidden ${role === 'admin' && 'bg-black'}`}>
       <CardHeader className="p-0">
         <div className="aspect-video relative">
           <Avatar className="h-52 w-full rounded-none">
             <AvatarImage
-              src={doctor.user.photo}
-              alt={doctor.user.username}
+              src={patient.user.photo}
+              alt={patient.user.username}
               className="object-cover"
             />
             <AvatarFallback className="rounded-none">
-              {doctor.user.username}
+              {patient.user.username}
             </AvatarFallback>
           </Avatar>
-          <Badge className="absolute top-4 right-4">
-            {doctor.availability[0]?.day}
-          </Badge>
         </div>
       </CardHeader>
       <CardContent className="grid gap-2.5 p-4">
-        <CardTitle>{doctor.user.firstName + " " +doctor.user.lastName}</CardTitle>
+        <CardTitle>{patient.user.firstName + " " +patient.user.lastName}</CardTitle>
         <CardDescription className="flex items-center gap-1">
-          <Star className="h-4 w-4 fill-primary text-primary" />
-          {doctor.rating} Rating
+          <Calendar className="h-4 w-4 fill-primary text-primary" />
+          {age} years
         </CardDescription>
         <div className="grid gap-2 text-sm">
           <div className="flex items-center gap-2">
-            <Badge variant="secondary">{doctor.specializations.join(', ')}</Badge>
-            <span className="text-muted-foreground">{doctor.experience} years</span>
+            <Badge variant="secondary">Gender : {patient.gender}</Badge>
+            <Badge variant="secondary">Blood Group : {patient.bloodGroup}</Badge>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Phone className="h-4 w-4" />
-            {doctor.phone}
+            {patient.emergencyContact.phoneNumber}
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar className="h-4 w-4" />
-            <Clock className="h-4 w-4" />
-            Next Available: {doctor.availability[0]?.slots[0]?.start} - {doctor.availability[0]?.slots[0]?.end}
+            {patient.address}
           </div>
         </div>
       </CardContent>
       <ScrollArea>
       <CardFooter className="p-4 pt-0 flex gap-3">
-        <Link href={role==='admin'?`/admin/features/manage-doctors/${doctor._id}`:`/patient/features/health-connect/doctor/${doctor._id}`} className="w-full">
+        <Link href={`/admin/features/manage-patients/${patient._id}`} className="w-full">
           <Button className="w-full">View Profile</Button>
         </Link>
-        {role === 'admin' && <Button className="w-full hover:bg-red-500 bg-red-700 transition-colors" onClick={()=>handleDelete(doctor._id)}>Remove Doctor</Button>}
+        <Button className="w-full hover:bg-red-500 bg-red-700 transition-colors" onClick={()=>handleDelete(patient._id)}>Remove Patient</Button>
       </CardFooter>
       <ScrollBar orientation="horizontal" className="hidden"/>
       </ScrollArea>
@@ -71,4 +80,4 @@ const DoctorCard = ({ doctor,handleDelete }: { doctor: Doctor, handleDelete:(id:
   );
 };
 
-export default DoctorCard;
+export default PatientCard;

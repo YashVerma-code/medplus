@@ -11,63 +11,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DNA } from "react-loader-spinner"
 
-interface Slot {
-  start: string;
-  end: string;
-  status: 'available' | 'booked' | 'unavailable';
-}
-
-interface Availability {
-  day: string;
-  slots: Slot[];
-}
-
-interface ProfessionalDetails {
-  licenseNumber: string;
-  professionalOrganizations: string[];
-  publications: string[];
-  awards: string[];
-}
-
-interface User {
-  _id: string;
-  clerkId: string;
-  email: string;
-  username: string;
-  photo: string;
-  firstName?: string;
-  lastName?: string;
-  role: 'admin' | 'doctor' | 'patient';
-}
-
-interface Doctor {
-  _id: string;
-  user: User;
-  specializations: string[];
-  experience: number;
-  education: string[];
-  languages: string[];
-  qualifications: string[];
-  rating: number;
-  availability: Availability[];
-  phone: string;
-  professionalDetails: ProfessionalDetails;
-  consultationModes: string[];
-  timeZone: string;
-  ratings: number;
-  totalReviews: number;
-  schedule: {
-    [key: string]: string;
-  };
-}
-
-interface DoctorProfilePageProps {
-  params: {
-    _id: string;
-  };
-}
-
-export default function DoctorProfilePage({ params: { _id } }: DoctorProfilePageProps) {
+export default function DoctorProfilePage({ params: { _id } }: {params: {_id: string}}) {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -135,7 +79,6 @@ export default function DoctorProfilePage({ params: { _id } }: DoctorProfilePage
               <TabsTrigger value="info">Info</TabsTrigger>
               <TabsTrigger value="schedule">Schedule</TabsTrigger>
               <TabsTrigger value="patients">Patients</TabsTrigger>
-              <TabsTrigger value="reviews">Reviews</TabsTrigger>
               <TabsTrigger value="analytics">Analytics</TabsTrigger>
             </TabsList>
             <TabsContent value="info">
@@ -161,27 +104,6 @@ export default function DoctorProfilePage({ params: { _id } }: DoctorProfilePage
                       <div>
                         <dt className="font-semibold">Awards:</dt>
                         <dd>{doctor.professionalDetails.awards.join(", ")}</dd>
-                      </div>
-                    </dl>
-                  </CardContent>
-                </Card>
-                <Card className='bg-black'>
-                  <CardHeader>
-                    <CardTitle className="text-xl">Consultation Details</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <dl className="space-y-2 text-sm">
-                      <div>
-                        <dt className="font-semibold">Consultation Modes:</dt>
-                        {/* <dd>{doctor.consultationModes.join(", ")}</dd> */}
-                      </div>
-                      <div>
-                        <dt className="font-semibold">Languages:</dt>
-                        <dd>{doctor.languages.join(", ")}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-semibold">Time Zone:</dt>
-                        <dd>{doctor.timeZone}</dd>
                       </div>
                     </dl>
                   </CardContent>
@@ -280,32 +202,6 @@ export default function DoctorProfilePage({ params: { _id } }: DoctorProfilePage
                 </CardContent>
               </Card>
             </TabsContent>
-            <TabsContent value="reviews">
-              <Card className='bg-black'>
-                <CardHeader>
-                  <CardTitle className="text-xl">Patient Reviews</CardTitle>
-                  <CardDescription>
-                    Overall Rating: {doctor.ratings} ({doctor.totalReviews} reviews)
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ScrollArea className="h-[300px]">
-                    {/* Mock reviews */}
-                    {[...Array(5)].map((_, index) => (
-                      <div key={index} className="mb-4 pb-4 border-b last:border-b-0">
-                        <div className="flex items-center mb-2">
-                          <span className="font-bold mr-2">Patient {index + 1}</span>
-                          <span className="text-yellow-500">{'★'.repeat(5)}</span>
-                        </div>
-                        <p className="text-sm">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </p>
-                      </div>
-                    ))}
-                  </ScrollArea>
-                </CardContent>
-              </Card>
-            </TabsContent>
             <TabsContent value="analytics">
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 <Card className='bg-black'>
@@ -322,8 +218,8 @@ export default function DoctorProfilePage({ params: { _id } }: DoctorProfilePage
                     <CardTitle className="text-xl">Average Rating</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-3xl sm:text-4xl font-bold">{doctor.ratings}</div>
-                    <p className="text-sm text-muted-foreground">Based on {doctor.totalReviews} reviews</p>
+                    {/* <div className="text-3xl sm:text-4xl font-bold">{doctor.ratings}</div> */}
+                    {/* <p className="text-sm text-muted-foreground">Based on {doctor.totalReviews} reviews</p> */}
                   </CardContent>
                 </Card>
                 <Card className='bg-black'>

@@ -54,6 +54,15 @@ const doctorSchema = new Schema({
       ]
     }
   ],
+  bookedSlots: [
+    {
+      date: String,
+      start: String,
+      end: String,
+      day: String,
+      status: String,
+    },
+  ],
   phone: {
     type: String,
     required: true,

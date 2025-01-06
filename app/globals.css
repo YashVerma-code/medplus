@@ -343,7 +343,7 @@
   }
 
   .sidebar-nav {
-    @apply h-full flex-col justify-between md:flex md:gap-2;
+    @apply h-full flex-col justify-between md:flex;
   }
 
   .sidebar-nav_elements {

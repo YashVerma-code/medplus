@@ -2,20 +2,22 @@
 
 // ====== USER PARAMS
 declare type CreateUserParams = {
-    clerkId: string
-    email: string
-    username: string
-    firstName: string | null
-    lastName: string
-    photo: string
-  }
-  
-  declare type UpdateUserParams = {
-    firstName: string | null
-    lastName: string
-    username: string
-    photo: string
-  }
+  clerkId: string;
+  email: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  photo: string;
+  role:string;
+  _id:string;
+};
+
+declare type UpdateUserParams = {
+  firstName?: string | null;
+  lastName?: string;
+  username?: string;
+  photo?: string;
+};
 
 // ====== DOCTOR PARAMS
 declare type CreateDoctorParams = {
@@ -28,9 +30,8 @@ declare type CreateDoctorParams = {
   imageUrl?: string; // Optional
   phone: string;
   about: string;
-  education: string[]; 
+  education: string[];
   specializations: string[];
-  streamChatId: string; 
 };
 
 declare type UpdateDoctorParams = {
@@ -45,138 +46,192 @@ declare type UpdateDoctorParams = {
   about?: string;
   education?: string[];
   specializations?: string[];
-  streamChatId?: string;
 };
 
 interface CreatePatientParams {
-  user: string; // ObjectId of the associated user
-  name: string;
-  email: string;
-  phone: string;
+  address: string;
+  allergies: string[];
+  appointmentHistory: Array<any>;
+  bloodGroup: string;
+  chronicConditions: string[];
   dateOfBirth: Date;
-  gender: "Male" | "Female" | "Other";
-  bloodGroup:
-  | "A+"
-  | "A-"
-  | "B+"
-  | "B-"
-  | "AB+"
-  | "AB-"
-  | "O+"
-  | "O-";
   emergencyContact: {
     name: string;
     relationship: string;
     phoneNumber: string;
-    address: string;
   };
-  chronicConditions?: string[];
-  allergies?: string[];
-  medications?: {
-      name?: string;
-      dosage?: string;
-  }[];
-  immunizations?: string[];
-  appointmentHistory?: {
-    date: Date;
-    time: string;
-    doctor: string;
-    type: string;
-  }[];
-  records:{
-      date: Date;
-      doctorName: string;
-      symptoms: string;
-      symptomDuration: string;
-      reason: string;
-  }[];
-  paymentHistory?: {
-      date: Date;
-      amount: number;
-      description?: string;
-  }[];
-  streamChatId?: string;
-}
-
-interface UpdatePatientParams {
-  name?: string;
-  email?: string;
-  phone?: string;
-  emergencyContact?: {
-    name?: string;
-    relationship?: string;
-    phoneNumber?: string;
-    address?: string;
-  };
-  dateOfBirth?: Date;
-  gender?: "Male" | "Female" | "Other";
-  bloodGroup?:
-  | "A+"
-  | "A-"
-  | "B+"
-  | "B-"
-  | "AB+"
-  | "AB-"
-  | "O+"
-  | "O-";
-  chronicConditions?: string[];
-  allergies?: string[];
-  medications?: {
-      name?: string;
-      dosage?: string;
-  }[];
-  immunizations?: string[];
-  paymentHistory?: {
-    date: Date;
-    amount: number;
-    description?: string;
-}[];
-records?:{
+  gender: string;
+  immunizations: string[];
+  records: {
     date: Date;
     doctorName: string;
     symptoms: string;
     symptomDuration: string;
     reason: string;
-} [];
-streamChatId?: string;
+  }[];
+  medications: {
+    name: string;
+    dosage: string;
+    _id: string;
+  }[];
+  paymentHistory: Array<any>;
+  user: {
+    clerkId: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    photo: string;
+    role: string;
+    username: string;
+  };
+  _id: string;
+}
+
+interface UpdatePatientParams {
+  address?: string;
+  allergies?: string[];
+  appointmentHistory?: Array<any>;
+  bloodGroup?: string;
+  chronicConditions?: string[];
+  dateOfBirth?: Date;
+  emergencyContact?: {
+    name?: string;
+    relationship?: string;
+    phoneNumber?: string;
+  };
+  gender?: string;
+  immunizations?: string[];
+  records?: {
+    date?: Date;
+    doctorName?: string;
+    symptoms?: string;
+    symptomDuration?: string;
+    reason?: string;
+  }[];
+  medications?: {
+    name?: string;
+    dosage?: string;
+    _id?: string;
+  }[];
+  paymentHistory?: Array<any>;
+  user?: {
+    clerkId?: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    photo?: string;
+    role?: string;
+    username?: string;
+  };
+  _id: string;
 }
 
 interface PatientDetails {
-    address: string;
-    allergies: string[];
-    appointmentHistory: Array<any>;
-    bloodGroup: string;
-    chronicConditions: string[];
-    dateOfBirth: Date; 
-    emergencyContact: {
-      name: string;
-      relationship: string;
-      phoneNumber: string;
-    };
-    gender: string;
-    immunizations: string[];
-    records:{
-      date: Date;
-      doctorName: string;
-      symptoms: string;
-      symptomDuration: string;
-      reason: string;
-    } [];
-    medications: {
-      name: string;
-      dosage: string;
-      _id: string;
-    }[];
-    paymentHistory: Array<any>;
-    user: {
-      clerkId: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-      photo: string;
-      role: string;
-      username: string;
-    };
+  address: string;
+  allergies: string[];
+  appointmentHistory: Array<any>;
+  bloodGroup: string;
+  chronicConditions: string[];
+  dateOfBirth: Date;
+  emergencyContact: {
+    name: string;
+    relationship: string;
+    phoneNumber: string;
+  };
+  gender: string;
+  immunizations: string[];
+  records: {
+    date: Date;
+    doctorName: string;
+    symptoms: string;
+    symptomDuration: string;
+    reason: string;
+  }[];
+  medications: {
+    name: string;
+    dosage: string;
     _id: string;
-    streamChatId: string;
+  }[];
+  paymentHistory: Array<any>;
+  user: {
+    clerkId: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    photo: string;
+    role: string;
+    username: string;
+    _id:string;
+  };
+  _id:string
+}
+
+interface Slot {
+  _id: string;
+  start: string;
+  end: string;
+  status: "available" | "booked" | "unavailable";
+}
+
+interface Availability {
+  day: string;
+  slots: Slot[];
+}
+
+interface ProfessionalDetails {
+  licenseNumber: string;
+  professionalOrganizations: string[];
+  publications: string[];
+  awards: string[];
+}
+
+interface User {
+  _id: string;
+  clerkId: string;
+  email: string;
+  username: string;
+  photo: string;
+  firstName?: string;
+  lastName?: string;
+  role: "admin" | "doctor" | "patient";
+}
+
+interface BookedSlot {
+  date: string;
+  start: string;
+  end: string;
+  day: string;
+  status: string;
+  _id: string;
+}
+
+interface Doctor {
+  _id: string;
+  user: User;
+  specializations: string[];
+  experience: number;
+  education: string[];
+  languages: string[];
+  qualifications: string[];
+  rating: number;
+  availability: Availability[];
+  phone: string;
+  professionalDetails: ProfessionalDetails;
+  bookedSlots: BookedSlot[];
+}
+
+interface Appointment {
+  _id: string;
+  patientId: string;
+  doctorId: string;
+  doctor: string;
+  patient: string;
+  date: Date;
+  health_record: {
+    allergies: string[];
+    current_medications: string[];
+    description?: string;
+  };
+  time: string;
+  type: string;
 }

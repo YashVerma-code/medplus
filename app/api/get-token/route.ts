@@ -14,10 +14,9 @@ export async function GET() {
         { status: 401 }
       );
     }
-
     const streamClient = StreamChat.getInstance(
-      'tyaxvrk499mf',
-      'wddzfefzcrds7ww35bt8u556fdkzhx682z34eevhq4v96jcd2n4z5s4jspqq6p37'
+      process.env.NEXT_PUBLIC_API_KEY!,
+      process.env.NEXT_PUBLIC_STREAM_SECRET
     );
 
     const expirationTime = Math.floor(Date.now() / 1000) + 60 * 60;

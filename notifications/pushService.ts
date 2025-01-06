@@ -17,10 +17,9 @@ export async function registerPushNotifications() {
   }
 
   const sw = await getReadyServiceWorker();
-
   const subscription = await sw.pushManager.subscribe({
     userVisibleOnly: true,
-    applicationServerKey: 'BA_0tQ-TNw4TwMJ95U68ay8TiZNo5mR5AZMbAPJWMOin_rdkvoJ4xfxiruwkDCaitetpuXnqwld-z9pD0AEL3j8',
+    applicationServerKey: process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
   });
 
   await sendPushSubscriptionToServer(subscription);

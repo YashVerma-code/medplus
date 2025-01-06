@@ -59,15 +59,19 @@ const PatientSchema = new Schema({
       type: { type: String, required: true },
     },
   ],
-  records: [
-    { 
-      doctorName: { type: String, required: true },
-      symptoms: { type: String, required: true },
-      symptomDuration: { type: String, required: true },
-      reason: { type: String, required: true },
-      date: { type: Date, required: true },
-    }
-  ],
+  records: {
+    type: [
+      {
+        doctorName: { type: String, required: true },
+        symptoms: { type: String, required: true },
+        symptomDuration: { type: String, required: true },
+        reason: { type: String, required: true },
+        date: { type: Date, required: true },
+      }
+    ],
+    required: false,
+  },
+  
   paymentHistory: [
     {
       date: { type: Date, required: true },

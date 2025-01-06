@@ -1,6 +1,6 @@
 "use client";
 import { useState, useCallback, useEffect } from "react";
-import DoctorCard from "@/components/shared/DoctorCard";
+import PatientCard from "@/components/shared/PatientCard";
 import { debounce } from "lodash";
 import { ThreeDots } from "react-loader-spinner";
 import useGlobalStore from "@/zustand/useProps";
@@ -16,34 +16,37 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { CreatePatientModal } from "@/components/shared/CreatePatientModal";
 
-async function searchDoctors(query: string): Promise<Doctor[]> {
+async function searchPatients(query: string): Promise<PatientDetails[]> {
   const response = await fetch(
-    `/api/doctors/search?q=${encodeURIComponent(query)}`
+    `/api/patients?q=${encodeURIComponent(query)}`
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch doctors");
+    throw new Error("Failed to fetch patients");
   }
-  return response.json();
+  const data = await response.json();
+  console.log("patients",data);
+  return data;
 }
 
-const ManageDoctors: React.FC = () => {
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
+const ManagePatients: React.FC = () => {
+  const [patients, setPatients] = useState<PatientDetails[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { searchTerm, setSearchTerm } = useGlobalStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const doctorsPerPage = 8;
+  const patientsPerPage = 8;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce(async (query: string) => {
       setIsLoading(true);
       try {
-        let results = await searchDoctors(query);
-        setDoctors(Array.isArray(results) ? results : [results]);
+        let results = await searchPatients(query);
+        setPatients(Array.isArray(results) ? results : [results]);
         setCurrentPage(1);
       } catch (error) {
-        console.error("Error searching doctors:", error);
+        console.error("Error searching patients:", error);
       } finally {
         setIsLoading(false);
       }
@@ -51,14 +54,18 @@ const ManageDoctors: React.FC = () => {
     []
   );
   const handleDelete = async (id:string) => {
-    const response = await fetch(`/api/doctors/search?id=${id}`, {
+    const response = await fetch(`/api/patients/`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }), 
     });
     if (response.ok) {
-      toast.success(`Doctor removed successfully`);
-      setDoctors(doctors.filter(doctor=>doctor._id!==id));
+      toast.success(`Patient removed successfully`);
+      setPatients(patients.filter(patient=>patient._id!==id));
     } else {
-      toast.error("Failed to remove doctor");
+      toast.error("Failed to remove patient");
     };
   }
 
@@ -70,10 +77,10 @@ const ManageDoctors: React.FC = () => {
     }
   }, [searchTerm, debouncedSearch]);
 
-  const indexOfLastDoctor = currentPage * doctorsPerPage;
-  const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
-  const currentDoctors = doctors.slice(indexOfFirstDoctor, indexOfLastDoctor);
-  const totalPages = Math.ceil(doctors.length / doctorsPerPage);
+  const indexOfLastPatient = currentPage * patientsPerPage;
+  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
+  const currentPatients = patients.slice(indexOfFirstPatient, indexOfLastPatient);
+  const totalPages = Math.ceil(patients.length / patientsPerPage);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -81,26 +88,31 @@ const ManageDoctors: React.FC = () => {
     <div className="bg-black min-h-screen">
       <div className="flex flex-col gap-6">
         <div className="sticky top-0 z-10 bg-black py-4">
-          <div className="mx-auto relative w-[96%] mb-4">
-            <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <div className="flex items-center justify-between gap-3 relative mb-4 mx-6">
+            <div className="w-2/3">
+            <Search className="absolute left-2 top-5 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search doctors by id or profile..."
+              placeholder="Search patients by id or profile..."
               className="pl-8 bg-black"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+            </div>
+            <div>
+            <CreatePatientModal savedPatients = {patients}/>
+            </div>
           </div>
         </div>
         {isLoading ? (
           <div className="h-[calc(100vh-65px)] mx-auto flex items-center justify-center">
             <ThreeDots visible={true} height="80" width="80" color="#2fe0d8" />
           </div>
-        ) : currentDoctors.length > 0 ? (
+        ) : currentPatients.length > 0 ? (
           <div className="px-6 flex-col mb-4">
             <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-4">
-              {currentDoctors.map((doctor) => (
-                <DoctorCard key={doctor._id} doctor={doctor} handleDelete={handleDelete}/>
+              {currentPatients.map((patient) => (
+                <PatientCard key={patient._id} patient={patient} handleDelete={handleDelete}/>
               ))}
             </div>
             <div className="mt-8">
@@ -136,7 +148,7 @@ const ManageDoctors: React.FC = () => {
           <div className="h-[calc(100vh-65px)] relative w-full flex justify-center items-center">
             <Alert className="fixed w-1/2 bg-white border-none">
               <AlertTitle className="text-center text-black">
-                No doctors found
+                No patients found
               </AlertTitle>
             </Alert>
           </div>
@@ -145,4 +157,4 @@ const ManageDoctors: React.FC = () => {
     </div>
   );
 };
-export default ManageDoctors;
+export default ManagePatients;

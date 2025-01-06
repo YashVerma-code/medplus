@@ -1,33 +1,61 @@
 import { create } from 'zustand';
 
 const EmptyPatient: PatientDetails = {
-  address: '',
+  address: "",
   allergies: [],
   appointmentHistory: [],
-  bloodGroup: '',
+  bloodGroup: "",
   chronicConditions: [],
-  dateOfBirth: new Date(0), 
+  dateOfBirth: new Date(0),
   emergencyContact: {
-    name: '',
-    relationship: '',
-    phoneNumber: '',
+    name: "",
+    relationship: "",
+    phoneNumber: "",
   },
-  gender: '',
+  gender: "",
   immunizations: [],
   records: [],
-  medications: [],  
+  medications: [],
   paymentHistory: [],
   user: {
-    clerkId: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    photo: '',
-    role: '',
-    username: '',
+    clerkId: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    photo: "",
+    role: "patient",
+    username: "",
   },
-  _id: '',
-  streamChatId: '',
+  _id: "",
+};
+
+const EmptyDoctor: Doctor = {
+  _id: "",
+  user: {
+    _id: "",
+    clerkId: "",
+    email: "",
+    username: "",
+    photo: "",
+    firstName: "",
+    lastName: "",
+    role: "doctor",
+  },
+  specializations: [],
+  experience: 0,
+  education: [],
+  languages: [],
+  qualifications: [],
+  rating: 0,
+  availability: [],
+  phone: "",
+  professionalDetails: {
+    licenseNumber: "",
+    professionalOrganizations: [],
+    publications: [],
+    awards: [],
+  },
+  bookedSlots: [],
 };
 
 
@@ -38,10 +66,14 @@ interface GlobalState {
   setRole: (role: string) => void;
   patientId: string;
   setPatientId: (patientId: string) => void;
+  doctorId: string;
+  setDoctorId: (doctorId: string) => void;
   userId: string;
   setUserId: (userId: string) => void;
   patientDetails:PatientDetails;
   setPatientDetails: (patientDetails: PatientDetails) => void;
+  doctorDetails: Doctor;
+  setDoctorDetails: (doctorDetails: Doctor) =>void;
 }
 
 const getInitialValue = <T>(key: string, defaultValue: T): T  => {
@@ -74,6 +106,11 @@ const useGlobalStore = create<GlobalState>((set) => ({
     set({ patientId });
     localStorage.setItem('patientId', patientId); 
   },
+  doctorId: getInitValue('doctorId',''),
+  setDoctorId: (doctorId: string) => {
+    set ({doctorId});
+    localStorage.setItem('doctorId',doctorId);
+  },
 
   userId: getInitValue('userId', ''),
   setUserId: (userId: string) => {
@@ -85,6 +122,11 @@ const useGlobalStore = create<GlobalState>((set) => ({
   setPatientDetails: (details: PatientDetails) => {
     set({ patientDetails: details });
     localStorage.setItem('patientDetails', JSON.stringify(details));
+  },
+  doctorDetails: getInitialValue<Doctor>('doctorDetails', EmptyDoctor),
+  setDoctorDetails: (details: Doctor) => {
+    set({ doctorDetails: details });
+    localStorage.setItem('doctorDetails', JSON.stringify(details));
   },
 
 }));

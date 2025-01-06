@@ -30,6 +30,22 @@ export function PatientProfileEditModal({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handleNameChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const [firstName, lastName] = e.target.value.split(" ");
+
+    setFormData((prev) => ({
+      ...prev,
+      user: {
+        ...prev.user,
+        firstName: firstName || prev.user.firstName, 
+        lastName: lastName || prev.user.lastName,
+      },
+    }));
+  };
+  
+
   const handleDateChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -124,10 +140,18 @@ export function PatientProfileEditModal({
       console.error("Please fix the phone number error before submitting");
       return;
     }
-    const updatedData = {
-      id: patientId,
-      ...formData,
-    };
+    let updatedData;
+    if(role === 'admin'){
+      updatedData = {
+        id: patient._id,
+        ...formData,
+      };
+    } else {
+      updatedData = {
+        id: patientId,
+        ...formData,
+      };
+    }
     setLoading(true);
     try {
       const response = await fetch("/api/patients/", {
@@ -144,7 +168,6 @@ export function PatientProfileEditModal({
         );
       }
       const result = await response.json();
-      console.log(result);
       setOpen(false);
       setPatientDetails(result);
       setFormData(result);
@@ -172,7 +195,7 @@ export function PatientProfileEditModal({
           )} 
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[625px]">
+      <DialogContent className="sm:max-w-[625px] bg-black">
         <DialogHeader>
           <DialogTitle>Edit Your Profile</DialogTitle>
           <DialogDescription>
@@ -189,7 +212,8 @@ export function PatientProfileEditModal({
                 <Input
                   id="user"
                   value={formData.user.firstName + " " + formData.user.lastName}
-                  className="col-span-3"
+                  onChange={handleNameChange}
+                  className="col-span-3 bg-black"
                   disabled={role === "patient" || role === "doctor"}
                 />
               </div>
@@ -209,7 +233,7 @@ export function PatientProfileEditModal({
                       : ""
                   }
                   onChange={handleDateChange}
-                  className="col-span-3"
+                  className="col-span-3 bg-black"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4 mr-2">
@@ -221,7 +245,7 @@ export function PatientProfileEditModal({
                   name="gender"
                   value={formData.gender}
                   onChange={handleGenderChange}
-                  className="col-span-3 p-2 border rounded-md"
+                  className="col-span-3 p-2 border rounded-md bg-black"
                 >
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
@@ -237,7 +261,7 @@ export function PatientProfileEditModal({
                   name="bloodGroup"
                   value={formData.bloodGroup}
                   onChange={handleBloodGroupChange}
-                  className="col-span-3 p-2 border rounded-md"
+                  className="col-span-3 p-2 border rounded-md bg-black"
                 >
                   <option value="A+">A+</option>
                   <option value="A-">A-</option>
@@ -258,7 +282,7 @@ export function PatientProfileEditModal({
                   name="name"
                   value={formData.emergencyContact.name}
                   onChange={handleEmergencyContactChange}
-                  className="col-span-3"
+                  className="col-span-3 bg-black"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4 mr-2">
@@ -273,7 +297,7 @@ export function PatientProfileEditModal({
                   name="relationship"
                   value={formData.emergencyContact.relationship}
                   onChange={handleEmergencyContactChange}
-                  className="col-span-3"
+                  className="col-span-3 bg-black"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4 mr-2">
@@ -288,7 +312,7 @@ export function PatientProfileEditModal({
                     placeholder="+91xxxxxxxxxx"
                     value={formData.emergencyContact.phoneNumber}
                     onChange={handleEmergencyContactChange}
-                    className={phoneError ? "border-red-500" : ""}
+                    className={`${phoneError} ? "border-red-500" : "" bg-black `}
                   />
                   {phoneError && (
                     <p className="text-red-500 text-sm mt-1">{phoneError}</p>
@@ -304,7 +328,7 @@ export function PatientProfileEditModal({
                   name="address"
                   value={formData.address}
                   onChange={handleAddressChange}
-                  className="col-span-3"
+                  className="col-span-3 bg-black"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4 mr-2">
@@ -316,7 +340,7 @@ export function PatientProfileEditModal({
                   name="chronicConditions"
                   value={formData.chronicConditions.join(", ")}
                   onChange={(e) => handleArrayChange(e, "chronicConditions")}
-                  className="col-span-3"
+                  className="col-span-3 bg-black"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4 mr-2">
@@ -328,7 +352,7 @@ export function PatientProfileEditModal({
                   name="allergies"
                   value={formData.allergies.join(", ")}
                   onChange={(e) => handleArrayChange(e, "allergies")}
-                  className="col-span-3"
+                  className="col-span-3 bg-black"
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4 mr-2">
@@ -342,7 +366,7 @@ export function PatientProfileEditModal({
                     .map((med) => `${med.name}, ${med.dosage}`)
                     .join("\n")}
                   onChange={handleMedicationsChange}
-                  className="col-span-3"
+                  className="col-span-3 bg-black"
                   disabled={role === "patient" || role === "doctor"}
                 />
               </div>

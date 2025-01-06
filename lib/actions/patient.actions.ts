@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import Patient from "../database/models/patient.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
+import mongoose from "mongoose";
 
 // CREATE
 export async function createPatient(patient: CreatePatientParams) {
@@ -42,6 +43,59 @@ export async function getPatientById(patientId: string) {
     return JSON.parse(JSON.stringify(patient));
   } catch (error) {
     handleError(error);
+  }
+}
+
+export async function getPatientByUserId(userId: string) { 
+  try {
+    await connectToDatabase();
+    const patient = await Patient.findOne({ user : userId });
+    console.log("get patient by user id");
+    if(!patient) throw new Error('Patient Not Found');
+
+    return JSON.parse(JSON.stringify(patient));
+  } catch(error) {
+    handleError(error)
+  }
+
+}
+
+// SEARCH
+export async function searchPatients(query: string) {
+  try {
+    await connectToDatabase();
+    console.log(query);
+
+    const filter = query
+      ? {
+          $or: [
+            { 'user.firstName': { $regex: query, $options: 'i' } },
+            { 'user.lastName': { $regex: query, $options: 'i' } },
+            { 'user.username': { $regex: query, $options: 'i' } },
+            { bloodGroup: { $regex: query, $options: 'i' } },
+            ...(mongoose.Types.ObjectId.isValid(query) ? [{ _id: query }] : []),
+          ].filter(Boolean),
+        }
+      : {};
+
+    const results = await Patient.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      { $unwind: '$user' },
+      { $match: filter },
+      { $limit: 20 },
+    ]);
+
+    return results;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Internal Server Error');
   }
 }
 
