@@ -15,6 +15,8 @@ import {
   Stethoscope,
   LogIn,
   MessageSquareMore,
+  HousePlus,
+  CalendarPlus2,
 } from "lucide-react";
 import useGlobalStore from "@/zustand/useProps";
 
@@ -25,6 +27,8 @@ const iconMap = {
   "/FaUser": <UserRound />,
   "/FaStethoscope": <Stethoscope />,
   "/FaChat": <MessageSquareMore />,
+  "/FaHousePlus": <HousePlus/>,
+  "/FaCalendarPlus2": <CalendarPlus2/>
 };
 
 const Sidebar = () => {
