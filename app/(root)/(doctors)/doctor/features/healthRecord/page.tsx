@@ -13,7 +13,7 @@ import {
   CardDescription,
 } from "@/components/ui/card"
 import { Search,Newspaper } from 'lucide-react';
-
+import { DNA } from "react-loader-spinner";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -230,15 +230,8 @@ export default function Prescription() {
 
   if (isLoading) {
     return (
-      <div className="flex h-[50vh] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    )
-  }
-
-  return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-teal-100 to-blue-200">
-     <header className="sticky top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
+      <div className="flex flex-col min-h-screen bg-gradient-to-br from-teal-100 to-blue-200">
+      <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
              <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                <div className="flex items-center gap-3">
                  <div className="bg-blue-200 rounded-full p-2">
@@ -246,7 +239,52 @@ export default function Prescription() {
                  </div>
                  <div>
                    <h1 className="text-2xl font-bold text-blue-700">Health-Records</h1>
-                   <p className="text-sm text-gray-500">manage the prescription here +</p>
+                   <p className="text-sm text-gray-500">Seamlessly manage your prescriptions with ease and precision</p>
+                 </div>
+               </div>
+     
+               <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                 <div className="relative w-full sm:w-auto">
+                   <Input
+                     type="text"
+                     placeholder="Search items..."
+                     value={searchTerm}
+                     onChange={(e) => setSearchTerm(e.target.value)}
+                     className="w-full sm:w-60 md:w-96 pr-10"
+                   />
+                   <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                 </div>
+                
+               </div>
+             </div>
+             
+           </header>
+
+           <div className="flex justify-center">
+                          <DNA
+                            visible={true}
+                            height="80"
+                            width="80"
+                            ariaLabel="dna-loading"
+                            wrapperStyle={{ filter: "hue-rotate(180deg)" }}
+                            wrapperClass="dna-wrapper"
+                          />
+                        </div>
+           </div>
+    )
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-teal-100 to-blue-200">
+     <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
+             <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+               <div className="flex items-center gap-3">
+                 <div className="bg-blue-200 rounded-full p-2">
+                   <Newspaper className="text-blue-500 w-8 h-8" aria-hidden="true" />
+                 </div>
+                 <div>
+                   <h1 className="text-2xl font-bold text-blue-700">Health-Records</h1>
+                   <p className="text-sm text-gray-500">Seamlessly manage your prescriptions with ease and precision</p>
                  </div>
                </div>
      
@@ -381,12 +419,12 @@ export default function Prescription() {
                   </DialogContent>
                 </Dialog>
                 <div className="max-h-48 space-y-2 overflow-y-auto">
-                  {patient?.records?.map((record) => (
+                  {patient?.records?.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((record) => (
                     <CardDescription
                       key={record?._id}
                       className="rounded bg-muted p-3"
                     >
-                      <div className="space-y-1 text-sm">
+                      <div className="space-y-1 text-sm container">
                         <div className="font-medium text-foreground">
                           Date: {new Date(record?.date).toLocaleDateString()}
                         </div>

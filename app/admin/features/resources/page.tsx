@@ -1,10 +1,8 @@
-
-
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
 import { Input } from "@/components/ui/input";
-import { Search, Menu, PlusIcon as HousePlus } from 'lucide-react';
+import { Search, PlusIcon as HousePlus } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,7 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import Add from "@/components/shared/Add";
 import { ItemCard } from "@/components/shared/ItemCard";
-
+import { DNA } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 interface Item {
   _id: string;
   itemName: string;
@@ -28,8 +27,7 @@ export default function Resource() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-   const className = "admin";
+  const className = "admin";
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -77,7 +75,6 @@ export default function Resource() {
           listItem._id === "temp-id" ? newItem : listItem
         )
       );
-      // setIsAddDialogOpen(false);
       fetchData();
    
     } catch (error) {
@@ -152,73 +149,69 @@ export default function Resource() {
 
   return (
     <div className="flex flex-col min-h-screen bg-black">
-    <header className="sticky top-0 z-10 w-full bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg shadow-lg">
-      <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="bg-teal-200 rounded-full p-2">
-            <HousePlus className="text-teal-600 w-8 h-8" aria-hidden="true" />
+      <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
+        <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-teal-200 rounded-full p-2">
+              <HousePlus className="text-teal-600 w-8 h-8" aria-hidden="true" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-teal-700">Inventory</h1>
+              <p className="text-sm text-gray-100">Manage your resources effectively</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-2xl font-bold text-teal-700">Inventory</h1>
-            <p className="text-sm text-gray-100">Manage your resources effectively</p>
-          </div>
-        </div>
-  
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-          <div className="relative w-full sm:w-auto">
-            <Input
-              type="text"
-              placeholder="Search items..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full sm:w-60 md:w-96 pr-10 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
-            />
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
-          </div>
-          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-teal-500 text-white hover:bg-teal-600 focus:ring-2 focus:ring-teal-400">
-                Add Item
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Add New Item</DialogTitle>
-              </DialogHeader>
-              <Add onAdd={handleAddItem} />
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-    </header>
-  
-    <main className="flex-grow">
-      <div className="p-6 max-w-6xl mx-auto">
-        {isLoading && (
-          <p className="text-center text-gray-500 mt-8">Loading...</p>
-        )}
-        {error && <p className="text-center text-red-500 mt-8">{error}</p>}
-        {filteredList.length === 0 && !isLoading ? (
-          <p className="text-center text-gray-500 mt-8">
-            No items found. Add some items to get started!
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredList.map((item) => (
-              <ItemCard
-                key={item._id}
-                itemName={item.itemName}
-                quantity={item.quantity}
-                onUpdate={(newQuantity) => handleUpdateItem(item._id, newQuantity)}
-                onDelete={() => handleDeleteItem(item._id)}
+    
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+            <div className="relative w-full sm:w-auto">
+              <Input
+                type="text"
+                placeholder="Search items..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full sm:w-60 md:w-96 pr-10 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400"
               />
-            ))}
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+            </div>
+            <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-teal-500 text-white hover:bg-teal-600 focus:ring-2 focus:ring-teal-400">
+                  Add Item
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Add New Item</DialogTitle>
+                </DialogHeader>
+                <Add onAdd={handleAddItem} />
+              </DialogContent>
+            </Dialog>
           </div>
-        )}
-      </div>
-    </main>
-  </div>
-  
+        </div>
+      </header>
+    
+      <main className="flex-grow">
+        <div className="p-6 max-w-6xl mx-auto">
+          {isLoading && (
+                  <div className="h-[calc(100vh-65px)] mx-auto flex items-center justify-center">
+                  <ThreeDots visible={true} height="80" width="80" color="#2fe0d8" />
+                </div>
+          )}
+          {error && <p className="text-center text-red-500 mt-8">{error}</p>}
+          {filteredList.length === 0 && !isLoading ? (
+            <p className="text-center text-gray-500 mt-8">
+              No items found. Add some items to get started!
+            </p>
+          ) : (
+            <ItemCard
+              items={filteredList}
+              itemsPerPage={9}
+              onUpdate={handleUpdateItem}
+              onDelete={handleDeleteItem}
+            />
+          )}
+        </div>
+      </main>
+    </div>
   );
 }
 

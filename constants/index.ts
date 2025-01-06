@@ -22,7 +22,7 @@ export const patientNavLinks :{label: string; route: string; icon: IconName }[] 
     icon: '/FaStethoscope',
   },
   {
-    label: 'Med-info',
+    label: 'MedInfo',
     route: '/patient/features/medinfo',
     icon: '/FaHome',
   },
@@ -85,12 +85,12 @@ export const doctorNavLinks :{label: string; route: string; icon: IconName }[] =
     icon: '/FaStar',
   },  
   {
-    label: 'EHR',
+    label: 'healthRecord',
     route: '/doctor/features/healthRecord',
     icon: '/FaStar',
   },
   {
-    label: 'Resources',
+    label: 'resources',
     route: '/doctor/features/resources',
     icon: '/FaStar',
   },
