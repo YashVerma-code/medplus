@@ -9,6 +9,7 @@ interface Item {
   _id: string;
   itemName: string;
   quantity: number;
+  photo: string;
 }
 
 interface ItemCardProps {
@@ -40,14 +41,19 @@ export function ItemCard({ items, itemsPerPage, onUpdate, onDelete }: ItemCardPr
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
         {currentItems.map((item) => (
-          <Card key={item._id} className="flex flex-col justify-between bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg rounded-lg border border-gray-700">
+          <Card key={item._id} className="flex flex-col justify-between bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg rounded-lg border border-gray-700 overflow-hidden">
+            <img 
+              src={item.photo} 
+              alt={item.itemName} 
+              className="w-full h-32 object-cover rounded-t-lg" 
+            />
             <CardContent className="p-4">
               <h3 className="text-lg font-semibold text-white mb-2">{item.itemName}</h3>
               <p className="text-gray-400 text-sm">Quantity: {item.quantity}</p>
             </CardContent>
-            <CardFooter className="flex justify-between items-center p-4 bg-gray-800">
+            <CardFooter className="flex justify-between items-center p-4 bg-gray-800 overflow-hidden">
               <div className="flex items-center gap-2">
                 <input
                   type="number"
@@ -71,7 +77,7 @@ export function ItemCard({ items, itemsPerPage, onUpdate, onDelete }: ItemCardPr
                 onClick={() => onDelete(item._id)}
                 variant="destructive"
                 size="sm"
-                className="bg-red-500 text-white hover:bg-red-600 px-4 py-1 rounded"
+                className="bg-red-500 text-white hover:bg-red-600 px-4 py-1 rounded ml-1"
               >
                 Delete
               </Button>

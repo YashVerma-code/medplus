@@ -85,7 +85,7 @@ export const doctorNavLinks :{label: string; route: string; icon: IconName }[] =
     icon: '/FaStar',
   },  
   {
-    label: 'healthRecord',
+    label: 'Health Records',
     route: '/doctor/features/healthRecord',
     icon: '/FaStar',
   },

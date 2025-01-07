@@ -277,38 +277,40 @@ export default function Prescription() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-teal-100 to-blue-200">
      <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
-             <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-               <div className="flex items-center gap-3">
-                 <div className="bg-blue-200 rounded-full p-2">
-                   <Newspaper className="text-blue-500 w-8 h-8" aria-hidden="true" />
-                 </div>
-                 <div>
-                   <h1 className="text-2xl font-bold text-blue-700">Health-Records</h1>
-                   <p className="text-sm text-gray-500">Seamlessly manage your prescriptions with ease and precision</p>
-                 </div>
-               </div>
-     
-               <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-                 <div className="relative w-full sm:w-auto">
-                   <Input
-                     type="text"
-                     placeholder="Search items..."
-                     value={searchTerm}
-                     onChange={(e) => setSearchTerm(e.target.value)}
-                     className="w-full sm:w-60 md:w-96 pr-10"
-                   />
-                   <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
-                 </div>
-                
-               </div>
-             </div>
-           </header>
+        <div className="container mx-auto px-4 py-2">
+          <div className="flex gap-2 items-center justify-between ">
+            <div className="flex items-center gap-1">
+              <div className="bg-lblue bg-opacity-50 rounded-lg p-2">
+                <Newspaper className="text-blue w-8 h-8" aria-hidden="true" />
+              </div>
+              <div className="flex flex-col">
+                <h1 className="hidden lg:block text-2xl sm:text-3xl lg:text-3xl font-bold text-blue ml-0 sm:ml-2 leading-6 sm:leading-6">
+                 Health Records
+                </h1>
+                <p className="hidden lg:block text-blue-700 text-sm sm:text-base ml-0 sm:ml-2">
+                Seamlessly manage your prescriptions with ease and precision
+                </p>
+              </div>
+            </div>
+            <div className="relative lg:w-96 w-full">
+              <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search doctors by name or specialty"
+                className="pl-8"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+      </header>
       {patients.length === 0 ? (
         <div className="text-center text-muted-foreground">
           No patients found with appointments
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3  p-6 mt-20 sm:mt-0">
           {filteredPatients.map((patient) => (
             <Card key={patient._id} className="overflow-hidden">
               <CardHeader>
@@ -418,7 +420,7 @@ export default function Prescription() {
                     </div>
                   </DialogContent>
                 </Dialog>
-                <div className="max-h-48 space-y-2 overflow-y-auto">
+                <div className="max-h-48 space-y-2 overflow-y-auto ">
                   {patient?.records?.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((record) => (
                     <CardDescription
                       key={record?._id}

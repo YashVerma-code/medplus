@@ -68,28 +68,27 @@ export default function MedInfo() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-teal-50">
       {/* Header Section */}
-      <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-200 rounded-full p-2">
-              <Pill className="text-blue w-8 h-8" aria-hidden="true" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-blue">Med-Info</h1>
-              <p className="text-sm text-gray-500">Search the medicine for information</p>
-            </div>
-          </div>
-
-          {/* Responsive Menu */}
-          <div className="lg:hidden flex items-center">
-            <Button variant="ghost" size="icon">
-              <Menu className="h-6 w-6" />
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-grow container mx-auto px-4 py-8">
+ <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
+         <div className="container mx-auto px-4 py-2">
+           <div className="flex gap-2 items-center justify-between ">
+             <div className="flex items-center gap-1">
+               <div className="bg-lblue bg-opacity-50 rounded-lg p-2">
+                 <Pill className="text-blue w-8 h-8" aria-hidden="true" />
+               </div>
+               <div className="flex flex-col">
+                 <h1 className="hidden lg:block text-2xl sm:text-3xl lg:text-3xl font-bold text-blue ml-0 sm:ml-2 leading-6 sm:leading-6">
+                   MedInfo
+                 </h1>
+                 <p className="hidden lg:block text-blue-700 text-sm sm:text-base ml-0 sm:ml-2">
+                  Your go-to source for drug and illness information
+                 </p>
+               </div>
+             </div>
+            
+           </div>
+         </div>
+       </header>
+      <main className="flex-grow p-6 mt-8 sm:mt-15">
         <Card className="mb-8 bg-lightblue-50 shadow-lg border-0">
           <CardContent className="p-6">
             <div className="grid md:grid-cols-2 gap-6">

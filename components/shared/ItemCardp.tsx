@@ -10,6 +10,7 @@ interface Item {
   _id: string;
   itemName: string;
   quantity: number;
+  photo: string;
 }
 
 interface ItemCardpProps {
@@ -47,6 +48,11 @@ export function ItemCardp({ items, itemsPerPage }: ItemCardpProps) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {currentItems.map((item) => (
           <Card key={item._id} className="flex flex-col justify-between bg-white shadow-lg rounded-lg border border-gray-200">
+             <img 
+              src={item.photo} 
+              alt={item.itemName} 
+              className="w-full h-32 object-cover rounded-t-lg" 
+            />
             <CardContent className="p-4">
               <h3 className="text-lg font-semibold text-gray-800 mb-2">{item.itemName}</h3>
               {editingId === item._id ? (

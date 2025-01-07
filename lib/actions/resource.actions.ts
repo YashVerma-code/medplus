@@ -10,6 +10,7 @@ import { NextResponse } from 'next/server';
 interface CreateResourceParams {
   itemName: string;
   quantity: number;
+  photo:string;
 }
 
 // Create item

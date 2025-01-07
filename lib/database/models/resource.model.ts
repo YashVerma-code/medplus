@@ -12,6 +12,10 @@ const resourceSchema = new Schema(
       required: true,
       min: 0, // Prevents negative quantities
     },
+    photo:{
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true } // Adds createdAt and updatedAt fields
 );
