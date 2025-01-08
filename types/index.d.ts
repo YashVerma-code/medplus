@@ -171,6 +171,7 @@ interface Slot {
   start: string;
   end: string;
   status: "available" | "booked" | "unavailable";
+  date?:string;
 }
 
 interface Availability {

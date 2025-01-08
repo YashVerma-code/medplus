@@ -6,6 +6,7 @@ import useGlobalStore from "@/zustand/useProps";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../ui/input";
 import { CircleX } from "lucide-react";
+import { ThreeDots } from "react-loader-spinner";
 
 interface Slot {
   start: string;
@@ -87,6 +88,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           description: "Failed to load available slots.",
           duration: 3000,
         });
+        setTimeSlots([]);
       } finally {
         setSlotUpdating(false);
       }
@@ -239,16 +241,20 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             >
               Time
             </Label>
+            {isSlotUpdating? (
+                              <ThreeDots
+                              visible={true}
+                              height="40"
+                              width="40"
+                              color="#2fe0d8"
+                            />):
             <select
-                id="time"
-                value={updatedTime}
-                onChange={(e) => setUpdatedTime(e.target.value)}
-                className="col-span-3 p-2 border border-gray-300 rounded-lg"
-                required
-              >
-                {isSlotUpdating?<> <option value="" disabled>
-                 Updating...
-                </option></>:
+            id="time"
+            value={updatedTime}
+            onChange={(e) => setUpdatedTime(e.target.value)}
+            className="col-span-3 p-2 border border-gray-300 rounded-lg"
+            required
+            >
               <>
                 <option value="" disabled>
                   Select a Slot
@@ -259,8 +265,9 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                   </option>
                 ))}
                 </>
-              }
               </select>
+              }
+               
           </div>
 
           {/* Type  */}

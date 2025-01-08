@@ -17,6 +17,7 @@ import { DNA } from "react-loader-spinner";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Dialog,
   DialogContent,
@@ -232,14 +233,14 @@ export default function Prescription() {
     return (
       <div className="flex flex-col min-h-screen bg-gradient-to-br from-teal-100 to-blue-200">
       <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
-             <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+             <div className="container mx-auto px-4 py-2 flex flex-col sm:flex-row items-center justify-between gap-4">
                <div className="flex items-center gap-3">
                  <div className="bg-blue-200 rounded-full p-2">
-                   <Newspaper className="text-blue-500 w-8 h-8" aria-hidden="true" />
+                   <Newspaper className="text-blue w-8 h-8" aria-hidden="true" />
                  </div>
                  <div>
-                   <h1 className="text-2xl font-bold text-blue-700">Health-Records</h1>
-                   <p className="text-sm text-gray-500">Seamlessly manage your prescriptions with ease and precision</p>
+                   <h1 className="hidden lg:block text-2xl sm:text-3xl lg:text-3xl font-bold text-blue ml-0 sm:ml-2 leading-6 sm:leading-6">Health-Records</h1>
+                   <p className="hidden lg:block text-blue-700 text-sm sm:text-base ml-0 sm:ml-2">Seamlessly manage your prescriptions with ease and precision</p>
                  </div>
                </div>
      
@@ -306,8 +307,15 @@ export default function Prescription() {
         </div>
       </header>
       {patients.length === 0 ? (
-        <div className="text-center text-muted-foreground">
-          No patients found with appointments
+        <div className="text-center text-muted-foreground flex justify-center mt-10">
+           <Alert className="relative w-full sm:w-1/2 md:w-1/2 lg:w-1/2 bg-teal-200 bg-opacity-20 border-none">
+            <AlertTitle className="text-center text-green-500">
+            No patients found with appointments!
+            </AlertTitle>
+            <AlertDescription className="text-center text-green-500">
+              Schedule your appointment with patients. 
+            </AlertDescription>
+          </Alert>
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3  p-6 mt-20 sm:mt-0">
@@ -424,22 +432,29 @@ export default function Prescription() {
                   {patient?.records?.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map((record) => (
                     <CardDescription
                       key={record?._id}
-                      className="rounded bg-muted p-3"
+                      className="rounded-lg bg-muted p-3"
                     >
-                      <div className="space-y-1 text-sm container">
+                      <div className="space-y-2 text-sm container">
                         <div className="font-medium text-foreground">
-                          Date: {new Date(record?.date).toLocaleDateString()}
+                        <span className="font-bold">Date:</span> {new Date(record?.date).toLocaleDateString("en-Gb").split("/").join("-")}
                         </div>
-                        <div>Doctor: {record?.doctorName}</div>
-                        <div>Symptoms: {record?.symptoms}</div>
-                        <div>Duration: {record?.symptomDuration}</div>
-                        <div>Reason: {record?.reason}</div>
+                        {/* <div>Doctor: {record?.doctorName}</div> */}
+                        <div><span className="font-bold"> Symptoms: </span>{record?.symptoms}</div>
+                        <div><span className="font-bold"> Duration:</span> {record?.symptomDuration}</div>
+                        <div><span className="font-bold">Reason:</span> {record?.reason}</div>
                       </div>
                     </CardDescription>
                   ))}
                   {patient?.records?.length === 0 && (
                     <div className="text-center text-sm text-muted-foreground">
-                      No prescription records found
+                      <Alert className="relative w-full sm:w-1/2 md:w-1/2 lg:w-1/2 bg-teal-200 bg-opacity-20 border-none">
+                        <AlertTitle className="text-center text-green-500">
+                          No prescription records found!
+                        </AlertTitle>
+                        <AlertDescription className="text-center text-green-500">
+                          Schedule your appointment with patients. 
+                        </AlertDescription>
+                      </Alert>
                     </div>
                   )}
                 </div>

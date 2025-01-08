@@ -53,7 +53,6 @@ const CareFinderPage = () => {
           variant: "destructive",
           title: "Uh oh! Something went wrong.",
           description: "There was a problem with your request.",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
         });
       } finally {
         setIsLoading(false);
@@ -124,7 +123,7 @@ const CareFinderPage = () => {
           />
         </div>
       ) : (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 lg:mt-0 md:mt-15 sm:mt-20 mt-20">
           <div className="w-full ">
             <HospitalList hospitals={hospitals} />
           </div>

@@ -6,6 +6,7 @@ import { useUser } from "@clerk/nextjs";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "../ui/input";
 import { CircleX } from "lucide-react";
+import { ThreeDots } from "react-loader-spinner";
 
 interface AppointmentModalProps {
   isOpen: boolean;
@@ -148,6 +149,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           description: "Failed to load available slots. Please try again.",
           duration: 3000,
         });
+        setTimeSlots([]);
       } finally {
         setSlotUpdating(false);
       }
@@ -213,7 +215,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 dark:text-white">
       <div className="bg-white p-6 shadow-lg rounded-xl max-w-lg w-full mx-4">
         <div className="w-full flex flex-wrap justify-end">
           <button
@@ -281,39 +283,39 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
               >
                 Time :
               </Label>
-              <select
+              {isSlotUpdating? (
+                  <ThreeDots
+                  visible={true}
+                  height="40"
+                  width="40"
+                  color="#2fe0d8"
+                />
+              ):(
+
+                <select
                 id="time"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 className="col-span-3 w-full p-2 border border-gray-300 rounded-lg"
                 required
-              >
-                {(doctorId && date)?<></>:<>
-                  {" "}
-                    <option value="" disabled>
-                      Select the doctor and date 
-                    </option>
-                </>}
-                {isSlotUpdating && (doctorId && date) ? (
-                  <>
-                    {" "}
-                    <option value="" disabled>
-                      Updating...
-                    </option>
-                  </>
-                ) : (
-                  <>
-                    <option value="" disabled>
+                >
+                {(doctorId && date)?<>
+                  <option value="" disabled>
                       Select a Slot
                     </option>
                     {timeSlots.map((slot, index) => (
                       <option key={index} value={slot.start}>
                         {slot.start} - {slot.end}
                       </option>
-                    ))}
-                  </>
-                )}
+                    ))}</>:<>
+                  {" "}
+                    <option value="" disabled>
+                      Select the doctor and date 
+                    </option>
+                </>}
               </select>
+            )
+              }
           </div>
 
           {/* Type */}

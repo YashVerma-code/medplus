@@ -1,4 +1,4 @@
-export type IconName = "/FaHome" | "/FaStar" | "/FaBriefcaseMedical" | "/FaUser" |"/FaStethoscope" | "/FaChat" | "/FaCalendarPlus2" | "/FaHousePlus";;
+export type IconName = "/FaHome" | "/FaStar" | "/FaBriefcaseMedical" | "/FaUser" |"/FaStethoscope" | "/FaChat" | "/FaCalendarPlus2" | "/FaHousePlus" | "/FaPlus" | "/FaPill" | "/FaNewspaper";
 // patient
 export const patientNavLinks :{label: string; route: string; icon: IconName }[] = [
   {
@@ -24,17 +24,17 @@ export const patientNavLinks :{label: string; route: string; icon: IconName }[] 
   {
     label: 'MedInfo',
     route: '/patient/features/medinfo',
-    icon: '/FaHome',
+    icon: '/FaPill',
+  },
+  {
+    label: 'Inventory',
+    route: '/patient/features/resources',
+    icon: '/FaPlus',
   },
   {
     label: 'Chat',
     route: '/chat',
     icon: '/FaChat',
-  },
-  {
-    label: 'resources',
-    route: '/patient/features/resources',
-    icon: '/FaHome',
   },
   {
     label: 'Profile',
@@ -80,19 +80,19 @@ export const doctorNavLinks :{label: string; route: string; icon: IconName }[] =
     icon: '/FaHome',
   },
   {
-    label: 'Appointment Calendar',
+    label: "Doctor's Planner",
     route: '/doctor/features/appointment-calendar',
-    icon: '/FaStar',
+    icon: '/FaCalendarPlus2',
   },  
   {
     label: 'Health Records',
     route: '/doctor/features/healthRecord',
-    icon: '/FaStar',
+    icon: '/FaNewspaper',
   },
   {
-    label: 'resources',
+    label: 'Inventory',
     route: '/doctor/features/resources',
-    icon: '/FaStar',
+    icon: '/FaPlus',
   },
   {
     label: 'Chat',
