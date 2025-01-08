@@ -96,7 +96,7 @@ export default function Resource() {
                   Inventory
                 </h1>
                 <p className="hidden lg:block text-blue-700 text-sm sm:text-base ml-0 sm:ml-2">
-                Manage your resources effectively
+                  Easily track and manage all your resources in one place, giving you the clarity and control you need
                 </p>
               </div>
             </div>

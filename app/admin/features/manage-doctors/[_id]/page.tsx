@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,27 +10,118 @@ import { Calendar } from "@/components/ui/calendar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DNA } from "react-loader-spinner"
+import { SlotModal } from '@/components/shared/SlotModal';
+import { debounce } from 'lodash';
+import { DeleteSlotModal } from '@/components/shared/DeleteSlotModal';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+async function searchAppointments(id:string) {
+  const response = await fetch(`/api/appointments/get-doctor-appointments?id=${id}`);
+  console.log("Searching id : ",id);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || "Failed to your appointments.");
+  }
+  return response.json();
+}
+
 
 export default function DoctorProfilePage({ params: { _id } }: {params: {_id: string}}) {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState(true);
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [isSlotUpdating, setSlotUpdating] = useState(false);
+  const [timeSlots, setTimeSlots] = useState<Slot[]>([]);
+  const [bookedSlots, setBookedSlots] = useState<Slot[]>([]);
+  const [upcomingAppointments, setupcomingAppointments] = useState<Appointment[]>([]);
+
+  const handleUpdate = () => {
+    setStatus(!status);
+  };
+
+   const debouncedGetAppointments = debounce(async () => {
+      setIsLoading(true);
+      try {
+        const appointmentsResult = await searchAppointments(_id);
+        const now = new Date();
+        const currentDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const upcomingAppointmentsResult = appointmentsResult.filter(
+          (appointment: Appointment) => {
+            const appointmentDate = new Date(
+              new Date(appointment.date).getFullYear(),
+              new Date(appointment.date).getMonth(),
+              new Date(appointment.date).getDate()
+            );
+            return appointmentDate >= currentDate;
+          }
+        );
+        setupcomingAppointments(upcomingAppointmentsResult);
+      } catch (error: any) {
+        console.log("Error loading upcoming Appointments or Past Events", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 500);
+  
+     const getupcomingAppointments = useCallback(() => {
+        debouncedGetAppointments();
+      }, []);
+
+  useEffect(() => {
+    const fetchAvailableSlots = async () => {
+      if (!date) {
+        return;
+      }
+
+      try {
+        setSlotUpdating(true);
+        const parsedDate = new Date(date);
+        const dayOfWeek = parsedDate.toLocaleDateString("en-US", {
+          weekday: "long",
+        });
+        const response = await fetch(
+          `/api/appointments/get-available-slots?id=${_id}&day=${dayOfWeek}`
+        );
+        // console.log("Response : ", r.error);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.error || "Failed to fetch available slots."
+          );
+        }
+        const { availableSlots } = await response.json();
+        setTimeSlots(availableSlots || []);
+      } catch (error: any) {
+        console.log("Error fetching slots:", error.error);
+        setTimeSlots([]);
+      } finally {
+        setSlotUpdating(false);
+      }
+    };
+
+    fetchAvailableSlots();
+    
+  }, [_id, date,status]);
 
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
         const response = await fetch(`/api/doctors/search?id=${_id}`);
         const data = await response.json();
-        console.log("Doctor Data:", data);
+        // console.log("Doctor Data:", data);
         setDoctor(data);
+        setBookedSlots(data.bookedSlots);
       } catch (error) {
         console.error("Failed to fetch doctor data:", error);
+        setBookedSlots([])
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchDoctor();
+    getupcomingAppointments();
   }, [_id]);
 
   if (isLoading) {
@@ -143,12 +234,81 @@ export default function DoctorProfilePage({ params: { _id } }: {params: {_id: st
                   </CardHeader>
                   <CardContent>
                     <dl className="space-y-2 text-sm">
-                      {/* {Object.entries(doctor.schedule).map(([day, hours]) => (
-                        <div key={day}>
-                          <dt className="font-semibold">{day}:</dt>
-                          <dd>{hours}</dd>
-                        </div>
-                      ))} */}
+                      {isSlotUpdating ? (
+                        <DNA
+                          visible={true}
+                          height="80"
+                          width="80"
+                          ariaLabel="dna-loading"
+                          wrapperStyle={{ filter: "hue-rotate(180deg)" }}
+                          wrapperClass="dna-wrapper"
+                        />
+                      ) : (
+                        <>
+                          <Card className="bg-black">
+                            <CardHeader>
+                              <CardTitle className="text-xl">
+                                Availabile slots
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                              {timeSlots.length === 0 ? (
+                                <div className="text-sm sm:text-base font-bold flex flex-wrap justify-between">
+                                  No slots available on selected day.
+                                </div>
+                              ) : (
+                                <>
+                                  <div className="text-sm sm:text-base font-bold grid gap-3 grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3">
+                                  {timeSlots
+                                  .sort((a, b) => {
+                                    const startA = a.start ? a.start.toString() : '';
+                                    const startB = b.start ? b.start.toString() : '';
+                                    return startA.localeCompare(startB); 
+                                  })
+                                  .map((obj, index) => (
+                                    <div key={index} className="border rounded-lg bg-white text-black p-3">
+                                      {obj.start} - {obj.end}
+                                    </div>
+                                  ))}
+                                  </div>
+                                </>
+                              )}
+                            </CardContent>
+                          </Card>
+                          <Card className="bg-black">
+                            <CardHeader>
+                              <CardTitle className="text-xl">
+                               Booked slots
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                              {bookedSlots.length === 0 ||!bookedSlots.some((obj) => obj.date === date?.toLocaleDateString("en-CA")) ? (
+                                <div className="text-sm sm:text-base font-bold">
+                                  No booked slots on the selected day.
+                                </div>
+                              ) : (
+                                <>
+                                  <div className="text-sm sm:text-base font-bold grid grid-cols-2 sm:grid-cols-3">
+                                    {bookedSlots.map((obj) => {
+                                    const selectedDate = date
+                                    ? date.toLocaleDateString("en-CA") // "en-CA" outputs date as "YYYY-MM-DD"
+                                    : null;
+                                      if(obj.date===selectedDate){
+                                        return(
+                                        <div className="border rounded-lg bg-white text-black px-3 py-2 flex flex-wrap w-auto text-base" key={`${obj.date}-${obj.start}-${obj.end}`}>
+                                          <span className='w-full text-center'>Date: {" "}{obj.date}</span>
+                                          <span className='w-full text-center'>{obj.start} - {obj.end}</span>
+                                        </div>)
+                                      }
+                                    })}
+                                  </div>
+                                </>
+                              )}
+                            </CardContent>
+                          </Card>
+                        </>
+                      )}
+                      
                     </dl>
                   </CardContent>
                 </Card>
@@ -162,7 +322,14 @@ export default function DoctorProfilePage({ params: { _id } }: {params: {_id: st
                       selected={date}
                       onSelect={setDate}
                       className="rounded-md border w-full"
+                      disabled={(date) =>
+                        date <= new Date() || date < new Date("1900-01-01")
+                      }
                     />
+                   <div className='grid grid-cols-2 gap-5 sm:grid-cols-3'>
+                    <SlotModal docId={`${_id}`} onUpdate={handleUpdate}/>
+                    <DeleteSlotModal docId={_id} onUpdate={handleUpdate}/>
+                   </div>
                   </CardContent>
                 </Card>
               </div>
@@ -184,20 +351,27 @@ export default function DoctorProfilePage({ params: { _id } }: {params: {_id: st
                         </TableRow>
                       </TableHeader>
                       <TableBody>
+                        {upcomingAppointments.map((appointment)=>
                         <TableRow>
-                          <TableCell>John Doe</TableCell>
-                          <TableCell>June 15, 2023</TableCell>
-                          <TableCell>10:00 AM</TableCell>
-                          <TableCell>In-Person</TableCell>
+                          <TableCell>{appointment.patient}</TableCell>
+                          <TableCell> {new Date(appointment.date).toLocaleDateString("en-GB", {day: "2-digit",month: "2-digit",year: "numeric",}).split("/").join("-")}</TableCell>
+                          <TableCell>{appointment.time}</TableCell>
+                          <TableCell>{appointment.type}</TableCell>
                         </TableRow>
-                        <TableRow>
-                          <TableCell>Jane Smith</TableCell>
-                          <TableCell>June 15, 2023</TableCell>
-                          <TableCell>11:00 AM</TableCell>
-                          <TableCell>Telehealth</TableCell>
-                        </TableRow>
+                        )}
                       </TableBody>
                     </Table>
+                    {upcomingAppointments.length===0?
+                        <div className='flex justify-center mx-auto w-1/2 mt-10'>
+                          <Alert className="relative bg-opacity-20 border-none">
+                            <AlertTitle className="text-center text-white">
+                            No patients found !
+                            </AlertTitle>
+                            <AlertDescription className="text-center text-white">
+                              See scheduled appointments with patients. 
+                            </AlertDescription>
+                          </Alert>
+                        </div>:<></>}
                   </ScrollArea>
                 </CardContent>
               </Card>
@@ -213,7 +387,7 @@ export default function DoctorProfilePage({ params: { _id } }: {params: {_id: st
                     <p className="text-sm text-muted-foreground">+5% from last month</p>
                   </CardContent>
                 </Card>
-                <Card className='bg-black'>
+                <Card className="bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">Average Rating</CardTitle>
                   </CardHeader>

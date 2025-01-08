@@ -66,7 +66,7 @@ export default function MedInfo() {
   
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-teal-50">
+    <div className="flex flex-col min-h-screen  bg-gradient-to-br from-teal-100 to-blue-200 ">
       {/* Header Section */}
  <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
          <div className="container mx-auto px-4 py-2">
@@ -80,7 +80,7 @@ export default function MedInfo() {
                    MedInfo
                  </h1>
                  <p className="hidden lg:block text-blue-700 text-sm sm:text-base ml-0 sm:ml-2">
-                  Your go-to source for drug and illness information
+                 Your Health, Your Knowledge—Explore Medicines and Insights with MedInfo.
                  </p>
                </div>
              </div>
@@ -102,7 +102,7 @@ export default function MedInfo() {
                   value={medName}
                   onChange={(e) => setMedName(e.target.value)}
                   className="bg-blue-50 border-lightblue-200 focus:border-blue focus:ring-lightblue-400"
-                  placeholder="e.g., Aspirin"
+                  placeholder="E.g. Aspirin"
                 />
               </div>
               <div className="space-y-2">
@@ -115,7 +115,7 @@ export default function MedInfo() {
                   value={illness}
                   onChange={(e) => setIllness(e.target.value)}
                   className="bg-blue-50 border-lightblue-200 focus:border-blue focus:ring-lightblue-400"
-                  placeholder="e.g., Headache"
+                  placeholder="E.g. Headache"
                 />
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function MedInfo() {
                 </>
               ) : (
                 <>
-                  <Search className="w-4 h-4 mr-2  text-black" />
+                  <Search className="w-4 h-4 mr-2  text-white" />
                   Search
                 </>
               )}

@@ -9,6 +9,7 @@ import { ThreeDots } from 'react-loader-spinner'
 import { redirect, usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 import useGlobalStore from '@/zustand/useProps'
+import { Toaster } from '@/components/ui/toaster'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const menuItems = [
@@ -119,6 +120,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </nav>
       {children}
+      <Toaster/>
     </div>
   )
 }
