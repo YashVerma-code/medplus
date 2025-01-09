@@ -31,12 +31,58 @@ MedPlus is an innovative hospital management system designed to provide **seamle
 ## 🛠️ Technologies & Tools:
 
 ### We have used following tools:
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) &nbsp;&nbsp;
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)&nbsp;&nbsp;
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)&nbsp;&nbsp;
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)&nbsp;&nbsp;
-![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)&nbsp;&nbsp;
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+<div style="display: flex; gap: 10px; align-items: center;">
+
+<img 
+  src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" 
+  alt="JavaScript" 
+  style="width: 120px; height: auto;" 
+/>
+&nbsp;&nbsp;
+<img 
+  src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" 
+  alt="React" 
+  style="width: 100px; height: auto;" 
+/>
+&nbsp;&nbsp;
+<img 
+  src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" 
+  alt="Next.js" 
+  style="width: 120px; height: auto;" 
+/>
+&nbsp;&nbsp;
+<img 
+  src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" 
+  alt="TypeScript" 
+  style="width: 120px; height: auto;" 
+/>
+&nbsp;&nbsp;
+<img 
+  src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" 
+  alt="Postman" 
+  style="width: 120px; height: auto;" 
+/>
+&nbsp;&nbsp;
+<img 
+  src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" 
+  alt="MongoDB" 
+  style="width: 120px; height: auto;" 
+/>
+&nbsp;&nbsp;
+<img 
+  src="https://getstream.io/stream-dark.png" 
+  alt="Stream.io" 
+  style="width: 120px; height: auto;" 
+/>
+&nbsp;&nbsp;
+<img 
+  src="https://miro.medium.com/v2/resize:fit:1024/1*mlYJnwZ6NZ9_TTdBb2KgGA.jpeg" 
+  alt="Shadcn/ui" 
+  style="width: 100px; height: auto;" 
+/>
+&nbsp;&nbsp;
+</div>
+
 
 ---
 
