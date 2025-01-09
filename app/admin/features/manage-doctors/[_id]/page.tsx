@@ -351,8 +351,8 @@ export default function DoctorProfilePage({ params: { _id } }: {params: {_id: st
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {upcomingAppointments.map((appointment)=>
-                        <TableRow>
+                        {upcomingAppointments.map((appointment,index)=>
+                        <TableRow key={index}>
                           <TableCell>{appointment.patient}</TableCell>
                           <TableCell> {new Date(appointment.date).toLocaleDateString("en-GB", {day: "2-digit",month: "2-digit",year: "numeric",}).split("/").join("-")}</TableCell>
                           <TableCell>{appointment.time}</TableCell>

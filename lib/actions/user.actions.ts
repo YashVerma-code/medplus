@@ -6,8 +6,17 @@ import User from '../database/models/user.model'
 import { connectToDatabase } from '../database/mongoose'
 import { handleError } from '../utils'
 
+interface CreateUserParam {
+  clerkId: string;
+  email: string;
+  username: string;
+  firstName: string|null;
+  lastName: string;
+  photo: string;
+  role:string;
+}
 // CREATE
-export async function createUser(user: CreateUserParams) {
+export async function createUser(user: CreateUserParam) {
   try {
     await connectToDatabase()
     console.log('user created')

@@ -30,11 +30,11 @@ const iconMap = {
   "/FaUser": <UserRound />,
   "/FaStethoscope": <Stethoscope />,
   "/FaChat": <MessageSquareMore />,
-  "/FaHousePlus": <HousePlus/>,
-  "/FaCalendarPlus2": <CalendarPlus2/>,
-  "/FaPlus":<PlusIcon/>,
-  "/FaPill":<Pill/>,
-  "/FaNewspaper":<Newspaper/>
+  "/FaHousePlus": <HousePlus />,
+  "/FaCalendarPlus2": <CalendarPlus2 />,
+  "/FaPlus": <PlusIcon />,
+  "/FaPill": <Pill />,
+  "/FaNewspaper": <Newspaper />,
 };
 
 const Sidebar = () => {
@@ -62,32 +62,21 @@ const Sidebar = () => {
   const navLinks = role === "patient" ? patientNavLinks : doctorNavLinks;
 
   return (
-    <aside>
-      <div className="sidebar">
-        <div className="flex size-full flex-col gap-4">
-          <Link href="/" className="sidebar-logo pl-5">
-            <Image
-              src="/assets/images/logo-large.png"
-              alt="logo"
-              width={180}
-              height={30}
-            />
-          </Link>
-          <nav className="sidebar-nav">
-          <SignedOut>
-            <li
-              className={`sidebar-nav_element bg-gray-300 hover:bg-blue hover:bg-opacity-90 hover:text-white text-gray-600`}
-            >
-              <Link className="sidebar-link" href={"/sign-in"}>
-                <span className={`sidebar-icon`}>
-                  <LogIn />
-                </span>
-                <span className="text-lg">Login</span>
+    <>
+      {isRoleLoaded && isSignedIn && (
+        <aside>
+          <div className="sidebar">
+            <div className="flex size-full flex-col gap-4">
+              <Link href="/" className="sidebar-logo pl-5">
+                <Image
+                  src="/assets/images/logo-large.png"
+                  alt="logo"
+                  width={180}
+                  height={30}
+                />
               </Link>
-            </li>
-          </SignedOut>
-          {isRoleLoaded && isSignedIn && (
-            <SignedIn>
+              <nav className="sidebar-nav">
+              <SignedIn>
             <ul className="sidebar-nav_elements h-[300px] overflow-auto">
               {navLinks.slice(0, navLinks.length - 1).map((link) => {
                 const isActive = link.route == baseRoute;
@@ -172,12 +161,12 @@ const Sidebar = () => {
               </li>
             </ul>
           </SignedIn>
-          )
-        }
-          </nav>
-        </div>
-      </div>
-    </aside>
+              </nav>
+            </div>
+          </div>
+        </aside>
+      )}
+    </>
   );
 };
 

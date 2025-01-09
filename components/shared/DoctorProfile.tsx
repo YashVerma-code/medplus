@@ -73,7 +73,6 @@ export default function DoctorProfilePage({ doctor }: { doctor: Doctor }) {
               ))}
             </div>
           </div>
-          <Button className="mt-4 sm:mt-0">Edit Profile</Button>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="info" className="w-full">

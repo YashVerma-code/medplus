@@ -33,7 +33,7 @@ export default function PatientProfilePage({
     console.log("Patient updated:", updatedPatient);
   };
   return (
-    <div className="md:container md:mx-auto md:py-6 md:px-4 lg:px-8 bg-black">
+    <div className="md:container md:mx-auto md:py-6 md:px-4 lg:px-8 dark:bg-black">
       <Card className="w-full rounded-b-none bg-transparent border-none">
         <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center gap-4 px-6 pb-4 pt-0 justify-between">
           <div className="flex items-center gap-4 w-ful">
@@ -78,7 +78,7 @@ export default function PatientProfilePage({
             </TabsList>
             <TabsContent value="health">
               <div className="grid gap-4 md:grid-cols-2">
-                <Card className="bg-black">
+                <Card className="dark:bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">
                       Chronic Conditions
@@ -92,7 +92,7 @@ export default function PatientProfilePage({
                     </ul>
                   </CardContent>
                 </Card>
-                <Card className="bg-black">
+                <Card className="dark:bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">Allergies</CardTitle>
                   </CardHeader>
@@ -104,7 +104,7 @@ export default function PatientProfilePage({
                     </ul>
                   </CardContent>
                 </Card>
-                <Card className="bg-black">
+                <Card className="dark:bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">Immunizations</CardTitle>
                   </CardHeader>
@@ -116,7 +116,7 @@ export default function PatientProfilePage({
                     </ul>
                   </CardContent>
                 </Card>
-                <Card className="bg-black">
+                <Card className="dark:bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">Emergency Contact</CardTitle>
                   </CardHeader>
@@ -144,7 +144,7 @@ export default function PatientProfilePage({
             </TabsContent>
             {patient.medications.length > 0 ? (
               <TabsContent value="medications">
-                <Card className="bg-black">
+                <Card className="dark:bg-black">
                   <CardHeader>
                     <CardTitle className="text-xl">
                       Current Medications

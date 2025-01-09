@@ -9,16 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import useGlobalStore from "@/zustand/useProps";
 import { Calendar, Clock, MessageSquareMore, Phone, Star } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DNA } from "react-loader-spinner";
 
 const DoctorInfo = ({ params: { _id } }: {params: {_id:string}}) => {
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const router = useRouter();
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
@@ -87,8 +87,12 @@ const DoctorInfo = ({ params: { _id } }: {params: {_id:string}}) => {
           </CardHeader>
           <CardContent className="grid gap-6">
             <div>
-              <h3 className="font-semibold mb-2">About</h3>
-              {/* <p className="text-sm text-muted-foreground">{doctor.about}</p> */}
+              <h3 className="font-semibold mb-2">Organizations</h3>
+              <p className="text-sm text-muted-foreground">{doctor.professionalDetails.professionalOrganizations}</p>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2">Languages spoken</h3>
+              <p className="text-sm text-muted-foreground">{doctor.languages}</p>
             </div>
             <div>
               <h3 className="font-semibold mb-2">Education</h3>
@@ -134,7 +138,7 @@ const DoctorInfo = ({ params: { _id } }: {params: {_id:string}}) => {
               <MessageSquareMore className="mr-2 h-4 w-4" />
                 Chat Now
               </Button>
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" onClick={()=>router.push('/patient/features/health-calendar')}>
                 Schedule for Later
               </Button>
             </div>
