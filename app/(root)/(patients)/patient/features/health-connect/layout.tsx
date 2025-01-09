@@ -10,7 +10,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   const { searchTerm, setSearchTerm } = useGlobalStore();
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-teal-100 to-blue-200">
+    <div className="flex flex-col min-h-screen bg-gradient-to-br from-teal-100 to-blue-200 overflow-hidden">
       <header className="lg:sticky fixed top-16 sm:top-16 md:top-16 lg:top-0 z-10 w-full bg-lblue bg-opacity-20 backdrop-filter backdrop-blur-lg shadow-lg">
         <div className="container mx-auto px-4 py-2">
           <div className="flex gap-2 items-center justify-between ">

@@ -2,6 +2,8 @@
 import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import useGlobalStore from "@/zustand/useProps";
+import Image from "next/image";
+import Link from "next/link";
 
 const DoctorHome = () => {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -48,15 +50,74 @@ const DoctorHome = () => {
     }
   }, [isLoaded, isSignedIn, user, setRole, setUserId, setDoctorId, role]);
   return (
-    <>
-      <div className="grid grid-cols-12 grid-rows-12 gap-5 p-4 box-border min-h-screen rounded-lg">
-        <div className="col-span-8 row-span-6 rounded-lg rounded-tl-[18px] p-4 bggrad">Doctor 1</div>
-        <div className=" col-span-4 row-span-4 rounded-lg  rounded-tr-[18px] p-4 bggrad ">Box 2</div>
-        <div className=" col-span-4 row-span-2 rounded-lg p-4 bggrad ">Box 3</div>
-        <div className=" col-span-5 row-span-6 rounded-lg rounded-bl-[18px] p-4 bggrad ">Box 4</div>
-        <div className=" col-span-7 row-span-6 rounded-lg rounded-br-[18px] p-4 bggrad ">Box 5</div>
+    <div className='grid  grid-flow-row lg:grid-flow-col auto-rows-[50%] lg:auto-cols-[73%] lg:gap-6 overflow-y-auto lg:overflow-x-auto overscroll-contain mx-100  snap-mandatory scroll-p-10'>
+   
+
+    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
+      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-400/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
+        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
+          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
+            <h1 className="text-6xl font-bold text-black tracking-wider">MedInfo</h1>
+            <p className="text-sm text-gray-700"> Your Medicine Guide. Get detailed insights about your prescriptions with MedInfo, your trusted companion for medicine information. From uses and dosages to potential side effects and precautions, MedInfo provides all the details you need to make informed decisions about your health. Empower your health with knowledge at your fingertips!
+</p></div>
+          <Image src="/assets/images/img4.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
+        </div>
+        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
+      </div>
     </div>
-    </>
+
+
+  
+
+
+    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
+      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-400/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
+        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
+          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
+            <h1 className="text-6xl font-bold text-black tracking-wider">Inventory</h1>
+            <p className="text-sm text-gray-700"> Your Resource Tracker. Stay on top of critical healthcare resources with Inventory. Whether it's tracking the quantity of medicines, oxygen cylinders, or other essential supplies, this feature ensures you're always informed and prepared. Maintain seamless management and make timely decisions with real-time updates on availability. 
+Efficient resource management, anytime, anywhere!
+</p></div>
+          <Image src="/assets/images/img3.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
+        </div>
+        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
+      </div>
+    </div>
+    
+
+    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
+      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-300/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
+        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
+          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
+            <h1 className="text-6xl font-bold text-black tracking-wider">HealthChat</h1>
+            <p className="text-sm text-gray-700"> Connect with Your Doctor Instantly
+Experience seamless communication with HealthChat, a real-time chat system designed to bridge the gap between patients and doctors. Whether it's clarifying doubts, sharing updates, or seeking quick advice, HealthChat ensures secure and direct interaction, fostering better understanding and personalized care.
+
+Your health questions, answered—anytime, anywhere!</p></div>
+          <Image src="/assets/images/img5.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
+        </div>
+        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
+      </div>
+    </div>
+
+
+    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
+      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-400/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
+        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
+          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
+            <h1 className="text-6xl font-bold text-black tracking-wider">Community Updates</h1>
+            <p className="text-sm text-gray-700">Stay Informed, Stay Ahead. 
+Keep up with the latest breakthroughs and advancements in the medical field with Community Updates. From innovative treatments and health tips to critical news and discoveries, this feature ensures you're always in the loop with what’s shaping the world of healthcare.
+
+Knowledge that empowers, updates that inspire!</p></div>
+          <Image src="/assets/images/img6.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
+        </div>
+        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
+      </div>
+    </div>
+
+
+  </div>
   )
 }
 

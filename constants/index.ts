@@ -1,4 +1,4 @@
-export type IconName = "/FaHome" | "/FaStar" | "/FaBriefcaseMedical" | "/FaUser" |"/FaStethoscope" | "/FaChat" | "/FaCalendarPlus2" | "/FaHousePlus" | "/FaPlus" | "/FaPill" | "/FaNewspaper";
+export type IconName = "/FaHome" | "/FaStar" | "/FaBriefcaseMedical" | "/FaUser" |"/FaStethoscope" | "/FaChat" | "/FaCalendarPlus2" | "/FaHousePlus" | "/FaPlus" | "/FaPill" | "/FaNewspaper"|"/FaMessage" |"/FaBed";
 // patient
 export const patientNavLinks :{label: string; route: string; icon: IconName }[] = [
   {
@@ -15,6 +15,16 @@ export const patientNavLinks :{label: string; route: string; icon: IconName }[] 
     label: 'Care Finder',
     route: '/patient/features/care-finder',
     icon: '/FaHousePlus',
+  },
+  {
+    label: 'Hospital Capacity',
+    route: '/patient/features/ICUbeds',
+    icon: '/FaBed',
+  },
+  {
+    label: 'Community updates',
+    route: '/patient/features/Community-update',
+    icon: '/FaMessage',
   },
   {
     label: 'Health Connect',
@@ -88,6 +98,11 @@ export const doctorNavLinks :{label: string; route: string; icon: IconName }[] =
     label: 'Health Records',
     route: '/doctor/features/healthRecord',
     icon: '/FaNewspaper',
+  },
+  {
+    label: 'Community updates',
+    route: '/doctor/features/Community-update',
+    icon: '/FaMessage',
   },
   {
     label: 'Inventory',

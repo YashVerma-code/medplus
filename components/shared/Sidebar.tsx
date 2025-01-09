@@ -1,3 +1,4 @@
+
 "use client";
 import { doctorNavLinks, nullNavLinks, patientNavLinks } from "@/constants";
 import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
@@ -20,6 +21,9 @@ import {
   PlusIcon,
   Pill,
   Newspaper,
+  MessageSquarePlus,
+  Bed,
+  
 } from "lucide-react";
 import useGlobalStore from "@/zustand/useProps";
 
@@ -35,6 +39,8 @@ const iconMap = {
   "/FaPlus": <PlusIcon />,
   "/FaPill": <Pill />,
   "/FaNewspaper": <Newspaper />,
+  "/FaMessage": <MessageSquarePlus />,
+  "/FaBed": <Bed />,
 };
 
 const Sidebar = () => {
@@ -64,17 +70,18 @@ const Sidebar = () => {
   return (
     <>
       {isRoleLoaded && isSignedIn && (
-        <aside>
+        <aside className="overflow-auto">
           <div className="sidebar">
             <div className="flex size-full flex-col gap-4">
-              <Link href="/" className="sidebar-logo pl-5">
-                <Image
-                  src="/assets/images/logo-large.png"
-                  alt="logo"
-                  width={180}
-                  height={30}
-                />
-              </Link>
+              <Link href="/" className="sidebar-logo pl-5 w-full h-auto">
+            <Image
+              src="/assets/images/logo-large.png"
+              alt="logo"
+              width={150}
+             height={150}
+              className="object-cover aspect-square"
+            />
+          </Link>
               <nav className="sidebar-nav">
               <SignedIn>
             <ul className="sidebar-nav_elements h-[300px] overflow-auto">
