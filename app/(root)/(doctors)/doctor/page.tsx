@@ -75,7 +75,7 @@ const DoctorHome = () => {
         <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
           <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
             <h1 className="text-6xl font-bold text-black tracking-wider">Inventory</h1>
-            <p className="text-sm text-gray-700"> Your Resource Tracker. Stay on top of critical healthcare resources with Inventory. Whether it's tracking the quantity of medicines, oxygen cylinders, or other essential supplies, this feature ensures you're always informed and prepared. Maintain seamless management and make timely decisions with real-time updates on availability. 
+            <p className="text-sm text-gray-700"> Your Resource Tracker. Stay on top of critical healthcare resources with Inventory. Whether it&apos;s tracking the quantity of medicines, oxygen cylinders, or other essential supplies, this feature ensures you&apos;re always informed and prepared. Maintain seamless management and make timely decisions with real-time updates on availability. 
 Efficient resource management, anytime, anywhere!
 </p></div>
           <Image src="/assets/images/img3.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
@@ -91,7 +91,7 @@ Efficient resource management, anytime, anywhere!
           <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
             <h1 className="text-6xl font-bold text-black tracking-wider">HealthChat</h1>
             <p className="text-sm text-gray-700"> Connect with Your Doctor Instantly
-Experience seamless communication with HealthChat, a real-time chat system designed to bridge the gap between patients and doctors. Whether it's clarifying doubts, sharing updates, or seeking quick advice, HealthChat ensures secure and direct interaction, fostering better understanding and personalized care.
+Experience seamless communication with HealthChat, a real-time chat system designed to bridge the gap between patients and doctors. Whether it&apos;s clarifying doubts, sharing updates, or seeking quick advice, HealthChat ensures secure and direct interaction, fostering better understanding and personalized care.
 
 Your health questions, answered—anytime, anywhere!</p></div>
           <Image src="/assets/images/img5.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
@@ -107,7 +107,7 @@ Your health questions, answered—anytime, anywhere!</p></div>
           <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
             <h1 className="text-6xl font-bold text-black tracking-wider">Community Updates</h1>
             <p className="text-sm text-gray-700">Stay Informed, Stay Ahead. 
-Keep up with the latest breakthroughs and advancements in the medical field with Community Updates. From innovative treatments and health tips to critical news and discoveries, this feature ensures you're always in the loop with what’s shaping the world of healthcare.
+Keep up with the latest breakthroughs and advancements in the medical field with Community Updates. From innovative treatments and health tips to critical news and discoveries, this feature ensures you&apos;re always in the loop with what&apos;s shaping the world of healthcare.
 
 Knowledge that empowers, updates that inspire!</p></div>
           <Image src="/assets/images/img6.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
