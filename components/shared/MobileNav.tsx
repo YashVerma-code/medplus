@@ -9,7 +9,8 @@ import { Button } from "../ui/button";
 import { doctorNavLinks, patientNavLinks } from "@/constants";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import ThemeSwitch from "./ThemeSwitch";
-import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope, MessageSquareMore, CalendarPlus2, HousePlus, PlusIcon, Pill, Newspaper } from "lucide-react";
+import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope, MessageSquareMore, CalendarPlus2, HousePlus, PlusIcon, Pill, Newspaper,  MessageSquarePlus,
+  Bed, } from "lucide-react";
 import useGlobalStore from "@/zustand/useProps";
 const iconMap = {
   "/FaHome": <House />,
@@ -22,7 +23,9 @@ const iconMap = {
   "/FaHousePlus": <HousePlus/>,
   "/FaPlus":<PlusIcon/>,
   "/FaPill":<Pill/>,
-  "/FaNewspaper":<Newspaper/>
+  "/FaNewspaper":<Newspaper/>,
+    "/FaMessage": <MessageSquarePlus />,
+    "/FaBed": <Bed />,
 };
 const extractFeatureFromPath = (path: string): string =>{
   let pageName = '';
@@ -44,7 +47,7 @@ const MobileNav = () => {
   const { role } = useGlobalStore();
   const navLinks = role === "patient" ? patientNavLinks : doctorNavLinks;
   return (
-    <header className="header flex items-center z-10">
+    <header className="header flex items-center z-10 ">
       <Link href="/" className="flex items-center gap-2">
         <Image
           src="/assets/images/logo-small.png"
@@ -56,7 +59,7 @@ const MobileNav = () => {
       <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-blue ml-0 sm:ml-2 leading-5 sm:leading-6">
         {pageTitle}
       </div>
-      <nav className="flex items-center gap-2">
+      <nav className="flex items-center gap-2 ">
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
           <ThemeSwitch />
@@ -76,7 +79,7 @@ const MobileNav = () => {
                     width={152}
                     height={23}
                   />
-                  <ul className="flex flex-col gap-2">
+                  <ul className="flex flex-col gap-2 overflow-auto ">
                     {navLinks
                       .filter(link => link.label !== "Profile")
                       .map((link) => {
