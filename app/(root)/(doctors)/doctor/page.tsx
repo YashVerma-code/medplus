@@ -1,9 +1,10 @@
-'use client';
+"use client";
 import { useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import useGlobalStore from "@/zustand/useProps";
 import Image from "next/image";
 import Link from "next/link";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const DoctorHome = () => {
   const { user, isLoaded, isSignedIn } = useUser();
@@ -21,10 +22,10 @@ const DoctorHome = () => {
         setRole("doctor");
         localStorage.setItem("role", "doctor");
       }
-      if(userId){
+      if (userId) {
         setUserId(userId);
         localStorage.setItem("userId", userId);
-      } 
+      }
 
       if (userId && role === "doctor") {
         const storedDoctorId = localStorage.getItem("doctorId");
@@ -34,12 +35,14 @@ const DoctorHome = () => {
         } else {
           const fetchDoctorId = async () => {
             try {
-              const response = await fetch(`/api/doctors/search?userId=${userId}`);
+              const response = await fetch(
+                `/api/doctors/search?userId=${userId}`
+              );
               if (!response.ok) throw new Error("Doctor not found");
 
               const data = await response.json();
               setDoctorId(data._id);
-              localStorage.setItem("doctorId", data._id); 
+              localStorage.setItem("doctorId", data._id);
             } catch (error) {
               console.error("Error fetching doctor:", error);
             }
@@ -49,76 +52,86 @@ const DoctorHome = () => {
       }
     }
   }, [isLoaded, isSignedIn, user, setRole, setUserId, setDoctorId, role]);
+
   return (
-    <div className='grid  grid-flow-row lg:grid-flow-col auto-rows-[50%] lg:auto-cols-[73%] lg:gap-6 overflow-y-auto lg:overflow-x-auto overscroll-contain mx-100  snap-mandatory scroll-p-10'>
-   
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 overflow-y-auto px-6 py-10 lg:py-8">
+      {[
+        {
+          title: "Doctor's\u00A0Planner",
+          link:'/doctor/features/appointment-calendar',
+          description:
+            "Take control of your time with Doctor's Planner. Easily manage appointments, customize your availability, and set reminders to ensure your practice runs smoothly. A flexible, user-friendly tool designed to streamline your daily schedule and improve patient management.",
+          image: "/assets/images/img4.png",
+        },
+        {
+          title: "Inventory",
+          link:'/doctor/features/resources',
+          description:
+            "Your Resource Tracker. Stay on top of critical healthcare resources with Inventory. Whether it's tracking the quantity of medicines, oxygen cylinders, or other essential supplies, this feature ensures you're always informed and prepared.",
+          image: "/assets/images/img3.png",
+        },
+        {
+          title: "Health\u00A0Chat",
+          link:'/chat',
+          description:
+            "Connect with Your Doctor Instantly. Experience seamless communication with HealthChat, a real-time chat system designed to bridge the gap between patients and doctors. Whether it's clarifying doubts, sharing updates, or seeking quick advice, HealthChat ensures secure and direct interaction.",
+          image: "/assets/images/img5.png",
+        },
+        {
+          title: "Community\u00A0Updates",
+          link:'/doctor/features/Community-update',
+          description:
+            "Stay Informed, Stay Ahead. Keep up with the latest breakthroughs and advancements in the medical field with Community Updates. From innovative treatments and health tips to critical news and discoveries, this feature ensures you're always in the loop.",
+          image: "/assets/images/img6.png",
+        },
+      ].map((section, index) => (
+        <div
+          key={index}
+          className="flex flex-col items-center bg-emerald-400/30 rounded-2xl shadow-lg p-8 lg:p-12 backdrop-filter backdrop-blur-lg h-[600px]"
+        >
+          {/* Title */}
+          {section.title === "Inventory" ||
+          section.title === "Health\u00A0Chat" ? (
+            <>
+              <h1 className="text-4xl lg:text-6xl font-bold text-black tracking-wider mb-4 w-72 md:w-96 text-center max-h-fit">
+                {section.title}
+              </h1>
+            </>
+          ) : (
+            <ScrollArea>
+              <h1 className="text-4xl lg:text-6xl font-bold text-black tracking-wider mb-4 w-72 md:w-96 text-center max-h-fit">
+                {section.title}
+              </h1>
+              <ScrollBar orientation="horizontal" className="hidden" />
+            </ScrollArea>
+          )}
 
-    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
-      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-400/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
-        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
-          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
-            <h1 className="text-6xl font-bold text-black tracking-wider">MedInfo</h1>
-            <p className="text-sm text-gray-700"> Your Medicine Guide. Get detailed insights about your prescriptions with MedInfo, your trusted companion for medicine information. From uses and dosages to potential side effects and precautions, MedInfo provides all the details you need to make informed decisions about your health. Empower your health with knowledge at your fingertips!
-</p></div>
-          <Image src="/assets/images/img4.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
+          <ScrollArea>
+            <p className="text-sm lg:text-base text-gray-700 text-center flex-grow mb-4 max-h-[140px]">
+              {section.description}
+            </p>
+          </ScrollArea>
+
+          <div className="mb-4">
+            <Image
+              src={section.image}
+              alt={section.title}
+              width={250}
+              height={250}
+              className="mx-auto max-w-sm"
+            />
+          </div>
+
+          <Link
+            href={section.link}
+            className="bg-black text-white font-semibold rounded-lg text-lg lg:text-2xl px-6 py-3 text-center"
+          >
+            Visit Now
+          </Link>
         </div>
-        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
-      </div>
+      ))}
     </div>
+  );
+};
 
-
-  
-
-
-    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
-      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-400/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
-        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
-          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
-            <h1 className="text-6xl font-bold text-black tracking-wider">Inventory</h1>
-            <p className="text-sm text-gray-700"> Your Resource Tracker. Stay on top of critical healthcare resources with Inventory. Whether it&apos;s tracking the quantity of medicines, oxygen cylinders, or other essential supplies, this feature ensures you&apos;re always informed and prepared. Maintain seamless management and make timely decisions with real-time updates on availability. 
-Efficient resource management, anytime, anywhere!
-</p></div>
-          <Image src="/assets/images/img3.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
-        </div>
-        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
-      </div>
-    </div>
-    
-
-    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
-      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-300/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
-        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
-          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
-            <h1 className="text-6xl font-bold text-black tracking-wider">HealthChat</h1>
-            <p className="text-sm text-gray-700"> Connect with Your Doctor Instantly
-Experience seamless communication with HealthChat, a real-time chat system designed to bridge the gap between patients and doctors. Whether it&apos;s clarifying doubts, sharing updates, or seeking quick advice, HealthChat ensures secure and direct interaction, fostering better understanding and personalized care.
-
-Your health questions, answered—anytime, anywhere!</p></div>
-          <Image src="/assets/images/img5.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
-        </div>
-        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
-      </div>
-    </div>
-
-
-    <div className="mx snap-start min-h-[90%] lg:min-h-screen flex flex-col items-center justify-center ">
-      <div className="flex flex-col gap-10 items-center justify-center bg-emerald-400/30 bg-opacity-30 backdrop-filter backdrop-blur-lg rounded-[2.5rem] shadow-lg pt-0 pb-16 px-12 w-[95%] ">
-        <div className='flex flex-col lg:flex-row items-center justify-center lg:ml-10'>
-          <div className='flex flex-col justify-start items-start gap-16 mt-10 lg:mt-0'>
-            <h1 className="text-6xl font-bold text-black tracking-wider">Community Updates</h1>
-            <p className="text-sm text-gray-700">Stay Informed, Stay Ahead. 
-Keep up with the latest breakthroughs and advancements in the medical field with Community Updates. From innovative treatments and health tips to critical news and discoveries, this feature ensures you&apos;re always in the loop with what&apos;s shaping the world of healthcare.
-
-Knowledge that empowers, updates that inspire!</p></div>
-          <Image src="/assets/images/img6.png" alt="Logo" className="img-fluid" id="logo" width={450} height={450} />
-        </div>
-        <Link href="/" className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10">Find Hospitals</Link>
-      </div>
-    </div>
-
-
-  </div>
-  )
-}
-
-export default DoctorHome
+export default DoctorHome;

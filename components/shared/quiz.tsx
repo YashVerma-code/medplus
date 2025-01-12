@@ -1,89 +1,150 @@
-'use client';
-import { set } from 'lodash';
-import Image from 'next/image';
-import { useState } from 'react';
-const Quiz= () => {
-    const [answers, setAnswers] = useState([0,0,0,0,0,0,0,0,0,0]);
-    const options=[ 
-        "Not at all",
-        "Several days",
-        "More than half the days",
-        "Nearly every day"];
-    const questions=["Little interest or pleasure in doing things"," Feeling down, depressed, or hopeless", "Trouble falling or staying asleep, or sleeping too much","Feeling tired or having little energy","Poor appetite or overeating", "Feeling bad about yourself - or that you are a failure or have let yourself or your family down","Trouble concentrating on things, such as reading the newspaper or watching television", "Moving or speaking so slowly that other people could have noticed Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual", "Thoughts that you would be better off dead?", "Ever thoughts hurting yourself?"]
-    const [result, setResult]  = useState(0);
- 
-    return (
-        <div>
-            <header id="top" className="sticky top-0 z-10 w-full bg-white/10 shadow-md">
-                    <nav className="navbar bg-white/10 ring-1 ring-black/5 backdrop-blur-md p-4">
-                      <div className="container-fluid flex flex-wrap justify-between items-center max-sm:gap-5">
-                        <div className="flex items-center ">
-                          <Image src="/assets/images/logo-large2.png" alt="Logo" className="img-fluid" id="logo" width={100} height={100} />
-                          <div className=" text-4xl md:text-5xl font-bold text-black">MEDPLUS</div>
-                        </div>
-                       
-                            <button
-                            type="button"
-                            title="Login"
-                            className="bg-black/90 shadow-lg hover:bg-gray-900 mr-10  text-white font-semibold rounded-lg text-xl px-6 py-2 tracking-wider text-center"
-                            onClick={() => window.location.href = '/sign-in'}
-                            >
-                            Login
-                            </button>
-                      </div>
-                    </nav>
-                  </header>
-    <div className="flex flex-col gap-7 justify-start items-start ml-10 md:ml-16 mt-10">
-        {questions.map((question, qIndex) => {
-            return (
-                <div key={qIndex} className="flex flex-col gap-4">
-                    <div className="text-2xl text-gray-600 mb-4 mt-2">{(qIndex + 1) + '.  ' + question}</div>
-                    <div className="flex flex-col md:flex-row gap-4 item-start md:items-center">
-                        {options.map((option, oIndex) => {
-                            return (
-                                <div key={oIndex} className="flex flex-col md:flex-row gap-2 item-start md:items-center">
-                                    <label htmlFor={`${qIndex}-${oIndex}`} className="cursor-pointer">
-                                        <input 
-                                            type="radio" 
-                                            id={`${qIndex}-${oIndex}`} 
-                                            name={`question-${qIndex}`} 
-                                            value={option} 
-                                            className="hidden peer/io" 
-                                            onChange={() => {
-                                                const newAnswers = [...answers];
-                                                newAnswers[qIndex] = oIndex;
-                                                setAnswers(newAnswers);
-                                            }}
-                                        />
-                                        <span className="peer-checked/io:bg-[#6998ff] px-5 py-2 bg-white/70 hover:bg-zinc-300 font-semibold rounded-full">{option}</span>
-                                    </label>
-                                </div>
-                            );
-                        })}
+"use client"
+
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+
+const Quiz = () => {
+  const [answers, setAnswers] = useState<number[]>(Array(10).fill(0))
+  const [result, setResult] = useState<number | null>(null)
+  const [showResult, setShowResult] = useState(false)
+  const router = useRouter()
+
+  const options = [
+    "Not at all",
+    "Several days",
+    "More than half the days",
+    "Nearly every day",
+  ]
+
+  const questions = [
+    "Little interest or pleasure in doing things",
+    "Feeling down, depressed, or hopeless",
+    "Trouble falling or staying asleep, or sleeping too much",
+    "Feeling tired or having little energy",
+    "Poor appetite or overeating",
+    "Feeling bad about yourself - or that you are a failure or have let yourself or your family down",
+    "Trouble concentrating on things, such as reading the newspaper or watching television",
+    "Moving or speaking so slowly that other people could have noticed Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual",
+    "Thoughts that you would be better off dead?",
+    "Ever thoughts of hurting yourself?",
+  ]
+
+  const handleGetResult = () => {
+    const totalScore = answers.reduce((acc, curr) => acc + curr, 0)
+    setResult(totalScore)
+    setShowResult(true)
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col">
+      <header className="sticky top-0 z-10 w-full bg-white shadow-md hidden lg:block">
+        <nav className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-2 cursor-pointer" onClick={() => router.push("/")}>
+              <Image
+                src="/assets/images/logo-large2.png"
+                alt="MEDPLUS Logo"
+                width={50}
+                height={50}
+              />
+              <h1 className="text-2xl font-bold">MEDPLUS</h1>
+            </div>
+            <Button onClick={() => router.push("/sign-in")}>Login</Button>
+          </div>
+        </nav>
+      </header>
+
+      <main className="flex-grow flex flex-col">
+        <Card className="w-full bg-inherit flex-grow overflow-hidden flex flex-col">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-center">Depression Screening Questionnaire</CardTitle>
+          </CardHeader>
+          <CardContent className="flex-grow overflow-hidden">
+            <ScrollArea className="h-full pr-4">
+              {questions.map((question, qIndex) => (
+                <div key={qIndex} className="mb-6">
+                  <h2 className="text-lg font-medium mb-2">
+                    {qIndex + 1}. {question}
+                  </h2>
+                  <RadioGroup
+                    onValueChange={(value) => {
+                      const newAnswers = [...answers]
+                      newAnswers[qIndex] = parseInt(value)
+                      setAnswers(newAnswers)
+                    }}
+                  >
+                    <div className="grid gap-2 sm:grid-cols-2">
+                      {options.map((option, oIndex) => (
+                        <Label
+                          key={oIndex}
+                          htmlFor={`question-${qIndex}-${oIndex}`}
+                          className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer transition-colors duration-200 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary [&:has([data-state=checked])]:bg-primary/10"
+                        >
+                          <RadioGroupItem
+                            value={oIndex.toString()}
+                            id={`question-${qIndex}-${oIndex}`}
+                          />
+                          <span>{option}</span>
+                        </Label>
+                      ))}
                     </div>
+                  </RadioGroup>
                 </div>
-            );
-        })}
-        <button  onClick={
-            () => {
-                const result = answers.reduce((acc, curr) => acc + curr, 0);
-                setResult(result+1);
-            }
-        } className="bg-[#6998ff] self-center text-white font-semibold px-8 text-2xl py-2 rounded-full shadow-lg hover:bg-blue-700 mb-10">Get Result</button>
-        {result > 0 && <div className="text-2xl text-gray-600  bg-white p-5  px-4 pr-10 md:px-8 md:rounded-3xl mb-6 -mx-12 lg:-mx-0  lg:w-8/12"><p className='font-bold mb-4'>Your score is {result}</p><p className='text-blue mt-3 font-semibold text-3xl'>About your score</p>
-Each of your answers has a score of 0-3. Click “Your Answers” above to see your score for each question. Adding these up provides your Total Score.<br/>
+              ))}
+            </ScrollArea>
+          </CardContent>
+        </Card>
 
-Not at all = 0; Several days = 1; More than half the days = 2; Nearly every day = 3<br/>
+        <div className="mt-auto p-4">
+          <Button
+            className="w-full"
+            onClick={handleGetResult}
+          >
+            Get Result
+          </Button>
+        </div>
 
-<p className='text-blue font-semibold text-3xl mt-3'>Interpreting your Total Score</p>
-<p className='font-bold inline'>1-4:</p> Minimal depression<br/>
-<p className='font-bold inline'>5-9:</p> Mild depression<br/>
-<p className='font-bold inline'>10-14:</p> Moderate depression<br/>
-<p className='font-bold inline'>15-19:</p>Moderately severe depression<br/>
-<p className='font-bold inline'>20-27:</p> Severe depression</div>}
+        <Dialog open={showResult} onOpenChange={setShowResult}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Your Result</DialogTitle>
+              <DialogDescription>
+                Depression Screening Questionnaire Score
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-4">
+              <h3 className="text-xl font-bold mb-4">Your score is {result}</h3>
+              <p className="mb-4">
+                Each of your answers has a score of 0-3. Adding these up provides your Total Score.
+              </p>
+              <h4 className="text-lg font-semibold mb-2">Interpreting your Total Score</h4>
+              <ul className="list-disc list-inside space-y-1">
+                <li><strong>1-4:</strong> Minimal depression</li>
+                <li><strong>5-9:</strong> Mild depression</li>
+                <li><strong>10-14:</strong> Moderate depression</li>
+                <li><strong>15-19:</strong> Moderately severe depression</li>
+                <li><strong>20-27:</strong> Severe depression</li>
+              </ul>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </main>
     </div>
-    </div>
-  );
-};
+  )
+}
 
-export default Quiz;
+export default Quiz
+

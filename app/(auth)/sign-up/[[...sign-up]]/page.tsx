@@ -2,9 +2,11 @@
     
 import { SignUp } from '@clerk/nextjs'
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const SignUpPage = () => {
+  const router = useRouter();
   useEffect(() => {
     const patientDetails = localStorage.getItem('patientDetails');
     const patientId = localStorage.getItem('patientId');
@@ -21,14 +23,15 @@ const SignUpPage = () => {
   }, []);
   return (
     <div className="flex min-h-screen flex-col lg:flex-row">
-      <div className="flex-1 bg-blue text-white flex flex-col justify-center px-8 lg:px-16 py-12 relative">
+      <div className="sm:flex hidden flex-1 bg-blue text-white flex-col justify-center px-8 lg:px-16 py-12 relative">
         <div className="max-w-lg mx-auto">
           <Image
             src="/assets/images/logo-large.png"
             alt="MedPlus Logo"
             width={100}
             height={100}
-            className="mb-6 bg-white bg-opacity-25 p-1 rounded-lg"
+            className="mb-6 bg-white bg-opacity-25 p-1 rounded-lg cursor-pointer"
+            onClick={() => router.push('/')}
           />
           <h1 className="text-4xl lg:text-5xl font-extrabold mb-4">MedPlus Sign Up</h1>
           <p className="text-lg mb-6">
@@ -42,7 +45,7 @@ const SignUpPage = () => {
           </p>
         </div>
       </div>
-      <div className="flex-1 bg-white flex items-center justify-center px-6 py-6 lg:px-16">
+      <div className="flex-1 bg-inherit flex items-center justify-center px-6 py-6 lg:px-16">
         <div className="flex-col">
           <SignUp
             appearance={{
