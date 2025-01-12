@@ -3,7 +3,7 @@ import redis from "./redisDB";
 
 const ratelimit = new Ratelimit({
   redis: redis,
-  limiter: Ratelimit.slidingWindow(10, "1m"),
+  limiter: Ratelimit.slidingWindow(20, "1m"),
   analytics: true,
 });
 
