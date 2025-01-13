@@ -50,7 +50,7 @@ export default function Resource() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [list]);
 
   const handleAddItem = async (item: Omit<Item, "_id">) => {
     setList((prevList) => [...prevList, { ...item, _id: "temp-id" }]);
