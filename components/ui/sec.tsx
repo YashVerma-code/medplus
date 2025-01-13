@@ -6,8 +6,8 @@ const Sec1 = () => {
     <div className=" w-full flex flex-col md:flex-row justify-center items-start md:items-center gap-10 mt-10 md:pl-16">
 
       <div className="flex gap-2 flex-col items-start justify-center self-start ml-7 md:ml-4 lg:ml-12 md:mt-16 md:basis-[48%]">
-        <div className="text-black font-bold tracking-wide text-5xl md:text-5xl lg:text-7xl leading-tight mb-4">The Next Quality of <p className="text-emerald-600"> care for everyone</p></div>
-        <p className="mt-1 text-black font-semibold text-lg md:text-xl lg:text-2xl">Revolutionizing Hospital Management with Cutting-Edge Technology</p>
+        <div className="text-black font-bold tracking-wide text-5xl md:text-5xl lg:text-7xl leading-tight mb-4">The Next Quality <span className="text-emerald-600">care for everyone</span></div>
+        <p className="mt-1 text-black font-semibold text-lg md:text-xl lg:text-2xl">Revolutionizing Hospital Management with New-Age Technology</p>
         <button
                 type="button"
                 title="Login"

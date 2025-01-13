@@ -1,4 +1,4 @@
-import Quiz from "@/components/shared/quiz"
+import Quiz from "@/components/shared/Quiz"
 
 const Q = async () => {
   return (

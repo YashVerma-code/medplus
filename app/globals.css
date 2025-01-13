@@ -392,13 +392,7 @@
   background-color: #17191c;
   color: #ffffff;
 }
-/* .str-chat__channel-search-input--wrapper{
-  display: hidden;
-}
-.str-chat__channel-search.str-chat__channel-search--with-results.str-chat__channel-search--inline {
-  display: hidden;
-  background-color:black;
-} */
+
 .str-chat__channel-search.str-chat__channel-search--inline{
   display: none !important;
 }
