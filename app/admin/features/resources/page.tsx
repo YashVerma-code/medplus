@@ -15,6 +15,7 @@ import Add from "@/components/shared/Add";
 import { ItemCard } from "@/components/shared/ItemCard";
 import { DNA } from "react-loader-spinner";
 import { ThreeDots } from "react-loader-spinner";
+import toast from "react-hot-toast";
 interface Item {
   _id: string;
   itemName: string;
@@ -76,6 +77,7 @@ export default function Resource() {
           listItem._id === "temp-id" ? newItem : listItem
         )
       );
+      toast.success("Item added successfully")
       fetchData();
    
     } catch (error) {
