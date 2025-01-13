@@ -51,7 +51,7 @@ export default function Resource() {
 
   useEffect(() => {
     fetchData();
-  }, [list]);
+  }, []);
 
   const handleAddItem = async (item: Omit<Item, "_id">) => {
     setList((prevList) => [...prevList, { ...item, _id: "temp-id" }]);
@@ -136,6 +136,7 @@ export default function Resource() {
           listItem._id === itemId ? updatedItem : listItem
         )
       );
+      toast.success("updated successfully ")
     } catch (error) {
       console.error("Failed to update item quantity:", error);
       setError("Failed to update item quantity. Please try again.");

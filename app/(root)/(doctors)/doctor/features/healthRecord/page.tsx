@@ -91,12 +91,13 @@ interface PatientDetails {
     symptomDuration: string
     reason: string
     _id: string
+    medications: {
+      name: string
+      dosage: string
+      _id: string
+    }[]
   }[]
-  medications: {
-    name: string
-    dosage: string
-    _id: string
-  }[]
+ 
   paymentHistory: Array<any>
   user: {
     _id: string
@@ -123,6 +124,14 @@ export default function Prescription() {
     symptoms: "",
     symptomDuration: "",
     reason: "",
+
+  medications: [
+    {
+      name: "",
+   
+     
+    }
+  ]
   })
   const [searchTerm, setSearchTerm] = useState("")
   const fetchData = async () => {
@@ -170,10 +179,10 @@ export default function Prescription() {
   }, [user?.id]);
 
   const handleAddPrescription = async () => {
-    if (!selectedPatient || !user) return
+    if (!selectedPatient || !user) return;
 
     try {
-      setIsSubmitting(true)
+      setIsSubmitting(true);
       const response = await fetch(`/api/patients/add-prescription`, {
         method: "POST",
         headers: {
@@ -182,7 +191,7 @@ export default function Prescription() {
         body: JSON.stringify({
           patientId: selectedPatient._id,
           prescription: {
-            ...newPrescription,
+            ...newPrescription, 
             date: new Date(),
             doctorName: `${user.firstName} ${user.lastName}`,
           },
@@ -208,7 +217,7 @@ export default function Prescription() {
       await fetchData();
 
       // Reset form and close dialog
-      setNewPrescription({ symptoms: "", symptomDuration: "", reason: "" })
+      setNewPrescription({ symptoms: "", symptomDuration: "", reason: "", medications: [{ name: "" }] })
       setSelectedPatient(null)
     } catch (error) {
       console.error("Error adding prescription", error)
@@ -325,7 +334,7 @@ export default function Prescription() {
                 <CardTitle className="text-xl">
                   {patient?.user?.firstName} {patient?.user?.lastName}
                   <div className="text-sm font-normal">{patient.gender}</div>
-                  {patient?.medications?.length > 0 && (
+                  {/* {patient?.medications?.length > 0 && (
                     <div className="mt-2 text-sm font-normal">
                       <strong>Current Medications:</strong>
                       {patient?.medications?.map((medication) => (
@@ -334,7 +343,7 @@ export default function Prescription() {
                         </div>
                       ))}
                     </div>
-                  )}
+                  )} */}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -412,7 +421,38 @@ export default function Prescription() {
                           }
                         />
                       </div>
-                      <Button
+                      {newPrescription.medications.map((medication, index) => (
+                        <div key={index} className="space-y-2">
+                          <label
+                            htmlFor={`medication-${index}`}
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            Medication {index + 1} (Name)
+                          </label>
+                          <Textarea
+                            id={`medication-${index}`}
+                            placeholder={`Enter medication name (e.g., Paracetamol)`}
+                            value={medication.name}
+                            onChange={(e) => {
+                              const updatedMedications = [...newPrescription.medications];
+                              updatedMedications[index].name = e.target.value;
+                              setNewPrescription({
+                                ...newPrescription,
+                                medications: updatedMedications,
+                              });
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter') {
+                                e.preventDefault();
+                                setNewPrescription((prevState) => ({
+                                  ...prevState,
+                                  medications: [...prevState.medications, { name: '' }],
+                                }));
+                              }
+                            }}
+                          />
+                        </div>
+                      ))}    <Button
                         onClick={handleAddPrescription}
                         disabled={isSubmitting}
                       >
@@ -434,7 +474,7 @@ export default function Prescription() {
                       key={record?._id}
                       className="rounded-lg bg-muted p-3"
                     >
-                      <div className="space-y-2 text-sm container">
+                      <div className="space-y-2 text-sm container"></div>
                         <div className="font-medium text-foreground">
                         <span className="font-bold">Date:</span> {new Date(record?.date).toLocaleDateString("en-Gb").split("/").join("-")}
                         </div>
@@ -442,6 +482,14 @@ export default function Prescription() {
                         <div><span className="font-bold"> Symptoms: </span>{record?.symptoms}</div>
                         <div><span className="font-bold"> Duration:</span> {record?.symptomDuration}</div>
                         <div><span className="font-bold">Reason:</span> {record?.reason}</div>
+                        <div>
+                          <span className="font-bold">Medications:</span>
+                          {record?.medications?.map((medication) => (
+                            <div key={medication._id}>
+                              {medication.name} 
+                            </div>
+                             ))}
+
                       </div>
                     </CardDescription>
                   ))}
@@ -459,7 +507,7 @@ export default function Prescription() {
                   )}
                 </div>
               </CardContent>
-            </Card>
+            </Card> 
           ))}
         </div>
       )}

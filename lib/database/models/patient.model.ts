@@ -40,12 +40,7 @@ const PatientSchema = new Schema({
       type: String,
     },
   ],
-  medications: [
-    {
-      name: { type: String },
-      dosage: { type: String },
-    },
-  ],
+
   immunizations: [
     {  
       type: String,
@@ -67,6 +62,12 @@ const PatientSchema = new Schema({
         symptomDuration: { type: String, required: true },
         reason: { type: String, required: true },
         date: { type: Date, required: true },
+        medications: [
+          {
+            name: { type: String },
+         
+          },
+        ],
       }
     ],
     required: false,

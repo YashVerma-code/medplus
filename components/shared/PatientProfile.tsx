@@ -1,4 +1,5 @@
 "use client";
+import { jsPDF } from "jspdf";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -32,6 +33,48 @@ export default function PatientProfilePage({
     setPatient(updatedPatient);
     console.log("Patient updated:", updatedPatient);
   };
+
+    const handleDownloadPDF = ({ patient }: { patient: PatientDetails }) => {
+      const doc = new jsPDF();
+  
+      // Title of the document
+      const latestRecord = patient.records[0];
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(18);
+      doc.text("Patient Record", 105, 20, { align: "center" });
+
+      // Doctor Name
+      doc.setFontSize(14);
+      doc.text(`Doctor: ${latestRecord.doctorName}`, 20, 40);
+
+      // Symptoms
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.text("Symptoms:", 20, 50);
+      doc.text(latestRecord.symptoms, 20, 60);
+
+      // Duration
+      doc.text("Duration:", 20, 70);
+      doc.text(latestRecord.symptomDuration, 20, 80);
+
+      // Reason
+      doc.text("Reason:", 20, 90);
+      doc.text(latestRecord.reason, 20, 100);
+
+      // Medications
+      doc.text("Medications:", 20, 110);
+      let yOffset = 120;
+      latestRecord.medications?.forEach((medication: { name: string }) => {
+        doc.text(`- ${medication.name}`, 20, yOffset);
+        yOffset += 10;
+      });
+  
+      // Save the PDF
+      doc.save("patient_record.pdf");
+    };
+  
+  
   return (
     <div className="md:container md:mx-auto md:py-6 md:px-4 lg:px-8 dark:bg-black">
       <Card className="w-full rounded-b-none bg-transparent border-none">
@@ -142,32 +185,6 @@ export default function PatientProfilePage({
                 </Card>
               </div>
             </TabsContent>
-            {patient.medications.length > 0 ? (
-              <TabsContent value="medications">
-                <Card className="dark:bg-black">
-                  <CardHeader>
-                    <CardTitle className="text-xl">
-                      Current Medications
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="list-disc pl-5 text-sm">
-                      {patient.medications.map((medication, index) => (
-                        <li key={index}>
-                          {medication.name} - {medication.dosage}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            ) : (
-              <TabsContent value="medications">
-                <div className="flex justify-center items-center h-[200px] sm:h-auto">
-                  <p className="text-gray-600">No medications found.</p>
-                </div>
-              </TabsContent>
-            )}
             {patient.records?.length > 0 ? (
               <TabsContent value="records" className="border border-l-0 border-r-0 border-gray-800 rounded-md" >
                 <ScrollArea className="h-[calc(100vh-350px)]">
@@ -200,6 +217,23 @@ export default function PatientProfilePage({
                               <dt className="font-semibold">Reason:</dt>
                               <dd>{record.reason}</dd>
                             </div>
+                            <div>
+                          <span className="font-bold">Medications:</span>
+                          {record?.medications?.map((medication) => (
+                            <div key={medication._id}>
+                              {medication.name} 
+                            </div>
+                             ))}
+
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => handleDownloadPDF({ patient })}
+                          className="bg-black text-white rounded-md px-4 py-2 mt-5"
+                        >
+                          Download PDF
+                        </button>
+                      </div>
                           </dl>
                         </CardContent>                         
                       </div>
@@ -207,7 +241,7 @@ export default function PatientProfilePage({
                   </div>
                 </ScrollArea>
               </TabsContent>
-            ) : (
+            ) : ( 
               <TabsContent value="records">
                 <div className="flex justify-center items-center h-[200px] sm:h-auto">
                   <p className="text-gray-600">No records information found.</p>
