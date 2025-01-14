@@ -147,7 +147,7 @@ interface PatientDetails {
     symptomDuration: string;
     reason: string;
     medications: {
-      [x: string]: Key | null | undefined;
+     id:string;
       name: string;
      
     }[];

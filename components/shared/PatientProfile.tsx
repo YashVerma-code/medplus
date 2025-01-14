@@ -220,7 +220,7 @@ export default function PatientProfilePage({
                             <div>
                           <span className="font-bold">Medications:</span>
                           {record?.medications?.map((medication) => (
-                            <div key={medication._id}>
+                            <div key={medication.id}>
                               {medication.name} 
                             </div>
                              ))}

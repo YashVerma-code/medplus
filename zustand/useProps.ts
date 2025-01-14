@@ -15,7 +15,7 @@ const EmptyPatient: PatientDetails = {
   gender: "",
   immunizations: [],
   records: [],
-  medications: [],
+  // medications: [],
   paymentHistory: [],
   user: {
     _id:"",

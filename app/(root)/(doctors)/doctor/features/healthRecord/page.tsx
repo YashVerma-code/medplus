@@ -93,7 +93,7 @@ interface PatientDetails {
     _id: string
     medications: {
       name: string
-      dosage: string
+    
       _id: string
     }[]
   }[]
