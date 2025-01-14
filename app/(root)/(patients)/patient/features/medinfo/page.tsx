@@ -8,16 +8,20 @@ import { Search, Menu, PlusIcon as HousePlus, Pill } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
+import { set } from 'lodash';
+import Image from 'next/image';
 
-
+import img2 from '../../../../../../public/assets/images/med.png'
 
 export default function MedInfo() {
   const [medName, setMedName] = useState("");
   const [illness, setIllness] = useState("");
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [load, setLoad] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const handleSearch = async () => {
+    setLoad(false);
     if (!medName || !illness) {
       setError("Please enter both medicine name and illness");
       return;
@@ -88,10 +92,10 @@ export default function MedInfo() {
            </div>
          </div>
        </header>
-      <main className="flex-grow p-6 mt-8 sm:mt-15">
+      <main className="flex-grow p-6 mt-8 sm:mt-12 md:mt-10 mx-10">
         <Card className="mb-8 bg-lightblue-50 shadow-lg border-0">
           <CardContent className="p-6">
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 gap-16">
               <div className="space-y-2">
                 <Label htmlFor="med-name" className="text-lightblue-400 font-medium">
                   Enter the medicine name
@@ -101,7 +105,7 @@ export default function MedInfo() {
                   type="text"
                   value={medName}
                   onChange={(e) => setMedName(e.target.value)}
-                  className="bg-blue-50 border-lightblue-200 focus:border-blue focus:ring-lightblue-400"
+                  className="bg-blue-50 border-lightblue-200 focus:border-blue focus:ring-lightblue-400  rounded-full"
                   placeholder="E.g. Aspirin"
                 />
               </div>
@@ -114,7 +118,7 @@ export default function MedInfo() {
                   type="text"
                   value={illness}
                   onChange={(e) => setIllness(e.target.value)}
-                  className="bg-blue-50 border-lightblue-200 focus:border-blue focus:ring-lightblue-400"
+                  className="bg-blue-50 border-lightblue-200 focus:border-blue focus:ring-lightblue-400  rounded-full"
                   placeholder="E.g. Headache"
                 />
               </div>
@@ -122,7 +126,7 @@ export default function MedInfo() {
             <Button
               onClick={handleSearch}
               disabled={isLoading}
-              className="mt-6 w-50px bg-lightblue-600 hover:bg-lightblue-800 text-white"
+              className="mt-6 w-50px bg-lightblue-600 hover:bg-lightblue-800 text-white rounded-xl"
             >
               {isLoading ? (
                 <>
@@ -145,8 +149,18 @@ export default function MedInfo() {
           </div>
         )}
 
-        {isLoading ? (
-          <div className="grid md:grid-cols-2 gap-8">
+{load ? (
+  <div className="px-10 py-4 flex flex-col lg:flex-row  justify-start items-center gap-10 mt-10 bg-emerald-200 w-full h-auto rounded-3xl shadow-lg border-0">
+    <p className='text-gray-600 text-2xl tracking-wide leading-relaxed basis-1/2 font-normal'>Designed with you in mind, our easy-to-use feature makes finding the information you need a breeze. Search for medications by name, condition, or category and get the details you need quickly and efficiently.</p>
+    <Image src={img2}
+                            alt="Landscape picture"
+                            width={300 }
+                            height={250 }
+                            className={`rounded-lg basis-1/2 `}
+                        />
+  </div>
+) : isLoading ? (
+  <div className="grid md:grid-cols-2 gap-8">
             {[1, 2].map((i) => (
               <Card key={i} className="bg-lightblue-100 shadow-lg border-0">
                 <CardHeader>
@@ -163,17 +177,19 @@ export default function MedInfo() {
             ))}
           </div>
         ) : data && (
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-24 md:px-10 ">
           <Card className="bg-lightblue-100 shadow-lg border-0">
             <CardHeader>
-              <CardTitle className="text-lightblue-400">Reaction</CardTitle>
+              <CardTitle className="text-emerald-400 text-4xl ml-4  tracking-widest">Reaction</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="list-disc pl-5 space-y-4">
+              <ul className="list-disc pl-1 space-y-4">
                 {data.patient.reaction.map((reaction: any, index: number) => (
-                  <Card key={index} className="transform transition-transform hover:scale-105 hover:shadow-xl rounded-lg bg-white p-4"> 
-                    <div className="text-gray-700 text-lg font-medium">{reaction.reactionmeddrapt}</div>
-                  </Card>
+                    <li key={index} className="list-none">
+                    <Card className="transform transition-transform hover:scale-105 hover:shadow-xl rounded-lg bg-white p-4"> 
+                      <div className="text-gray-700 text-lg font-medium">{reaction.reactionmeddrapt}</div>
+                    </Card>
+                    </li>
                 ))}
               </ul>
             </CardContent>
@@ -181,7 +197,7 @@ export default function MedInfo() {
         
           <Card className='bg-lightblue-100 shadow-lg border-0'>
       <CardHeader>
-        <CardTitle className="text-lightblue-400">Drug Details</CardTitle>
+        <CardTitle className="text-emerald-400 text-4xl ml-3  tracking-widest">Drug Details</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">

@@ -5,6 +5,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Trash, Edit } from 'lucide-react';
 import { Input } from "@/components/ui/input";
+import { useUser } from "@clerk/nextjs";
 
 interface Item {
   _id: string;
@@ -20,6 +21,8 @@ interface ItemCardpProps {
 }
 
 export function ItemCardp({ items, itemsPerPage }: ItemCardpProps) {
+  
+  const { user} = useUser();
   const [currentPage, setCurrentPage] = useState(1);
   const [currentItems, setCurrentItems] = useState<Item[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -41,20 +44,20 @@ export function ItemCardp({ items, itemsPerPage }: ItemCardpProps) {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
 
- 
+  const userRole = user?.publicMetadata?.role as string | undefined;
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div className="space-y-4 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-7 ">
         {currentItems.map((item) => (
-          <Card key={item._id} className="flex flex-col justify-between bg-white shadow-lg rounded-lg border border-gray-200">
+          <Card key={item._id} className="flex flex-col justify-between  bg-emerald-100 shadow-lg rounded-2xl">
              <img 
               src={item.photo} 
               alt={item.itemName} 
-              className="w-full h-32 object-cover rounded-t-lg" 
+              className="w-full h-52 object-cover aspect-square rounded-t-2xl" 
             />
             <CardContent className="p-4">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">{item.itemName}</h3>
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2 tracking-wider">{item.itemName.charAt(0).toUpperCase() + item.itemName.slice(1)}</h3>
               {editingId === item._id ? (
                 <div className="flex items-center gap-2">
                   <Input
@@ -66,14 +69,15 @@ export function ItemCardp({ items, itemsPerPage }: ItemCardpProps) {
                   <Button onClick={() => setEditingId(null)} variant="outline" size="sm">Cancel</Button>
                 </div>
               ) : (
-                <p className="text-gray-600 text-sm">Quantity: {item.quantity}</p>
+                <p className="text-gray-600 text-lg">Quantity: {item.quantity}</p>
               )}
             </CardContent>
-            <CardFooter className="flex justify-between items-center p-4 bg-gray-50">
+            <CardFooter className={`flex justify-between items-center p-4  ${userRole=='patient'|| userRole=='doctor'? 'hidden': ''}`}>
             
              
             </CardFooter>
           </Card>
+          
         ))}
       </div>
       <div className="flex justify-between items-center mt-4">

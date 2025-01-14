@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog"
 
 const Quiz = () => {
-  const [answers, setAnswers] = useState<number[]>(Array(10).fill(0))
+  const [answers, setAnswers] = useState<number[]>(Array(10).fill(-1))
   const [result, setResult] = useState<number | null>(null)
   const [showResult, setShowResult] = useState(false)
   const router = useRouter()
@@ -43,6 +43,10 @@ const Quiz = () => {
   ]
 
   const handleGetResult = () => {
+    if (answers.includes(-1)) {
+      alert("Please answer all the questions before submitting.")
+      return
+    }
     const totalScore = answers.reduce((acc, curr) => acc + curr, 0)
     setResult(totalScore)
     setShowResult(true)
@@ -70,14 +74,14 @@ const Quiz = () => {
       <main className="flex-grow flex flex-col">
         <Card className="w-full bg-inherit flex-grow overflow-hidden flex flex-col">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center">Depression Screening Questionnaire</CardTitle>
+            <CardTitle className="text-4xl lg:text-5xl font-bold text-center text-gray-800 tracking-widest my-4">Depression Screening Questionnaire</CardTitle>
           </CardHeader>
           <CardContent className="flex-grow overflow-hidden">
             <ScrollArea className="h-full pr-4">
               {questions.map((question, qIndex) => (
-                <div key={qIndex} className="mb-6">
-                  <h2 className="text-lg font-medium mb-2">
-                    {qIndex + 1}. {question}
+                <div key={qIndex} className="my-14 lg:mx-10 border-b border-t border-gray-400 py-10 rounded-sm">
+                  <h2 className="text-3xl text-center tracking-wider font-medium text-pretty  text-neutral-800 mx-1 mb-9 my-2 ">
+                     {question}
                   </h2>
                   <RadioGroup
                     onValueChange={(value) => {
@@ -86,16 +90,17 @@ const Quiz = () => {
                       setAnswers(newAnswers)
                     }}
                   >
-                    <div className="grid gap-2 sm:grid-cols-2">
+                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 lg:gap-10 self-center lg:px-20">
                       {options.map((option, oIndex) => (
                         <Label
                           key={oIndex}
                           htmlFor={`question-${qIndex}-${oIndex}`}
-                          className="flex items-center space-x-2 p-4 border rounded-lg cursor-pointer transition-colors duration-200 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary [&:has([data-state=checked])]:bg-primary/10"
+                          className=" items-center md:text-center px-6 py-3 text-xl border rounded-full cursor-pointer transition-colors duration-200 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:bg-gradient-to-r [&:has([data-state=checked])]:from-cyan-500 [&:has([data-state=checked])]:to-emerald-500 [&:has([data-state=checked])]:bg-primary/10"
                         >
                           <RadioGroupItem
-                            value={oIndex.toString()}
-                            id={`question-${qIndex}-${oIndex}`}
+                          value={oIndex.toString()}
+                          id={`question-${qIndex}-${oIndex}`}
+                          className="hidden"
                           />
                           <span>{option}</span>
                         </Label>
@@ -108,9 +113,9 @@ const Quiz = () => {
           </CardContent>
         </Card>
 
-        <div className="mt-auto p-4">
+        <div className="p-4 flex justify-center">
           <Button
-            className="w-full"
+            className="py-5 px-7 text-gray-100 bg-emerald-600 text-4xl font-medium tracking-wider rounded-full self-center "
             onClick={handleGetResult}
           >
             Get Result
