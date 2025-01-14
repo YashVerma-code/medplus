@@ -54,83 +54,156 @@ const DoctorHome = () => {
   }, [isLoaded, isSignedIn, user, setRole, setUserId, setDoctorId, role]);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 overflow-y-auto px-6 py-10 lg:py-8">
-      {[
-        {
-          title: "Doctor's\u00A0Planner",
-          link:'/doctor/features/appointment-calendar',
-          description:
-            "Take control of your time with Doctor's Planner. Easily manage appointments, customize your availability, and set reminders to ensure your practice runs smoothly. A flexible, user-friendly tool designed to streamline your daily schedule and improve patient management.",
-          image: "/assets/images/img4.png",
-        },
-        {
-          title: "Inventory",
-          link:'/doctor/features/resources',
-          description:
-            "Your Resource Tracker. Stay on top of critical healthcare resources with Inventory. Whether it's tracking the quantity of medicines, oxygen cylinders, or other essential supplies, this feature ensures you're always informed and prepared.",
-          image: "/assets/images/img3.png",
-        },
-        {
-          title: "Health\u00A0Chat",
-          link:'/chat',
-          description:
-            "Connect with Your Doctor Instantly. Experience seamless communication with HealthChat, a real-time chat system designed to bridge the gap between patients and doctors. Whether it's clarifying doubts, sharing updates, or seeking quick advice, HealthChat ensures secure and direct interaction.",
-          image: "/assets/images/img5.png",
-        },
-        {
-          title: "Community\u00A0Updates",
-          link:'/doctor/features/Community-update',
-          description:
-            "Stay Informed, Stay Ahead. Keep up with the latest breakthroughs and advancements in the medical field with Community Updates. From innovative treatments and health tips to critical news and discoveries, this feature ensures you're always in the loop.",
-          image: "/assets/images/img6.png",
-        },
-      ].map((section, index) => (
-        <div
-          key={index}
-          className="flex flex-col items-center bg-emerald-400/30 rounded-2xl shadow-lg p-8 lg:p-12 backdrop-filter backdrop-blur-lg h-[600px]"
-        >
-          {/* Title */}
-          {section.title === "Inventory" ||
-          section.title === "Health\u00A0Chat" ? (
-            <>
-              <h1 className="text-4xl lg:text-6xl font-bold text-black tracking-wider mb-4 w-72 md:w-96 text-center max-h-fit">
-                {section.title}
-              </h1>
-            </>
-          ) : (
-            <ScrollArea>
-              <h1 className="text-4xl lg:text-6xl font-bold text-black tracking-wider mb-4 w-72 md:w-96 text-center max-h-fit">
-                {section.title}
-              </h1>
-              <ScrollBar orientation="horizontal" className="hidden" />
-            </ScrollArea>
-          )}
-
-          <ScrollArea>
-            <p className="text-sm lg:text-base text-gray-700 text-center flex-grow mb-4 max-h-[140px]">
-              {section.description}
-            </p>
-          </ScrollArea>
-
-          <div className="mb-4">
-            <Image
-              src={section.image}
-              alt={section.title}
-              width={250}
-              height={250}
-              className="mx-auto max-w-sm"
-            />
-          </div>
-
+    <div className="w-full min-h-screen  flex justify-center flex-wrap">
+      <div className="w-3/4 h-fit grid grid-cols-1 sm:grid-cols-2 mt-24">
+        <div className="flex flex-col justify-center items-center gap-16 mt-10 lg:mt-0">
+          <h1 className="text-6xl font-bold text-black tracking-wider">
+            Doctor&apos;s Planner
+          </h1>
+          <p className="text-sm text-gray-700">
+            Stay organized and never miss a beat with the Health Calendar.
+            Effortlessly view all your upcoming appointments at a glance,
+            ensuring you&apos;re always prepared for your health checkups. Need
+            to book a new appointment? A convenient &quot;Book Appointment&quot;
+            button is right there, making scheduling as easy as a single click.
+          </p>
           <Link
-            href={section.link}
-            className="bg-black text-white font-semibold rounded-lg text-lg lg:text-2xl px-6 py-3 text-center"
+            href="/patient/features/health-calendar"
+            className="bg-black text-white font-semibold rounded-lg text-3xl px-7 py-4 self-start tracking-wider text-center lg:ml-10"
           >
-            Visit Now
+            Open Now
           </Link>
         </div>
-      ))}
-    </div>
+        <Image
+          src="/assets/images/img2.png"
+          alt="Logo"
+          className="img-fluid"
+          id="logo"
+          width={450}
+          height={450}
+        />
+      </div>
+
+      <div className="w-3/4 h-fit grid grid-cols-1 sm:grid-cols-2 mt-24">
+        <Image
+          src="/assets/images/img3.png"
+          alt="Logo"
+          className="img-fluid"
+          id="logo"
+          width={450}
+          height={450}
+        />
+        <div className="flex flex-col justify-center items-center gap-16 mt-10 lg:mt-0">
+          <h1 className="text-6xl font-bold text-black tracking-wider">
+            Inventory
+          </h1>
+          <p className="text-sm text-gray-700">
+            {" "}
+            Your Resource Tracker. Stay on top of critical healthcare resources
+            with Inventory. Whether it&apos;s tracking the quantity of
+            medicines, oxygen cylinders, or other essential supplies, this
+            feature ensures you&apos;re always informed and prepared. Maintain
+            seamless management and make timely decisions with real-time updates
+            on availability. Efficient resource management, anytime, anywhere!
+          </p>
+          <Link
+            href="/patient/features/resources"
+            className="bg-black text-white font-semibold rounded-lg text-3xl px-7 py-4 self-start tracking-wider text-center lg:ml-10"
+          >
+            Open Now
+          </Link>
+        </div>
+      </div>
+
+      <div className="w-3/4 h-fit grid grid-cols-1 sm:grid-cols-2 mt-24">
+        <div className="flex flex-col justify-center items-center gap-16 mt-10 lg:mt-0">
+          <h1 className="text-6xl font-bold text-black tracking-wider">
+            HealthChat
+          </h1>
+          <p className="text-sm text-gray-700">
+            {" "}
+            Connect with Your Patients Instantly Experience seamless communication
+            with HealthChat, a real-time chat system designed to bridge the gap
+            between patients and doctors. Whether it&apos;s clarifying doubts,
+            sharing updates, or seeking quick advice, HealthChat ensures secure
+            and direct interaction, fostering better understanding and
+            personalized care. Your health questions,
+            answered—anytime, anywhere!
+          </p>
+          <Link
+            href="/chat"
+            className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10"
+          >
+            Open Now
+          </Link>
+        </div>
+        <Image
+          src="/assets/images/img5.png"
+          alt="Logo"
+          className="img-fluid"
+          id="logo"
+          width={450}
+          height={450}
+        />
+      </div>
+
+      <div className="w-3/4 h-fit grid grid-cols-1 sm:grid-cols-2 mt-24">
+        <Image
+          src="/assets/images/img6.png"
+          alt="Logo"
+          className="img-fluid"
+          id="logo"
+          width={450}
+          height={450}
+        />
+        <div className="flex flex-col justify-center items-center gap-16 mt-10 lg:mt-0">
+          <h1 className="text-6xl font-bold text-black tracking-wider">
+            Community Updates
+          </h1>
+          <p className="text-sm text-gray-700">
+            Stay Informed, Stay Ahead. Keep up with the latest breakthroughs and
+            advancements in the medical field with Community Updates. From
+            innovative treatments and health tips to critical news and
+            discoveries, this feature ensures you&apos;re always in the loop
+            with what&apos;s shaping the world of healthcare. Knowledge that
+            empowers, updates that inspire!
+          </p>
+          <Link
+            href="/patient/features/Community-update"
+            className="bg-black text-white font-semibold rounded-lg text-3xl px-7 py-4 self-start tracking-wider text-center lg:ml-10"
+          >
+           Open Now
+          </Link>
+        </div>
+      </div>
+
+      <div className="w-3/4 h-fit grid grid-cols-1 sm:grid-cols-2 mt-32 mb-10">
+        <div className="flex flex-col justify-center items-center gap-16 mt-10 lg:mt-0">
+          <h1 className="text-6xl font-bold text-black tracking-wider">
+            Health Record
+          </h1>
+          <p className="text-sm text-gray-700">
+            {" "}
+            As a healthcare professional, having access to your patient's complete health record is essential for making informed decisions. Our Health Record offers a detailed view of your patient's past medical journey—tracking medications, treatments, and diseases they've encountered. With this comprehensive history at your fingertips, you can provide better, more personalized care, anticipate potential health risks, and streamline the treatment process. All the information you need, in one place, to ensure the best outcomes for your patients
+          </p>
+          <Link
+            href="/chat"
+            className="bg-black text-white font-semibold rounded-lg text-4xl px-7 py-4 self-start tracking-wider text-center lg:ml-10"
+          >
+            Open Now
+          </Link>
+        </div>
+        <Image
+          src="/assets/images/img7.png"
+          alt="Logo"
+          className="img-fluid bg-none"
+          id="logo"
+          width={450}
+          height={450}
+        />
+      </div>
+
+    </div> 
   );
 };
 
