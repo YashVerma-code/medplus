@@ -55,7 +55,7 @@ const Bed = () => {
               </div>
               <div className="flex flex-col">
                 <h1 className="hidden lg:block text-2xl sm:text-3xl lg:text-3xl font-bold text-blue ml-0 sm:ml-2 leading-6 sm:leading-6">
-                  Hospital Beds Satus
+                  Hospital Beds Status
                 </h1>
                 <p className="hidden lg:block text-blue-700 text-sm sm:text-base ml-0 sm:ml-2">
                   Check the availability of beds in the hospital

@@ -30,6 +30,7 @@
     "@radix-ui/react-toast": "^1.2.1",
     "@types/lodash": "^4.17.13",
     "@types/web-push": "^3.6.4",
+    "@uploadthing/react": "^7.1.5",
     "@upstash/ratelimit": "^2.0.5",
     "@upstash/redis": "^1.34.3",
     "ag-grid-react": "^32.0.2",
@@ -63,6 +64,7 @@
     "svix": "^1.44.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^7.4.4",
     "web-push": "^3.6.7",
     "zustand": "^5.0.2"
   },
