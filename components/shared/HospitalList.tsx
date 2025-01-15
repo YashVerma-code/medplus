@@ -43,7 +43,7 @@ const HospitalList: React.FC<HospitalListProps> = ({ hospitals }) => {
           {hospitals.map((hospital) => (
             <div
               key={hospital.place_id}
-              className="p-4 w-28 min-w-[250px] sm:min-w-[300px] md:min-w-[400px] rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-shadow duration-300 flex-shrink-0 space-y-3 text-gray-900 bg-gradient-to-br from-lblue to-blue dark:from-gray-800 dark:to-gray-900
+              className="p-4 w-full min-w-[250px] sm:w-[300px] md:w-[400px] rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-shadow duration-300 flex-shrink-0 space-y-3 text-gray-900 bg-gradient-to-br from-lblue to-blue dark:from-gray-800 dark:to-gray-900
                border-gray-200 dark:!bg-black dark:text-white"
             >
               {/* Checkbox */}

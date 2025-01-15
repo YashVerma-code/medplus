@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import Doctor from "@/lib/database/models/doctor.model";
 
-export async function POST(req: Request) {
+export async function DELETE(req: Request) {
   await connectToDatabase();
   try {
     const { docId, day, start, end } = await req.json();

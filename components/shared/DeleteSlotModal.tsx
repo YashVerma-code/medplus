@@ -33,7 +33,7 @@ export function DeleteSlotModal({ docId ,onUpdate}: { docId: string; onUpdate: (
       const { start, end } = slot || {};
       console.log("Sending values : ", start, end, docId, day);
       const response = await fetch("/api/appointments/remove-slot", {
-        method: "POST",
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ day, start, end, docId }),
       });
