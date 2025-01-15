@@ -163,9 +163,9 @@ const Sidebar = () => {
                   }}
                 />
               </li>
-              <li className="pl-1 p-1.5 mt-1 mb-1 w-full hover:bg-gray-200 rounded-lg cursor-pointer">
+              {/* <li className="pl-1 p-1.5 mt-1 mb-1 w-full hover:bg-gray-200 rounded-lg cursor-pointer">
                 <ThemeSwitch />
-              </li>
+              </li> */}
             </ul>
           </SignedIn>
               </nav>

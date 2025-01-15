@@ -115,7 +115,6 @@ export default function PatientProfilePage({
           <Tabs defaultValue="health" className="w-full">
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 mb-10 h-full p-1">
               <TabsTrigger value="health" >Health Info</TabsTrigger>
-              <TabsTrigger value="medications">Medications</TabsTrigger>
               <TabsTrigger value="records">Records</TabsTrigger>
               <TabsTrigger value="payments">Payments</TabsTrigger>
             </TabsList>

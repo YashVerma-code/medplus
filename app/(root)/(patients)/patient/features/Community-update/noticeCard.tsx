@@ -58,7 +58,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
                     
                     <div onClick={handleImageClick} className={`cursor-pointer ${isZoomed ? 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75' : ''}`}>
                         <Image
-                            src={img2}
+                            src={card.img}
                             alt="Landscape picture"
                             width={isZoomed ? 800 : 700}
                             height={isZoomed ? 600 : 500}
