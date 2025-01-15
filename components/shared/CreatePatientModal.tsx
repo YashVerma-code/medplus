@@ -28,6 +28,10 @@ interface MedicalRecord {
   symptoms: string;
   symptomDuration: string;
   reason: string;
+  medications: {
+    name: string
+    id: string
+  }[]
 }
 
 export function CreatePatientModal({
@@ -54,18 +58,18 @@ export function CreatePatientModal({
     },
     gender: "Male",
     immunizations: ["Flu shot", "COVID-19"],
-    medications: [
-      {
-        name: "Aspirin",
-        dosage: "81mg daily",
-        _id: "67616e13f3536637b61e088d",
-      },
-      {
-        name: "Lisinopril",
-        dosage: "10mg daily",
-        _id: "67616e13f3536637b61e088d",
-      },
-    ],
+    // medications: [
+    //   {
+    //     name: "Aspirin",
+    //     dosage: "81mg daily",
+    //     _id: "67616e13f3536637b61e088d",
+    //   },
+    //   {
+    //     name: "Lisinopril",
+    //     dosage: "10mg daily",
+    //     _id: "67616e13f3536637b61e088d",
+    //   },
+    // ],
     paymentHistory: [],
     user: {
       _id: "",
@@ -85,12 +89,18 @@ export function CreatePatientModal({
   );
 
   const addMedicalRecord = () => {
-    const newRecord = {
+    const newRecord: MedicalRecord = {
       date: new Date(),
       doctorName: "",
       symptoms: "",
       symptomDuration: "",
       reason: "",
+      medications: [
+        {
+          name: "",
+          id: "",
+        },
+      ],
     };
 
     const updatedRecords = [...medicalRecords, newRecord];
@@ -489,7 +499,7 @@ export function CreatePatientModal({
                 />
               </div>
               <div className="space-y-2 p-1">
-                <Label>Medications</Label>
+                {/* <Label>Medications</Label>
                 {formData.medications.map((med, index) => (
                   <div key={index} className="grid grid-cols-2 gap-4">
                     <Input
@@ -523,7 +533,7 @@ export function CreatePatientModal({
                       }}
                     />
                   </div>
-                ))}
+                ))} */}
               </div>
               <div className="space-y-2 p-1">
                 <div className="flex items-center justify-between">

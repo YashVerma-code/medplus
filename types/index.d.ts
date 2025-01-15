@@ -146,12 +146,13 @@ interface PatientDetails {
     symptoms: string;
     symptomDuration: string;
     reason: string;
+    medications: {
+     id:string;
+      name: string;
+     
+    }[];
   }[];
-  medications: {
-    name: string;
-    dosage: string;
-    _id: string;
-  }[];
+
   paymentHistory: Array<any>;
   user: {
     clerkId: string;
