@@ -4,7 +4,7 @@
 
 ---
 
-[![Typing SVG](https://readme-typing-svg.demolab.com/?center=true&vCenter=true&font=Verdana&size=40&pause=500&duration=5000&width=1000&lines=Hello+there,+Welcome+to+our+Medplus+project!;Our+goal+is+to+continuously+improve+the+quality;And+accessibility+of+healthcare+services;using+digital+tools.;)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com/?center=true&vCenter=true&font=Verdana&size=40&pause=500&duration=5000&width=1000&lines=Hello+there,+Welcome+to+our+Medplus+project!;Our+goal+is+to+continuously+improve+the+quality;And+accessibility+of+healthcare+services;using+ai+digital+tools.;)](https://git.io/typing-svg)
 
 ---
 
