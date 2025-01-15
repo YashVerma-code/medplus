@@ -22,16 +22,17 @@ const HospitalLocation: React.FC<MapProps> = ({
   const bbox = `${longitude - zoomPadding},${latitude - zoomPadding},${
     longitude + zoomPadding
   },${latitude + zoomPadding}`;
-  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${latitude},${longitude}`;
+  // const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${latitude},${longitude}`;
+  const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}&hl=en&z=15&output=embed`;
 
   return (
     <iframe
-      width="80%"
+      width="90%"
       height="500"
       frameBorder="0"
       src={mapUrl}
       title="OpenStreetMap"
-      className="rounded-lg shadow-xl shadow-slate-400"
+      className="rounded-lg drop-shadow-lg shadow-slate-400 w-full"
     ></iframe>
   );
 };

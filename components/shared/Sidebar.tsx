@@ -70,21 +70,21 @@ const Sidebar = () => {
   return (
     <>
       {isRoleLoaded && isSignedIn && (
-        <aside className="overflow-auto">
+        <aside className="sidebar-container">
           <div className="sidebar">
             <div className="flex size-full flex-col gap-4">
-              <Link href="/" className="sidebar-logo pl-5 w-full h-auto">
+              <Link href="/" className="sidebar-logo  w-full h-auto  my-2">
             <Image
-              src="/assets/images/logo-large.png"
+              src="/assets/images/logov.png"
               alt="logo"
-              width={150}
-             height={150}
-              className="object-cover aspect-square"
+              width={320}
+             height={20}
+              className="m-0 bg-black"
             />
           </Link>
               <nav className="sidebar-nav">
               <SignedIn>
-            <ul className="sidebar-nav_elements h-[300px] overflow-auto">
+            <ul className="sidebar-nav_elements h-auto">
               {navLinks.slice(0, navLinks.length - 1).map((link) => {
                 const isActive = link.route == baseRoute;
                 return (

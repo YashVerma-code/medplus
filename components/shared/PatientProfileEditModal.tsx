@@ -356,10 +356,10 @@ export function PatientProfileEditModal({
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4 mr-2">
-                <Label htmlFor="medications" className="text-right">
+                {/* <Label htmlFor="medications" className="text-right">
                   Medications
-                </Label>
-                <Textarea
+                </Label> */}
+                {/* <Textarea
                   id="medications"
                   name="medications"
                   value={formData.medications
@@ -368,7 +368,7 @@ export function PatientProfileEditModal({
                   onChange={handleMedicationsChange}
                   className="col-span-3 bg-black"
                   disabled={role === "patient" || role === "doctor"}
-                />
+                /> */}
               </div>
             </div>
           </ScrollArea>

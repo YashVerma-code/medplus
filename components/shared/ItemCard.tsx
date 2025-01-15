@@ -41,29 +41,37 @@ export function ItemCard({ items, itemsPerPage, onUpdate, onDelete }: ItemCardPr
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-7 ">
         {currentItems.map((item) => (
           <Card key={item._id} className="flex flex-col justify-between bg-gradient-to-r from-gray-800 to-gray-900 text-white shadow-lg rounded-lg border border-gray-700 overflow-hidden">
             <img 
               src={item.photo} 
               alt={item.itemName} 
-              className="w-full h-32 object-cover rounded-t-lg" 
+              className="w-full h-52 object-cover aspect-square rounded-t-2xl" 
             />
             <CardContent className="p-4">
-              <h3 className="text-lg font-semibold text-white mb-2">{item.itemName}</h3>
-              <p className="text-gray-400 text-sm">Quantity: {item.quantity}</p>
+            <h3 className="text-2xl font-semibold text-gray-200 mb-2 tracking-wider">{item.itemName.charAt(0).toUpperCase() + item.itemName.slice(1)}</h3>
+            <p className="text-gray-400 text-sm">Quantity: {item.quantity}</p>
             </CardContent>
             <CardFooter className="flex justify-between items-center p-4 bg-gray-800 overflow-hidden">
-              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2">
                 <input
                   type="number"
                   value={item.quantity}
                   onChange={(e) => {
-                    const value = parseInt(e.target.value, 10);
-                    onUpdate(item._id, isNaN(value) ? 0 : value);
+                  const value = parseInt(e.target.value, 10);
+                  setCurrentItems((prevItems) =>
+                    prevItems.map((prevItem) =>
+                    prevItem._id === item._id
+                      ? { ...prevItem, quantity: isNaN(value) ? 0 : value }
+                      : prevItem
+                    )
+                  );
                   }}
                   className="w-20 px-2 py-1 text-white bg-gray-700 rounded border-none focus:outline-none focus:ring-2 focus:ring-teal-400"
                   min={0}
+                  title="Quantity"
+                  placeholder="Enter quantity"
                 />
                 <Button
                   onClick={() => onUpdate(item._id, item.quantity)}
@@ -72,7 +80,7 @@ export function ItemCard({ items, itemsPerPage, onUpdate, onDelete }: ItemCardPr
                 >
                   Update
                 </Button>
-              </div>
+                </div>
               <Button
                 onClick={() => onDelete(item._id)}
                 variant="destructive"
@@ -111,5 +119,5 @@ export function ItemCard({ items, itemsPerPage, onUpdate, onDelete }: ItemCardPr
         </Button>
       </div>
     </div>
-  );
+  );  
 }

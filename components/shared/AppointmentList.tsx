@@ -19,6 +19,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+
 interface AppointmentListProps {
   appointments: Appointment[];
   text: string;
@@ -73,7 +82,6 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
   const [selectedAppointment, setSelectedAppointment] =
     useState<Appointment | null>(null);
   const [currDate, setCurrDate] = useState(new Date());
-  const [currentPage, setCurrentPage] = useState(1);
   const { role, setRole } = useGlobalStore();
   const { user, isLoaded, isSignedIn } = useUser();
   const {
@@ -84,48 +92,12 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
   } = useGlobalStore();
   const { toast } = useToast();
 
-  const AppointmentsPerPage = 5;
-  const totalPages = Math.ceil(appointments.length / AppointmentsPerPage);
-
-  const paginatedAppointments = appointments.slice(
-    (currentPage - 1) * AppointmentsPerPage,
-    currentPage * AppointmentsPerPage
-  );
-  const maxVisiblePages = 5;
-  const halfVisible = Math.floor(maxVisiblePages / 2);
-
-  const getVisiblePageNumbers = () => {
-    let startPage = Math.max(1, currentPage - halfVisible);
-    let endPage = Math.min(totalPages, currentPage + halfVisible);
-
-    if (endPage - startPage + 1 < maxVisiblePages) {
-      if (startPage === 1) {
-        endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-      } else if (endPage === totalPages) {
-        startPage = Math.max(1, endPage - maxVisiblePages + 1);
-      }
-    }
-
-    return Array.from(
-      { length: endPage - startPage + 1 },
-      (_, i) => startPage + i
-    );
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handlePageSelect = (page: number) => {
-    setCurrentPage(page);
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const AppointmentsPerPage = 2;
 
   useEffect(() => {
     setCurrDate(new Date());
+    setCurrentPage(1);
   }, []);
 
   useEffect(() => {
@@ -174,6 +146,12 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
     setSelectedAppointment(appointment); // Set the selected appointment data
     setReschedulingStatus(true); // Open the Reschedule Form
   };
+  const indexOfLastAppointment= currentPage * AppointmentsPerPage;
+  const indexOfFirstAppointment = indexOfLastAppointment - AppointmentsPerPage;
+  const currentAppointments = appointments.slice(indexOfFirstAppointment, indexOfLastAppointment);
+  const totalPages = Math.ceil(appointments.length / AppointmentsPerPage);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="mx-auto w-full ">
@@ -211,7 +189,7 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
             ) : null}
           </div>
           <ul className="space-y-5 px-0 md:px-24 lg:px-24 sm:px-24 ">
-            {paginatedAppointments.map((appointment, index) => {
+            {currentAppointments.map((appointment, index) => {
               const daysLeft = calculateDaysLeft(appointment.date);
               const progress = 100 - (100 * daysLeft) / (daysLeft + 1);
               const isCancelling = loadingIdsCancel.includes(
@@ -221,9 +199,8 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
                 appointment._id as string
               );
               return (
-                <>
                   <li
-                    key={index}
+                    key={appointment._id}
                     className={`h-full transition ease-in hover:scale-105 rounded-3xl shadow-lg flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4 p-5 ${
                       toShowButtons
                         ? "!bg-lblue text-gray-800  dark:!bg-white dark:!text-black "
@@ -345,11 +322,9 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() =>
-                                    handleCancel(appointment._id as string)
-                                  }
+                                  onClick={() => handleCancel(appointment._id)}
                                 >
-                                  Continue
+                                  Yes, Cancel Appointment
                                 </AlertDialogAction>
                               </AlertDialogFooter>
                             </AlertDialogContent>
@@ -358,38 +333,36 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
                       </div>
                     )}
                   </li>
-                </>
               );
             })}
           </ul>
-          <div className="flex justify-center mt-5 space-x-1 p-2">
-            <button
-              onClick={handlePrevPage}
-              disabled={currentPage === 1}
-              className="px-4 py-2 bg-transparent rounded disabled:opacity-50 font-extrabold"
-            >
-              {`<<`}
-            </button>
-            {getVisiblePageNumbers().map((pageNumber) => (
-              <button
-                key={pageNumber}
-                onClick={() => handlePageSelect(pageNumber)}
-                className={`px-4 py-2 ${
-                  currentPage === pageNumber
-                    ? "bg-blue-500 text-red-600 text-2xl"
-                    : "bg-transparent"
-                } rounded`}
-              >
-                {pageNumber}
-              </button>
-            ))}
-            <button
-              onClick={handleNextPage}
-              disabled={currentPage === totalPages}
-              className="px-4 py-2 bg-transparent rounded disabled:opacity-50 font-extrabold"
-            >
-              {`>>`}
-            </button>
+          <div className="mt-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => paginate(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+                {[...Array(totalPages)].map((_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink 
+                      onClick={() => paginate(index + 1)}
+                      isActive={currentPage === index + 1}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
         </>
       )}

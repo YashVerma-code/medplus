@@ -46,13 +46,18 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
             <div className="relative lg:w-96 w-full ">
               <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" onClick={handleSearchCity}/>
+              <form action="/" onSubmit={(e)=>{
+                e.preventDefault();
+                handleSearchCity();
+              }}>
               <Input
                 type="search"
                 placeholder={searchCity?searchCity:`Enter location to search`}
                 className="pl-8"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-              />
+                />
+                </form>
             </div>
           </div>
         </div>
