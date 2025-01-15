@@ -184,7 +184,7 @@ const DoctorHome = () => {
           </h1>
           <p className="text-sm text-gray-700">
             {" "}
-            As a healthcare professional, having access to your patient's complete health record is essential for making informed decisions. Our Health Record offers a detailed view of your patient's past medical journey—tracking medications, treatments, and diseases they've encountered. With this comprehensive history at your fingertips, you can provide better, more personalized care, anticipate potential health risks, and streamline the treatment process. All the information you need, in one place, to ensure the best outcomes for your patients
+            As a healthcare professional, having access to your patient&apos;s complete health record is essential for making informed decisions. Our Health Record offers a detailed view of your patient&apos;s past medical journey—tracking medications, treatments, and diseases they&apos;ve encountered. With this comprehensive history at your fingertips, you can provide better, more personalized care, anticipate potential health risks, and streamline the treatment process. All the information you need, in one place, to ensure the best outcomes for your patients
           </p>
           <Link
             href="/chat"
