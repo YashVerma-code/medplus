@@ -215,7 +215,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 dark:text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ">
       <div className="bg-white p-6 shadow-lg rounded-xl max-w-lg w-full mx-4">
         <div className="w-full flex flex-wrap justify-end">
           <button

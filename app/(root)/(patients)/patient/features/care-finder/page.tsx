@@ -127,7 +127,7 @@ const CareFinderPage = () => {
           <div className="w-full ">
             <HospitalList hospitals={hospitals} />
           </div>
-          {latitude && longitude && (
+          {latitude && longitude && hospitals.length!=0 &&(
 
             <div className="w-full">
             <div className="relative p-5 overflow-hidden flex flex-wrap justify-center rounded-lg">

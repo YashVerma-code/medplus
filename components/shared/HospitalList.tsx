@@ -37,14 +37,13 @@ const HospitalList: React.FC<HospitalListProps> = ({ hospitals }) => {
     <div className="container mx-auto px-4 py-8">
       <div className="w-full h-full flex flex-col items-center">
         <h2 className="text-lg font-semibold w-full text-center p-2">
-          We found {hospitals.length} results, all hospitals are cashless
+          {hospitals.length === 0 ? `No hospitals found near your entered city`:`We found ${hospitals.length} results, all hospitals are cashless`}
         </h2>
         <div className="flex space-x-4 overflow-x-auto w-full p-4">
           {hospitals.map((hospital) => (
             <div
               key={hospital.place_id}
-              className="p-4 w-full min-w-[250px] sm:w-[300px] md:w-[400px] rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-shadow duration-300 flex-shrink-0 space-y-3 text-gray-900 bg-gradient-to-br from-lblue to-blue dark:from-gray-800 dark:to-gray-900
-               border-gray-200 dark:!bg-black dark:text-white"
+              className="p-4 w-full min-w-[250px] sm:w-[300px] md:w-[400px] rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-shadow duration-300 flex-shrink-0 space-y-3 text-gray-900 bg-gradient-to-br from-lblue to-blue border-gray-200"
             >
               {/* Checkbox */}
               <label className="flex items-center cursor-pointer space-x-3 float-right">
@@ -57,7 +56,7 @@ const HospitalList: React.FC<HospitalListProps> = ({ hospitals }) => {
                 <div
                   className={`w-5 h-5 border-2 rounded-md ${
                     checkedIndex === hospital.place_id
-                      ? "bg-green-600 border-green-600 text-white dark:bg-white dark:text-black"
+                      ? "bg-green-600 border-green-600 text-white "
                       : "border-gray-300 "
                   } flex items-center justify-center`}
                 >

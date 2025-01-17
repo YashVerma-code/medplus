@@ -1,4 +1,5 @@
-import Home from '@/components/ui/frontpage'
+
+import Home from '@/components/shared/Home'
 import React from 'react'
 
 const page = () => {

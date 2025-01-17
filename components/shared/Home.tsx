@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import Sec1 from "./sec";
+import Sec1 from "../ui/sec";
 import { useRouter } from "next/navigation";
 
 const Home = () => {
@@ -31,7 +31,7 @@ const Home = () => {
               <Link
                 href={"/quiz"}
                 title="Quiz"
-                className="bg-blue-600  max-sm:hidden shadow-lg text-white bg-emerald-500 font-semibold rounded-full text-xl px-6 py-2 tracking-wider text-center"
+                className="bg-blue-600 shadow-lg text-white bg-emerald-500 font-semibold rounded-full text-xl px-6 py-2 tracking-wider text-center"
               >
                 Take Free Mental Health Quiz
               </Link>
@@ -50,11 +50,11 @@ const Home = () => {
       <div className="w-full h-auto self-center">
         <Sec1 />
       </div>
-      <div className="w-full h-auto self-center flex flex-col items-center justify-start gap-4 mt-10  px-10 md:px-32">
+      <div className="w-full h-auto self-center flex flex-col items-center justify-start gap-4 mt-10  px-10 md:px-32" id="services">
         <div className="text-5xl text-black font-bold text-center tracking-wide my-6 i ">
           Our components build better solutions
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" >
           <div className="hover:border-lime-600 border-2 transition-colors flex flex-col items-center justify-center gap-3 bg-[#112A46]/90 backdrop-blur-lg rounded-2xl shadow-lg py-4 px-6 lg:px-16 min-h-40">
             <div className="text-center text-2xl text-emerald-400 font-semibold ">
               Hospital Nearby Finder
@@ -136,7 +136,7 @@ const Home = () => {
             <Link
               href="/quiz"
               title="Quiz"
-              className="bg-blue-600  my-4 max-sm:hidden shadow-lg text-white bg-black font-semibold rounded-xl text-2xl px-6 py-2 tracking-wider text-center"
+              className="bg-blue-600 my-4 shadow-lg text-white bg-black font-semibold rounded-xl text-2xl px-6 py-2 tracking-wider text-center"
             >
               Take Quiz
             </Link>
@@ -149,47 +149,37 @@ const Home = () => {
                 <h3 className="text-lg font-bold mb-4">About</h3>
                 <ul>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Our story
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Awards
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Our Team
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:underline">
-                      Career
                     </a>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-4">Company</h3>
+                <h3 className="text-lg font-bold mb-4">Medplus</h3>
                 <ul>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="#services" className="hover:underline">
                       Our services
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
-                      Clients
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Contact
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Press
                     </a>
                   </li>
@@ -199,22 +189,22 @@ const Home = () => {
                 <h3 className="text-lg font-bold mb-4">Resources</h3>
                 <ul>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Blog
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Newsletter
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       Documentation
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
+                    <a href="/sign-in" className="hover:underline">
                       FAQs
                     </a>
                   </li>
@@ -249,7 +239,7 @@ const Home = () => {
           </div>
           <div className="text-center mt-8">
             <p className="text-sm">
-              &copy; {new Date().getFullYear()} Your Company. All rights
+              &copy; {new Date().getFullYear()} Medplus. All rights
               reserved.
             </p>
           </div>

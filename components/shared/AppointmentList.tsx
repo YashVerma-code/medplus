@@ -203,8 +203,8 @@ const AppointmentList: React.FC<AppointmentListProps> = ({
                     key={appointment._id}
                     className={`h-full transition ease-in hover:scale-105 rounded-3xl shadow-lg flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4 p-5 ${
                       toShowButtons
-                        ? "!bg-lblue text-gray-800  dark:!bg-white dark:!text-black "
-                        : "text-black !bg-mintGreen  dark:!bg-black dark:!text-white dark:border-gray-800 "
+                        ? "!bg-lblue text-gray-800 "
+                        : "text-black !bg-mintGreen "
                     }`}
                   >
                     {/* Left Section */}

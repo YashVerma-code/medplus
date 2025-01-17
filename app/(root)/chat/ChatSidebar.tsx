@@ -65,7 +65,7 @@ export default function ChatSidebar({
         />
       )}
       <MenuBar onUserMenuClick={() => setUsersMenuOpen(true)} />
-      <span className="absolute top-3 left-14 text-xl font-Poppins text-gray-800 dark:text-white">
+      <span className="absolute top-3 left-14 text-xl font-Poppins text-gray-800">
         Find {role === "doctor" ? "Patients" : "Doctors"}
       </span>
       <ChannelList
