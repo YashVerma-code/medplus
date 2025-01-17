@@ -221,26 +221,26 @@ const Home = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-4">Follow Us</h3>
+                <h3 className="text-lg font-bold mb-4">Developer&apos;s Team LinkedIn</h3>
                 <ul className="flex space-x-4">
                   <li>
-                    <a href="#" className="hover:underline">
-                      Facebook
+                    <a href="https://www.linkedin.com/in/yash-verma/" className="hover:underline">
+                      Yash
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
-                      Twitter
+                    <a href="https://www.linkedin.com/in/contact-parv/" className="hover:underline">
+                      Parv
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
-                      Instagram
+                    <a href="https://www.linkedin.com/in/varunsingh20/" className="hover:underline">
+                      Varun
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="hover:underline">
-                      LinkedIn
+                    <a href="https://www.linkedin.com/in/yogesh-bhivasane-131905289/" className="hover:underline">
+                     Yogesh
                     </a>
                   </li>
                 </ul>

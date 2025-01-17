@@ -47,14 +47,14 @@ export function ItemCardp({ items, itemsPerPage }: ItemCardpProps) {
   const userRole = user?.publicMetadata?.role as string | undefined;
 
   return (
-    <div className="space-y-4 ">
+    <div className="space-y-4 md:mt-24 sm:mt-20 lg:mt-0">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-7 ">
         {currentItems.map((item) => (
-          <Card key={item._id} className="flex flex-col justify-between  bg-emerald-100 shadow-lg rounded-2xl">
+          <Card key={item._id} className="flex flex-col justify-between bg-gray-200 shadow-lg rounded-2xl">
              <img 
               src={item.photo} 
               alt={item.itemName} 
-              className="w-full h-52 object-cover aspect-square rounded-t-2xl" 
+              className="w-full h-52 object-cover aspect-square rounded-t-2xl bg-white" 
             />
             <CardContent className="p-4">
               <h3 className="text-2xl font-semibold text-gray-800 mb-2 tracking-wider">{item.itemName.charAt(0).toUpperCase() + item.itemName.slice(1)}</h3>

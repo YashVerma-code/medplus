@@ -1,6 +1,5 @@
 import { authMiddleware, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import ratelimit from "./config/rateLimit";
 
 // Define public routes (accessible without authentication)
 const publicRoutes = ["/", "/quiz", "/sign-in", "/sign-up","/api/(.*)"];
@@ -12,59 +11,7 @@ export default authMiddleware({
     const { pathname } = req.nextUrl;
 
     // rate limiting
-    const ip = req.headers.get("x-forwarded-for") || req.ip || "127.0.0.1";
-    const { success } = await ratelimit.limit(ip);
-
-    if (!success) {
-      const html = `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Rate Limit Exceeded</title>
-          <style>
-            body {
-              font-family: Arial, sans-serif;
-              text-align: center;
-              padding: 50px;
-              background-color: #f8f9fa;
-              color: #333;
-            }
-            h1 {
-              font-size: 2.5rem;
-              color: #d9534f;
-            }
-            p {
-              font-size: 1.2rem;
-              margin-top: 20px;
-            }
-            a {
-              text-decoration: none;
-              color: #007bff;
-              font-weight: bold;
-            }
-            a:hover {
-              text-decoration: underline;
-            }
-          </style>
-        </head>
-        <body>
-          <h1>Too Many Requests</h1>
-          <p>You've made too many requests in a short period. Please try again later.</p>
-          <p><a href="/">Go back to the homepage</a></p>
-        </body>
-        </html>
-      `;
-    
-      return new NextResponse(html, {
-        status: 429,
-        headers: {
-          "Content-Type": "text/html",
-        },
-      });
-    }
-    
+        
 
     // if unauthenticated users try to access protected routes
     if (
