@@ -5,6 +5,8 @@ import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import { Providers } from '@/providers'
 import { Toaster } from 'react-hot-toast';
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
 
 const MyPoppins = Poppins({
   subsets: ['latin'],
@@ -35,6 +37,8 @@ export default function RootLayout({
         <Toaster position="top-center" />
         <Providers>
           {children}
+          <SpeedInsights/>
+          <Analytics />
         </Providers>
         </body>
       </html>
