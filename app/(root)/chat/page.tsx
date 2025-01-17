@@ -82,14 +82,14 @@ export default function ChatPage({
 
   if (!chatClient || !user) {
     return (
-      <div className="flex h-screen items-center justify-center bg-gray-100 dark:bg-black">
+      <div className="flex h-screen items-center justify-center bg-gray-100 ">
         <LoadingIndicator size={40} />
       </div>
     );
   }
 
   return (
-    <div className="lg:static absolute lg:h-screen h-[calc(100vh-64px)] w-full top-16 bg-gray-100 text-black dark:bg-black dark:text-white">
+    <div className="lg:static absolute lg:h-screen h-[calc(100vh-64px)] w-full top-16 bg-gray-100 text-black">
       <div className="m-auto flex h-full min-w-[350px] max-w-[1600px] flex-col shadow-sm">
         <Chat
           client={chatClient}

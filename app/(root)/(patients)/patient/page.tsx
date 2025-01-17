@@ -70,7 +70,7 @@ const PatientHome = () => {
               href="/patient/features/care-finder"
               className="bg-black text-white font-semibold rounded-lg text-xl sm:text-3xl px-8 py-4 self-start tracking-wider text-center lg:ml-10 hover:bg-gray-900"
             >
-              Find Hospitals
+              Open Now
             </Link>
           </div>
         </div>
@@ -110,7 +110,7 @@ const PatientHome = () => {
             href="/patient/features/medinfo"
             className="bg-black text-white font-semibold rounded-lg  text-xl sm:text-3xl px-8 py-4 self-start tracking-wider text-center lg:ml-10 hover:bg-gray-900"
           >
-            MedInfo
+            Open Now
           </Link>
         </div>
       </div>
@@ -131,7 +131,7 @@ const PatientHome = () => {
             href="/patient/features/health-calendar"
             className="bg-black text-white font-semibold rounded-lg text-xl sm:text-3xl px-7 py-4 self-start tracking-wider text-center lg:ml-10 hover:bg-gray-900"
           >
-            Health Calendar
+            Open Now
           </Link>
         </div>
         <Image
@@ -170,7 +170,7 @@ const PatientHome = () => {
             href="/patient/features/resources"
             className="bg-black text-white font-semibold rounded-lg text-xl sm:text-3xl px-7 py-4 self-start tracking-wider text-center lg:ml-10 hover:bg-gray-900"
           >
-            Inventory
+            Open Now
           </Link>
         </div>
       </div>
@@ -194,7 +194,7 @@ const PatientHome = () => {
             href="/chat"
             className="bg-black text-white font-semibold rounded-lg text-xl sm:text-3xl px-7 py-4 self-start tracking-wider text-center lg:ml-10 hover:bg-gray-900"
           >
-            Health Chat
+            Open Now
           </Link>
         </div>
         <Image
@@ -232,7 +232,7 @@ const PatientHome = () => {
             href="/patient/features/Community-update"
             className="bg-black text-white font-semibold rounded-lg text-xl sm:text-3xl px-7 sm:py-4 py-2 self-start tracking-wider text-center lg:ml-10 hover:bg-gray-900"
           >
-            Community Updates
+            Open Now
           </Link>
         </div>
       </div>

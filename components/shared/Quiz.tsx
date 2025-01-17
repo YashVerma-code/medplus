@@ -95,7 +95,7 @@ const Quiz = () => {
                         <Label
                           key={oIndex}
                           htmlFor={`question-${qIndex}-${oIndex}`}
-                          className=" items-center md:text-center px-6 py-3 text-xl border rounded-full cursor-pointer transition-colors duration-200 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:bg-gradient-to-r [&:has([data-state=checked])]:from-cyan-500 [&:has([data-state=checked])]:to-emerald-500 [&:has([data-state=checked])]:bg-primary/10"
+                          className=" items-center md:text-center px-6 py-3 text-xl border-[5px] rounded-full cursor-pointer transition-colors duration-200 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:bg-gradient-to-r [&:has([data-state=checked])]:from-cyan-500 [&:has([data-state=checked])]:to-emerald-500 [&:has([data-state=checked])]:bg-primary/10"
                         >
                           <RadioGroupItem
                           value={oIndex.toString()}
@@ -115,7 +115,7 @@ const Quiz = () => {
 
         <div className="p-4 flex justify-center">
           <Button
-            className="py-5 px-7 text-gray-100 bg-emerald-600 text-4xl font-medium tracking-wider rounded-full self-center "
+            className="py-7 px-7 text-gray-100 bg-emerald-600 text-3xl font-medium tracking-wider rounded-full self-center "
             onClick={handleGetResult}
           >
             Get Result

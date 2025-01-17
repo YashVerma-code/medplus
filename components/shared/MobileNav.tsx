@@ -8,10 +8,10 @@ import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import { doctorNavLinks, patientNavLinks } from "@/constants";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import ThemeSwitch from "./ThemeSwitch";
 import { BriefcaseMedical, House, Menu, Star, UserRound,Stethoscope, MessageSquareMore, CalendarPlus2, HousePlus, PlusIcon, Pill, Newspaper,  MessageSquarePlus,
   Bed, } from "lucide-react";
 import useGlobalStore from "@/zustand/useProps";
+import { useState } from "react";
 const iconMap = {
   "/FaHome": <House />,
   "/FaStar": <Star />,
@@ -46,11 +46,16 @@ const MobileNav = () => {
   const baseRoute = "/" + pathname.split("/").slice(1, 4).join("/");
   const { role } = useGlobalStore();
   const navLinks = role === "patient" ? patientNavLinks : doctorNavLinks;
+  const [isSheetOpen, setSheetOpen] = useState(false);
+
+  const handleCloseSheet = () => {
+    setSheetOpen(false); // Close the sheet
+  };
   return (
     <header className="header flex items-center z-10 ">
       <Link href="/" className="flex items-center gap-2">
         <Image
-          src="/assets/images/logo-small.png"
+          src="/assets/images/logo-large2.png"
           alt="logo"
           width={60}
           height={51}
@@ -62,8 +67,7 @@ const MobileNav = () => {
       <nav className="flex items-center gap-2 ">
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
-          <ThemeSwitch />
-          <Sheet>
+          <Sheet  open={isSheetOpen} onOpenChange={()=>setSheetOpen(!isSheetOpen)}>
             <SheetTrigger asChild>
               <Button title="Menu" className="p-0">
               <Menu />
@@ -74,7 +78,7 @@ const MobileNav = () => {
                 <DialogTitle></DialogTitle>
                 <div className="flex flex-col gap-4">
                   <Image
-                    src="/assets/images/logo-large.png"
+                    src="/assets/images/logov.png"
                     alt="logo"
                     width={152}
                     height={23}
@@ -91,6 +95,7 @@ const MobileNav = () => {
                               className={`flex items-center gap-2 p-2 text-lg font-bold ${
                                 isActive ? "text-green-100" : "text-dark-700"
                               }`}
+                              onClick={()=>setSheetOpen(!isSheetOpen)}
                             >
                               <span>
                                 {iconMap[link.icon]}

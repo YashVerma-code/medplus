@@ -16,7 +16,7 @@ interface MenuBarProps {
 export default function MenuBar({ onUserMenuClick }: MenuBarProps) {
 
   return (
-    <div className="flex items-center justify-between gap-3 border-e border-e-[#DBDDE1] bg-white p-3.5 -translate-y-1 dark:border-e-gray-800 dark:bg-[#17191c]">
+    <div className="flex items-center justify-between gap-3 border-e border-e-[#DBDDE1] bg-white p-3.5 -translate-y-1 ">
       <UserButton
         afterSignOutUrl="/"
       />
@@ -83,7 +83,7 @@ function PushSubscriptionToggleButton() {
         </span>
       )}
       {confirmationMessage && (
-        <DisappearingMessage className="absolute left-1/2 top-8 z-10 -translate-x-1/2 rounded-lg bg-white px-2 py-1 shadow-md dark:bg-black">
+        <DisappearingMessage className="absolute left-1/2 top-8 z-10 -translate-x-1/2 rounded-lg bg-white px-2 py-1 shadow-md ">
           {confirmationMessage}
         </DisappearingMessage>
       )}

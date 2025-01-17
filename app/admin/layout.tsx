@@ -43,7 +43,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const {setTheme} = useTheme();
   const {setRole} = useGlobalStore();
   useEffect(() => {
-    setTheme("dark");
     setRole('admin');
   },[])
 

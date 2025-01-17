@@ -31,7 +31,7 @@ const Layout = ({ children }: LayoutProps) => {
             </div>
             <div className="relative lg:w-96 w-full md:w-96 sm:w-96 p-2 rounded-md">
               <button
-                className="w-full text-xl font-bold tracking-tight px-3 py-2 rounded-md hover:border-2 transition-colors duration-500 ease-in-out text-white hover:text-blue hover:bg-white bg-blue dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white "
+                className="w-full text-xl font-bold tracking-tight px-3 py-2 rounded-md hover:border-2 transition-colors duration-500 ease-in-out text-white hover:text-blue hover:bg-white bg-blue"
                 onClick={()=>setBookingStatus(true)}
               >
                 Book your Appointment
