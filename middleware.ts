@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import ratelimit from "./config/rateLimit";
 
 // Define public routes (accessible without authentication)
-const publicRoutes = ["/", "/quiz", "/sign-in", "/sign-up","/api/(.*)"];
+const publicRoutes = ["/", "/quiz", "/sign-in", "/sign-up","/api/(.*)", "/api/webhooks(.*)"];
 
 export default authMiddleware({
   publicRoutes,
