@@ -86,6 +86,17 @@ MedPlus is an innovative hospital management system designed to provide **seamle
 
 ---
 
+🛠️ Login Credentials:
+For Doctor:
+Username: sarah_w
+Password: maledoctor@abc
+
+For Admin:
+Username: maleadmin
+Password: maleadmin@xyz
+
+---
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
