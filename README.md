@@ -11,6 +11,13 @@
 ### 🚀 MedPlus: Revolutionizing Healthcare
 
 MedPlus is an innovative hospital management system designed to provide **seamless patient care** and **streamline doctor-patient interactions**. Whether you're a patient seeking medical attention or a doctor managing appointments and prescriptions, MedPlus makes healthcare more accessible and efficient. Join us in building the future of healthcare today!
+#### To access Doctor role:
+email: sarahwilson@gmail.com
+password: maledoctor@abc
+
+#### To access Admin role:
+email: xyz@gmail.com
+password: maleadmin@xyz
 
 ---
 
